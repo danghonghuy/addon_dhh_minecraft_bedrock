@@ -1,0 +1,173 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:tinder_fungus",
+            "menu_category": {
+                "category": "none"
+            },
+            "states": {
+                "sert:stack_amount": [
+                    1,
+                    2
+                ]
+            },
+            "traits": {
+                "minecraft:placement_position": {
+                    "enabled_states": [
+                        "minecraft:block_face"
+                    ]
+                }
+            }
+        },
+        "components": {
+            "minecraft:loot": "loot_tables/blocks/tinder_fungus_1.json",
+            "minecraft:placement_filter": {
+                "conditions": [
+                    {
+                        "allowed_faces": [
+                            "side"
+                        ],
+                        "block_filter": [
+                            {
+                                "tags": "query.any_tag(['wood'])"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "minecraft:collision_box": {
+                "origin": [
+                    -8,
+                    3,
+                    0
+                ],
+                "size": [
+                    16,
+                    4,
+                    8
+                ]
+            },
+            "minecraft:selection_box": {
+                "origin": [
+                    -8,
+                    6,
+                    0
+                ],
+                "size": [
+                    16,
+                    1,
+                    8
+                ]
+            },
+            "minecraft:light_dampening": 1,
+            "minecraft:geometry": "geometry.tinder.fungus.1",
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "tinder_fungus_1"
+                }
+            },
+            "minecraft:display_name": "item.sert:tinder_fungus",
+            "sert:break_on_step_on": {},
+            "sert:stackable_block": {
+                "fillers": [
+                    "sert:tinder_fungus"
+                ]
+            }
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('sert:stack_amount') == 1",
+                "components": {
+                    "minecraft:loot": "loot_tables/blocks/tinder_fungus_1.json"
+                }
+            },
+            {
+                "condition": "q.block_state('sert:stack_amount') == 2",
+                "components": {
+                    "minecraft:loot": "loot_tables/blocks/tinder_fungus_2.json",
+                    "minecraft:geometry": "geometry.tinder.fungus.2",
+                    "minecraft:material_instances": {
+                        "*": {
+                            "render_method": "alpha_test",
+                            "texture": "tinder_fungus_2"
+                        }
+                    },
+                    "minecraft:collision_box": {
+                        "origin": [
+                            -8,
+                            5,
+                            2
+                        ],
+                        "size": [
+                            15,
+                            4,
+                            6
+                        ]
+                    },
+                    "minecraft:selection_box": {
+                        "origin": [
+                            -8,
+                            5,
+                            2
+                        ],
+                        "size": [
+                            15,
+                            4,
+                            6
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'north'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'west'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'south'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'east'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            270,
+                            0
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

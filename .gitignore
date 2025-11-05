@@ -1,0 +1,16 @@
+# Minecraft Add-on files
+*.mcpack
+*.mcaddon
+*.zip
+
+# Build artifacts
+/build/
+/dist/
+
+# User-specific files
+.DS_Store
+*.user
+*.suo
+
+# Log files
+*.log

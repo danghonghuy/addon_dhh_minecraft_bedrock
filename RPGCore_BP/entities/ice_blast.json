@@ -1,0 +1,99 @@
+{
+	"format_version": "1.16.100",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "dhh:ice_blast",
+			"is_spawnable": false,
+			"is_summonable": true,
+			"is_experimental": false,
+			"runtime_identifier": "snowball"
+		},
+		"component_groups": {
+			"dhh:despawn": {
+				"minecraft:instant_despawn": {}
+			}
+		},
+		"components": {
+			  "minecraft:leashable": {},
+			"minecraft:collision_box": {
+				"width": 0.25,
+				"height": 0.25
+			},
+			"minecraft:timer": {
+				"time": 15,
+				"time_down_event": {
+					"event": "dhh:despawn"
+				}
+			},
+			"minecraft:projectile": {
+				"on_hit": {
+					"particle_on_hit": {
+						"particle_type": "snowballpoof",
+						"num_particles": 6,
+						"on_entity_hit": true,
+						"on_other_hit": true
+					},
+					"impact_damage": {
+						"damage": 0,
+						"knockback": true,
+						"semi_random_diff_damage": false
+					},
+					"definition_event": {
+						"affect_splash_area": true,
+						"splash_area": 4,
+						"event_trigger": {
+							"event": "dhh:freeze"
+						}
+					}
+				},
+				"power": 1.5,
+				"gravity": 0.03,
+				"anchor": 2,
+				"offset": [
+					0,
+					-0.5,
+					0
+				],
+				"reflect_on_hurt": false
+			},
+			"minecraft:physics": {},
+			"minecraft:pushable": {
+				"is_pushable": true,
+				"is_pushable_by_piston": true
+			},
+			"minecraft:conditional_bandwidth_optimization": {
+				"default_values": {
+					"max_optimized_distance": 100,
+					"max_dropped_ticks": 7,
+					"use_motion_prediction_hints": true
+				}
+			}
+		},
+		"events": {
+			"dhh:despawn": {
+				"add": {
+					"component_groups": [
+						"dhh:despawn"
+					]
+				}
+			},
+			"dhh:freeze": {
+				"sequence": [
+					{
+						"queue_command": {
+							"command": [
+								"damage @e[r=4] 4 freezing entity @e[type=dhh:snow_wraith,c=1]",
+								"effect @e[r=4] slowness 3 3"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:despawn"
+							]
+						}
+					}
+				]
+			}
+		}
+	}
+}

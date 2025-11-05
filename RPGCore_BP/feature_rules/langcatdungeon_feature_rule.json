@@ -1,0 +1,46 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:feature_rules": {
+    "description": {
+      "identifier": "minecraft:langcatdungeon_feature_rule",
+      "places_feature": "minecraft:langcatdungeon_feature_mcstructure"
+    },
+    "conditions": {
+      "placement_pass": "surface_pass",
+      "minecraft:biome_filter": [
+        {
+          "all_of": [
+            {
+              "any_of": [
+                {
+				  "test": "has_biome_tag",
+				  "operator": "==",
+				  "value": "desert"
+				}
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "distribution": {
+			"iterations": 1,
+			"scatter_chance": 0.03,
+			"x": {
+				"distribution": "uniform",
+				"extent": [
+					0,
+					25
+				]
+			},
+			"y": "query.heightmap(variable.worldx, variable.worldz) + -9",
+			"z": {
+				"distribution": "uniform",
+				"extent": [
+					0,
+					25
+				]
+			}
+		}
+	}
+}

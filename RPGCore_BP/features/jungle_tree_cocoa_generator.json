@@ -1,0 +1,19 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:structure_template_feature": {
+        "description": {
+            "identifier": "sert:jungle_tree_cocoa_generator"
+        },
+        "structure_name": "mystructure:jungle_tree_cocoa_generator",
+        "adjustment_radius": 4,
+        "facing_direction": "random",
+        "constraints": {
+            "block_intersection": {
+                "block_allowlist": [
+                    "minecraft:jungle_log",
+                    "minecraft:jungle_wood"
+                ]
+            }
+        }
+    }
+}

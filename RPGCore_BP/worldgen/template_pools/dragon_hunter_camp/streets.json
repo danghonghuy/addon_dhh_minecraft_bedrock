@@ -1,0 +1,64 @@
+{
+  "format_version": "1.21.20", 
+  "minecraft:template_pool": { 
+    "description": { 
+      "identifier": "dhh:dragon_hunter_camp/streets" 
+    }, 
+    "elements": [ 
+      { 
+        "element": { 
+          "element_type": "minecraft:single_pool_element", 
+          "location": "street_t", 
+          "processors": "dhh:dragon_hunter_camp_processors"
+        }, 
+        "weight": 3,
+          "projection": "terrain_matching"
+      }, 
+      { 
+        "element": { 
+          "element_type": "minecraft:single_pool_element", 
+          "location": "street", 
+          "processors": "dhh:dragon_hunter_camp_processors"
+        }, 
+        "weight": 2,
+          "projection": "terrain_matching" 
+      }, 
+      { 
+        "element": { 
+          "element_type": "minecraft:single_pool_element", 
+          "location": "street_nw", 
+          "processors": "dhh:dragon_hunter_camp_processors"
+        }, 
+        "weight": 1,
+          "projection": "terrain_matching"
+      }, 
+      { 
+        "element": { 
+          "element_type": "minecraft:single_pool_element", 
+          "location": "street_ne", 
+          "processors": "dhh:dragon_hunter_camp_processors"
+        }, 
+        "weight": 1,
+          "projection": "terrain_matching"
+      }, 
+      { 
+        "element": { 
+          "element_type": "minecraft:single_pool_element", 
+          "location": "street_sw", 
+          "processors": "dhh:dragon_hunter_camp_processors"
+        }, 
+        "weight": 1,
+          "projection": "terrain_matching"
+      }, 
+      { 
+        "element": { 
+          "element_type": "minecraft:single_pool_element", 
+          "location": "street_se", 
+          "processors": "dhh:dragon_hunter_camp_processors"
+        }, 
+        "weight": 1,
+          "projection": "terrain_matching"
+      }
+    ] 
+  } 
+}

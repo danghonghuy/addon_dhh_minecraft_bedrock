@@ -1,0 +1,92 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:magic_log",
+            "menu_category": {
+                "category": "nature",
+                "group": "minecraft:itemGroup.name.log"
+            },
+            "traits": {
+                "minecraft:placement_position": {
+                    "enabled_states": [
+                        "minecraft:block_face"
+                    ]
+                }
+            }
+        },
+        "components": {
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 2
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3
+            },
+            "minecraft:geometry": "minecraft:geometry.full_block",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "magic_log_side",
+                    "render_method": "opaque"
+                },
+                "down": "up",
+                "up": {
+                    "texture": "magic_log_top",
+                    "render_method": "opaque"
+                }
+            },
+            "minecraft:flammable": true,
+            "tag:minecraft:is_axe_item_destructible": {},
+            "tag:wood": {}
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'west' || q.block_state('minecraft:block_face') == 'east'",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "magic_log_side",
+                            "render_method": "opaque"
+                        },
+                        "west": {
+                            "texture": "magic_log_top",
+                            "render_method": "opaque"
+                        },
+                        "east": "west"
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'down' || q.block_state('minecraft:block_face') == 'up'",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "magic_log_side",
+                            "render_method": "opaque"
+                        },
+                        "up": {
+                            "texture": "magic_log_top",
+                            "render_method": "opaque"
+                        },
+                        "down": "up"
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'north' || q.block_state('minecraft:block_face') == 'south'",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "magic_log_side",
+                            "render_method": "opaque"
+                        },
+                        "south": {
+                            "texture": "magic_log_top",
+                            "render_method": "opaque"
+                        },
+                        "north": "south"
+                    }
+                }
+            }
+        ]
+    }
+}

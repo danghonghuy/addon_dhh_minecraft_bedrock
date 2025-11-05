@@ -1,0 +1,31 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:structure_template_feature": {
+        "description": {
+            "identifier": "sert:structures/wizard_tower"
+        },
+        "structure_name": "mystructure:wizard_tower",
+        "adjustment_radius": 5,
+        "facing_direction": "random",
+        "constraints": {
+            "grounded": {},
+            "unburied": {},
+            "block_intersection": {
+                "block_allowlist": [
+                    "minecraft:air",
+                    "minecraft:oak_leaves",
+                    "minecraft:birch_leaves",
+                    "minecraft:spruce_leaves",
+                    "minecraft:oak_wood",
+                    "minecraft:birch_wood",
+                    "minecraft:tall_grass",
+                    "minecraft:grass",
+                    "minecraft:moss_carpet",
+                    "minecraft:repeating_command_block",
+                    "sert:linuim",
+                    "sert:lotar"
+                ]
+            }
+        }
+    }
+}

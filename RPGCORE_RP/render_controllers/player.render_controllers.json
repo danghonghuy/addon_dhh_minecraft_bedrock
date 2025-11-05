@@ -1,0 +1,67 @@
+{
+  "format_version": "1.8.0",
+  "render_controllers": {
+   "controller.render.player.first_person": {
+  "geometry": "variable.is_transformed ? Geometry.warden_girl : Geometry.default",
+  "materials": [ { "*": "Material.default" } ],
+  "textures": [ "variable.is_transformed ? Texture.warden_girl : Texture.default" ],
+  "part_visibility": [
+    { "*": false },
+    { "head": false },
+
+  
+    { "lAm": "variable.is_transformed" },
+    { "rAm": "variable.is_transformed" }, 
+  
+   
+    { "punch_right": "variable.is_transformed" },
+    { "punch_left": "variable.is_transformed" },
+
+    
+  
+    { "rightArm": "!variable.is_transformed && (query.get_equipped_item_name(0, 1) == '' || query.get_equipped_item_name(0, 1) == 'filled_map')" },
+    { "rightSleeve": "!variable.is_transformed && (query.get_equipped_item_name(0, 1) == '' || query.get_equipped_item_name(0, 1) == 'filled_map')" },
+    { "leftArm": "!variable.is_transformed && ((query.get_equipped_item_name(0, 1) == 'filled_map' && query.get_equipped_item_name('off_hand') != 'shield') || (query.get_equipped_item_name('off_hand') == 'filled_map' && !query.item_is_charged) || (!query.item_is_charged && (variable.item_use_normalized > 0 && variable.item_use_normalized < 1.0)))" },
+    { "leftSleeve": "!variable.is_transformed && ((query.get_equipped_item_name(0, 1) == 'filled_map' && query.get_equipped_item_name('off_hand') != 'shield') || (query.get_equipped_item_name('off_hand') == 'filled_map' && !query.item_is_charged) || (!query.item_is_charged && (variable.item_use_normalized > 0 && variable.item_use_normalized < 1.0)))" }
+  ]
+},
+  "controller.render.player.third_person": {
+  "geometry": "variable.is_transformed ? Geometry.warden_girl : Geometry.default",
+  "materials": [ { "*": "Material.default" } ],
+  "textures": [ "variable.is_transformed ? Texture.warden_girl : Texture.default" ],
+  "part_visibility": [
+    { "*": true },
+    { "helmet": "variable.helmet_layer_visible && !variable.is_transformed" },
+    { "leftLegging": "variable.leg_layer_visible && !variable.is_transformed" },
+    { "rightLegging": "variable.leg_layer_visible && !variable.is_transformed" },
+    { "leftBoot": "variable.boot_layer_visible && !variable.is_transformed" },
+    { "rightBoot": "variable.boot_layer_visible && !variable.is_transformed" },
+    { "leftSock": "variable.boot_layer_visible && variable.leg_layer_visible && !variable.is_transformed" },
+    { "rightSock": "variable.boot_layer_visible && variable.leg_layer_visible && !variable.is_transformed" },
+    { "bodyArmor": "variable.chest_layer_visible && !query.has_cape && !variable.is_transformed" },
+    { "leftArmArmor": "variable.chest_layer_visible && !query.has_cape && !variable.is_transformed" },
+    { "rightArmArmor": "variable.chest_layer_visible && !query.has_cape && !variable.is_transformed" },
+    { "belt": "variable.chest_layer_visible && variable.leg_layer_visible && !variable.is_transformed" }
+  ]
+},
+  "controller.render.player.first_person_spectator": {
+      "geometry": "Geometry.default",
+      "materials": [ { "*": "Material.default" } ],
+      "textures": [ "Texture.default" ],
+      "part_visibility": [ { "*": false } ]
+    },
+    "controller.render.player.third_person_spectator": {
+      "geometry": "geometry.default",
+      "materials": [ { "*": "material.spectator" } ],
+      "textures": [ "texture.default" ],
+      "part_visibility": [ { "*": false }, { "head": true }, { "hat": true }, { "helmet": "variable.helmet_layer_visible" } ],
+      "color": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 0.3 }
+    },
+    "controller.render.player.map": {
+      "geometry": "geometry.default",
+      "materials": [ { "*": "material.default" } ],
+      "textures": [ "texture.default" ],
+      "part_visibility": [ { "*": false }, { "head": true }, { "hat": true }, { "helmet": true } ]
+    }
+  }
+}

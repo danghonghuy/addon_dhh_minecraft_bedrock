@@ -1,0 +1,29 @@
+{
+  "format_version": "1.16.100",
+  "minecraft:fog_settings": {
+    "description": {
+      "identifier": "dhh:blood_moon_fog" 
+    },
+    "distance": {
+      "air": {
+        "fog_start": 5.0,    
+        "fog_end": 40.0,     
+        "fog_color": "#C71A1A", 
+        "render_distance_type": "render"
+      }
+    },
+    "volumetric": {
+       "density": {
+           "air": {
+               "max_density": 1.0 
+           }
+       },
+       "media_coefficients": {
+           "air": {
+               "scattering": [0.8, 0.1, 0.1], 
+               "absorption": [0.0, 0.0, 0.0]
+           }
+       }
+    }
+  }
+}

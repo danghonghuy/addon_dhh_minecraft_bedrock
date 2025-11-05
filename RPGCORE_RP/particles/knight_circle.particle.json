@@ -1,0 +1,48 @@
+{
+	"format_version": "1.10.0",
+	"particle_effect": {
+		"description": {
+			"identifier": "dhh:knight_circle",
+			"basic_render_parameters": {
+				"material": "particles_blend",
+				"texture": "textures/particle/magic10"
+			}
+		},
+		"components": {
+			"minecraft:emitter_rate_instant": { 
+				"num_particles": 1
+			},
+			"minecraft:emitter_lifetime_once": { 
+				"active_time": 0
+			},
+			"minecraft:emitter_shape_point": {},
+			"minecraft:particle_lifetime_expression": {
+				"max_lifetime": "variable.particle_lifetime" 
+			},
+			"minecraft:particle_initial_speed": 0,
+			"minecraft:particle_motion_dynamic": {},
+			"minecraft:particle_appearance_billboard": {
+				"size": ["variable.circle_size", "variable.circle_size"],
+				"facing_camera_mode": "emitter_transform_xz",
+				"uv": {
+					"texture_width": 16,
+					"texture_height": 16,
+					"uv": [0, 0],
+					"uv_size": [16, 16]
+				}
+			},
+			"minecraft:particle_appearance_tinting": {
+				"color": {
+					"interpolant": "v.particle_age / v.particle_lifetime",
+					"gradient": {
+						"0.0": "#ffffffff",
+						"0.25": "#FFD7C256",
+						"0.5": "#FFA5FF9F",
+						"0.66": "#FFEBB9B9",
+						"1.0": "#FFFFFDFD"
+					}
+				}
+			}
+		}
+	}
+}

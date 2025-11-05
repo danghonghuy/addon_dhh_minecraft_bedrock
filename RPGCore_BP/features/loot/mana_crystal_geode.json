@@ -1,0 +1,31 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:geode_feature": {
+        "description": {
+            "identifier": "sert:loot/mana_crystal_geode"
+        },
+        "max_radius": 9,
+        "filler": "minecraft:air",
+        "inner_layer": "sert:mana_stone",
+        "alternate_inner_layer": "sert:mana_crystal_stone",
+        "use_alternate_layer0_chance": 0.125,
+        "middle_layer": "calcite",
+        "outer_layer": "tuff",
+        "inner_placements": [
+            "sert:mana_crystal_block"
+        ],
+        "placements_require_layer0_alternate": true,
+        "use_potential_placements_chance": 1,
+        "min_distribution_points": 2,
+        "max_distribution_points": 4,
+        "min_outer_wall_distance": 2,
+        "max_outer_wall_distance": 4,
+        "min_point_offset": 0,
+        "max_point_offset": 2,
+        "noise_multiplier": 0.125,
+        "invalid_blocks_threshold": 64,
+        "crack_point_offset": 0,
+        "generate_crack_chance": 1,
+        "base_crack_size": 1
+    }
+}

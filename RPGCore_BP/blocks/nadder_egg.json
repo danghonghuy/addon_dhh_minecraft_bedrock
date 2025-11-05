@@ -1,0 +1,65 @@
+{
+	"format_version": "1.21.20",
+	"minecraft:block": {
+		"description": {
+			"identifier": "dhh:nadder_egg",
+			"menu_category": {
+				"category": "nature"
+			},
+			"states": {
+				"dhh:nest_placed": [
+					false,
+					true
+				]
+			}
+		},
+		"components": {
+			"minecraft:custom_components": [
+				"dhh:nadder_egg"
+			],
+			"minecraft:destructible_by_explosion": {
+				"explosion_resistance": 3
+			},
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 2
+			},
+			"minecraft:geometry": "geometry.nadder_egg",
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "dhh_nadder_egg",
+					"render_method": "alpha_test"
+				}
+			},
+			"minecraft:collision_box": {
+				"origin": [
+					-3,
+					0,
+					-3
+				],
+				"size": [
+					6,
+					12,
+					6
+				]
+			},
+			"minecraft:selection_box": {
+				"origin": [
+					-3,
+					0,
+					-3
+				],
+				"size": [
+					6,
+					12,
+					6
+				]
+			},
+			"minecraft:tick": {
+				"interval_range": [
+					120,
+					240
+				]
+			}
+		}
+	}
+}

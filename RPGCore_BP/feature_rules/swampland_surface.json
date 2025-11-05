@@ -1,0 +1,42 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:feature_rules": {
+        "description": {
+            "identifier": "sert:swampland_surface",
+            "places_feature": "sert:swampland_surface"
+        },
+        "conditions": {
+            "placement_pass": "surface_pass",
+            "minecraft:biome_filter": [
+                {
+                    "all_of": [
+                        {
+                            "test": "has_biome_tag",
+                            "operator": "==",
+                            "value": "swamp"
+                        }
+                    ]
+                }
+            ]
+        },
+        "distribution": {
+            "iterations": 10,
+            "x": {
+                "extent": [
+                    0,
+                    16
+                ],
+                "distribution": "uniform"
+            },
+            "y": "q.heightmap(v.worldx, v.worldz) - 1",
+            "z": {
+                "extent": [
+                    0,
+                    16
+                ],
+                "distribution": "uniform"
+            },
+            "scatter_chance": 100
+        }
+    }
+}

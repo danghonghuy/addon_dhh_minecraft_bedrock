@@ -1,0 +1,154 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.light_fury.main": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"animations": [
+						"idle"
+					],
+					"transitions": [
+						{
+							"sitting": "query.property('dhh:sitting')"
+						},
+						{
+							"caged": "query.is_riding"
+						},
+						{
+							"walking": "query.is_on_ground&&query.is_moving"
+						},
+						{
+							"flying": "!query.is_on_ground&&query.is_moving"
+						}
+					],
+					"blend_transition": 1.5,
+					"blend_via_shortest_path": true
+				},
+				"sitting": {
+					"animations": [
+						"sit"
+					],
+					"transitions": [
+						{
+							"default": "!query.property('dhh:sitting')"
+						}
+					],
+					"blend_transition": 1.5,
+					"blend_via_shortest_path": true
+				},
+				"caged": {
+					"animations": [
+						"caged"
+					],
+					"transitions": [
+						{
+							"default": "!query.is_riding"
+						}
+					],
+					"blend_transition": 1.5,
+					"blend_via_shortest_path": true
+				},
+				"hovering": {
+					"animations": [
+						"hover"
+					],
+					"transitions": [
+						{
+							"walking": "query.is_on_ground&&query.is_moving"
+						},
+						{
+							"default": "query.is_on_ground&&!query.is_moving"
+						},
+						{
+							"flying": "query.ground_speed>=0"
+						}
+					],
+					"blend_transition": 1,
+					"blend_via_shortest_path": true
+				},
+				"gliding": {
+					"animations": [
+						"glide"
+					],
+					"transitions": [
+						{
+							"walking": "query.is_on_ground&&query.is_moving"
+						},
+						{
+							"flying": "query.vertical_speed>=0"
+						},
+						{
+							"default": "query.is_on_ground&&!query.is_moving"
+						},
+						{
+							"hovering": "query.ground_speed<0"
+						}
+					],
+					"blend_transition": 0.1,
+					"blend_via_shortest_path": true
+				},
+				"walking": {
+					"animations": [
+						"walk"
+					],
+					"transitions": [
+						{
+							"default": "!query.is_on_ground||!query.is_moving"
+						}
+					],
+					"blend_transition": 0.1,
+					"blend_via_shortest_path": true
+				},
+				"flying": {
+					"animations": [
+						"fly"
+					],
+					"transitions": [
+						{
+							"gliding": "query.vertical_speed<0&&!query.property('dhh:diving')"
+						},
+						{
+							"diving": "query.property('dhh:diving')"
+						},
+						{
+							"walking": "query.is_on_ground&&query.is_moving"
+						},
+						{
+							"default": "query.is_on_ground&&!query.is_moving"
+						},
+						{
+							"hovering": "query.ground_speed<0&&!query.property('dhh:diving')"
+						}
+					],
+					"blend_transition": 0.1,
+					"blend_via_shortest_path": true
+				},
+				"diving": {
+					"animations": [
+						"dive"
+					],
+					"transitions": [
+						{
+							"gliding": "query.vertical_speed<0&&!query.property('dhh:diving')"
+						},
+						{
+							"flying": "!query.vertical_speed<0||!query.property('dhh:diving')"
+						},
+						{
+							"walking": "query.is_on_ground&&query.is_moving"
+						},
+						{
+							"default": "query.is_on_ground&&!query.is_moving"
+						},
+						{
+							"hovering": "query.ground_speed<0&&!query.property('dhh:diving')"
+						}
+					],
+					"blend_transition": 0.1,
+					"blend_via_shortest_path": true
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,23 @@
+{
+    "format_version": "1.20.60",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:mana_stone",
+            "menu_category": {
+                "category": "nature"
+            }
+        },
+        "components": {
+            "minecraft:loot": "loot_tables/blocks/mana_stone.json",
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 3
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3
+            },
+            "tag:min_dig_tier:1": {},
+            "tag:minecraft:is_pickaxe_item_destructible": {},
+            "tag:stone": {}
+        }
+    }
+}

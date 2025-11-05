@@ -1,0 +1,35 @@
+{
+	"format_version": "1.20.30",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "dhh:dragon_saddle"
+		},
+		"tags": [
+			"crafting_table"
+		],
+		"key": {
+			"L": {
+				"item": "leather"
+			},
+			"S": {
+				"item": "string"
+			}
+		},
+		"unlock": [
+			{
+				"item": "minecraft:leather"
+			},
+			{
+				"item": "minecraft:string"
+			}
+		],
+		"pattern": [
+			" S ",
+			"S S",
+			"LLL"
+		],
+		"result": {
+			"item": "dhh:dragon_saddle"
+		}
+	}
+}

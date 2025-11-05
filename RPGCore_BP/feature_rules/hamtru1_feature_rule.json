@@ -1,0 +1,33 @@
+{
+	"format_version": "1.13.0",
+	"minecraft:feature_rules": {
+		"description": {
+			"identifier": "minecraft:hamtru1_feature_rule",
+			"places_feature": "minecraft:hamtru1_feature_mcstructure"
+		},
+		"conditions": {
+			"placement_pass": "first_pass",
+			"minecraft:biome_filter": {
+				"test": "has_biome_tag",
+				"operator": "==",
+				"value": "plains"
+			}
+		},
+		"distribution": {
+			"iterations": 1,
+			"x": {
+				"extent": [0, 16],
+				"distribution": "uniform"
+			},
+			"y": {
+				"extent": [11, 50],
+				"distribution": "uniform"
+			},
+			"z": {
+				"extent": [0, 16],
+				"distribution": "uniform"
+			},
+			"scatter_chance": 0.03
+		}
+	}
+}

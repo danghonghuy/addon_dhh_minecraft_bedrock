@@ -1,0 +1,26 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:magic_mushroom"
+        },
+        "features": [
+            [
+                "sert:magic_mushroom_1",
+                3
+            ],
+            [
+                "sert:magic_mushroom_2",
+                3
+            ],
+            [
+                "sert:magic_mushroom_3",
+                3
+            ],
+            [
+                "sert:magic_mushroom_4",
+                3
+            ]
+        ]
+    }
+}

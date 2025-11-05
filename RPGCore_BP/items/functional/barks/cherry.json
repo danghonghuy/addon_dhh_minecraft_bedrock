@@ -1,0 +1,29 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:item": {
+        "description": {
+            "identifier": "sert:cherry_bark",
+            "menu_category": {
+                "category": "construction"
+            }
+        },
+        "components": {
+            "minecraft:max_stack_size": 64,
+            "minecraft:icon": "cherry_bark",
+            "minecraft:fuel": {
+                "duration": 2
+            },
+            "sert:bark": [
+                {
+                    "log_type": "minecraft:cherry_log",
+                    "stripped_log_type": "minecraft:stripped_cherry_log"
+                },
+                {
+                    "log_type": "cherry_wood",
+                    "stripped_log_type": "stripped_cherry_wood"
+                }
+            ],
+            "sert:interact_animation": {}
+        }
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:mana_dungeon_room_generator",
+            "states": {
+                "sert:room_index": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11
+                ]
+            }
+        },
+        "components": {
+            "minecraft:tick": {
+                "interval_range": [
+                    1,
+                    15
+                ],
+                "looping": true
+            },
+            "sert:generator": {
+                "id": "mana_dungeon_room"
+            },
+            "tag:sys": {}
+        }
+    }
+}

@@ -1,0 +1,43 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "dhh:sand_wraith",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"textures": {
+				"default": "textures/entity/sand_wraith"
+			},
+			"geometry": {
+				"default": "geometry.sand_wraith"
+			},
+			"animations": {
+				"main_controller": "controller.animation.sand_wraith.main",
+				"walk": "animation.sand_wraith.walk",
+				"idle": "animation.sand_wraith.idle",
+				"fly": "animation.sand_wraith.fly",
+				"sleep": "animation.sand_wraith.sleep",
+				"sit": "animation.sand_wraith.sit",
+				"attack": "animation.sand_wraith.claw_attack",
+				"fire_ball": "animation.sand_wraith.breath",
+				"look_at_target": "animation.common.look_at_target",
+				"rotate": "animation.dragon.rotate"
+			},
+			"scripts": {
+				"animate": [
+					"main_controller",
+					"look_at_target",
+					"rotate"
+				]
+			},
+			"render_controllers": [
+				"controller.render.sand_wraith"
+			],
+			"spawn_egg": {
+				"base_color": "#a56732",
+				"overlay_color": "#d19766"
+			}
+		}
+	}
+}

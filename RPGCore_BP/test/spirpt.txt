@@ -1,0 +1,218 @@
+import { world, system } from "@minecraft/server";
+import { ActionFormData } from "@minecraft/server-ui";
+import { CONFIG } from "../config.js";
+import { getPlayerStats } from "../main.js";
+const Vector = {
+    magnitude(v) { return Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z); },
+    subtract(v1, v2) { return { x: v1.x - v2.x, y: v1.y - v2.y, z: v1.z - v2.z }; },
+    add(v1, v2) { return { x: v1.x + v2.x, y: v1.y + v2.y, z: v1.z + v2.z }; },
+    multiply(v, scalar) { return { x: v.x * scalar, y: v.y * scalar, z: v.z * scalar }; },
+};
+
+function endSpiritSight(player, message) {
+    if (!player.isValid || !player.hasTag("spirit_sight_active")) return;
+    
+    const timeoutId = player.getDynamicProperty("spiritsight:timeout_id");
+    if (timeoutId) system.clearRun(timeoutId);
+
+    player.camera.clear();
+    player.removeTag("spirit_sight_active");
+    
+    const locationJson = player.getDynamicProperty("spiritsight:location");
+    const rotationJson = player.getDynamicProperty("spiritsight:rotation");
+    
+    if (locationJson) {
+        try {
+            const loc = JSON.parse(locationJson);
+            const rot = JSON.parse(rotationJson);
+            player.teleport(loc, { rotation: rot });
+        } catch(e) {}
+    }
+    
+    player.removeEffect("invisibility");
+    player.removeEffect("resistance");
+
+    if (message) player.sendMessage(message);
+
+    player.setDynamicProperty("spiritsight:target_id", undefined); 
+    player.setDynamicProperty("spiritsight:timeout_id", undefined);
+    player.setDynamicProperty("spiritsight:location", undefined);
+    player.setDynamicProperty("spiritsight:rotation", undefined);
+
+    const cooldownSeconds = CONFIG.SKILL_COOLDOWNS.SPIRIT_SIGHT;
+    const cooldownTicks = cooldownSeconds * 20;
+    const now = system.currentTick;
+    player.setDynamicProperty("dhh:cd_spirit_sight", now + cooldownTicks);
+    
+    player.sendMessage(`§cKỹ năng Thị Kiến Tâm Linh đang hồi... (${cooldownSeconds}s)`);
+}
+
+async function startSpiritSight(player, stats) {
+    const skillLevel = stats.skills.spirit_sight || 1;
+    const selectRange = 1000 + (skillLevel - 1) * 1000;
+    const durationSeconds = 30 + (skillLevel - 1) * 15;
+    
+    const nearbyPlayers = world.getPlayers().filter(p => 
+        p.nameTag !== player.nameTag && p.dimension.id === player.dimension.id &&
+        Vector.magnitude(Vector.subtract(player.location, p.location)) <= selectRange
+    );
+
+    if (nearbyPlayers.length === 0) {
+        player.sendMessage(`§cKhông có người chơi nào trong phạm vi ${selectRange}m!`);
+        return false;
+    }
+    
+    const form = new ActionFormData();
+    form.title("§dThị Kiến Tâm Linh"); 
+    form.body("Chọn một đồng minh để kết nối thị kiến.");
+    nearbyPlayers.sort((a, b) => Vector.magnitude(Vector.subtract(player.location, a.location)) - Vector.magnitude(Vector.subtract(player.location, b.location)));
+    nearbyPlayers.forEach(p => form.button(`§f${p.nameTag}\n§7§o~${Math.floor(Vector.magnitude(Vector.subtract(player.location, p.location)))}m`));
+
+    const { canceled, selection } = await form.show(player);
+    if (canceled) return false;
+    const targetPlayer = nearbyPlayers[selection];
+    if (!targetPlayer?.isValid) { 
+        player.sendMessage("§cMục tiêu không còn hợp lệ."); 
+        return false; 
+    }
+    
+    player.setDynamicProperty("spiritsight:location", JSON.stringify(player.location));
+    player.setDynamicProperty("spiritsight:rotation", JSON.stringify(player.getRotation()));
+    
+    player.addTag("spirit_sight_active");
+    player.setDynamicProperty("spiritsight:target_id", targetPlayer.id);
+
+    const durationTicks = durationSeconds * 20;
+    player.addEffect("invisibility", durationTicks + 40, { showParticles: false });
+    player.addEffect("resistance", durationTicks + 40, { amplifier: 255, showParticles: false });
+    player.playSound("amethyst_block.resonate");
+    player.sendMessage(`§d§oBắt đầu thị kiến tâm linh với ${targetPlayer.nameTag}...`);
+    player.addEffect("darkness", 20, { showParticles: false });
+
+    const timeoutId = system.runTimeout(() => {
+        endSpiritSight(player, "§aThị kiến đã kết thúc.");
+    }, durationTicks);
+    
+    player.setDynamicProperty("spiritsight:timeout_id", timeoutId);
+    return true;
+}
+
+export function SPIRIT_SIGHT(player, stats) {
+    if (player.hasTag("spirit_sight_active")) {
+        endSpiritSight(player, "§eBạn đã chủ động ngắt kết nối thị kiến.");
+        return false;
+    } else {
+        return startSpiritSight(player, stats);
+    }
+}
+
+system.runInterval(() => {
+    for (const player of world.getAllPlayers()) {
+        if (player.hasTag("spirit_sight_active")) {
+            const targetId = player.getDynamicProperty("spiritsight:target_id");
+            if (!targetId) { 
+                endSpiritSight(player, "§cMục tiêu kết nối đã mất.");
+                continue;
+            }
+
+            const target = world.getEntity(targetId);
+            if (!target?.isValid) { 
+                endSpiritSight(player, "§cMục tiêu không còn tồn tại.");
+                continue;
+            }
+            
+            const effect = player.getEffect("invisibility");
+            const timeLeft = effect ? Math.round(effect.duration / 20) : 0;
+            player.onScreenDisplay.setActionBar(`§d§lThị Kiến: §f${target.nameTag} §7- §e${timeLeft}s §7(Cúi để hủy)`);
+            
+            try {
+                // --- SỬA LỖI Ở ĐÂY ---
+                const headLocation = target.getHeadLocation();
+                const viewDirection = target.getViewDirection();
+                // Đẩy camera ra phía TRƯỚC mặt mục tiêu 0.5 block
+                const forwardOffset = Vector.multiply(viewDirection, 0.5); 
+                const cameraLocation = Vector.add(headLocation, forwardOffset);
+                
+                player.camera.setCamera('minecraft:free', { location: cameraLocation, rotation: target.getRotation() });
+            } catch(e) {}
+        }
+    }
+}, 2);
+// --- DÁN TOÀN BỘ ĐOẠN MÃ NÀY VÀO CUỐI FILE spirit_sight.js ---
+
+const BUFF_LIST = ["strength", "speed", "regeneration"];
+const DEBUFF_LIST = ["slowness", "weakness", "wither"];
+const EFFECT_DURATION_TICKS = 200; // 10 giây
+
+/**
+ * Hiển thị menu lựa chọn hành động khi đang trong trạng thái Thị Kiến.
+ */
+export async function showSpiritSightActionMenu(player) {
+    // Lấy thông tin cần thiết
+    const targetId = player.getDynamicProperty("spiritsight:target_id");
+    const target = world.getEntity(targetId);
+
+    if (!target?.isValid) {
+        endSpiritSight(player, "§cMục tiêu không còn hợp lệ để thực hiện hành động.");
+        return;
+    }
+
+    const form = new ActionFormData();
+    form.title("§dHành Động Tâm Linh");
+    form.body(`Bạn đang kết nối với §f${target.nameTag}§d.\nChọn một hành động để thực hiện.`);
+
+    form.button("§c[Hủy Bỏ]\n§7Ngắt kết nối và quay về.");
+    form.button("§b[Dịch Chuyển]\n§7Tức thời đến vị trí của họ.");
+    form.button("§a[Hỗ Trợ]\n§7Ban phước cho đồng minh gần đó.");
+    form.button("§4[Nguyền Rủa]\n§7Gây hại cho kẻ thù gần đó.");
+
+    const { canceled, selection } = await form.show(player);
+    if (canceled) return;
+
+    // Lấy lại stats để tính sức mạnh hiệu ứng
+    const stats = getPlayerStats(player); // Bạn cần import hàm này
+    const skillLevel = stats.skills.spirit_sight || 1;
+    const effectAmplifier = Math.floor((skillLevel - 1) / 3);
+
+    switch (selection) {
+        // --- Case 0: Hủy Bỏ ---
+        case 0:
+            endSpiritSight(player, "§eBạn đã ngắt kết nối thị kiến.");
+            break;
+
+        // --- Case 1: Dịch Chuyển ---
+        case 1:
+            player.sendMessage(`§bĐang dịch chuyển đến vị trí của ${target.nameTag}...`);
+            // Hủy trạng thái Thị Kiến TRƯỚC khi dịch chuyển
+            endSpiritSight(player, ""); // Không cần message
+            // Dịch chuyển người chơi đến vị trí của mục tiêu
+            system.run(() => player.teleport(target.location));
+            break;
+
+        // --- Case 2: Hỗ Trợ (Buff) ---
+        case 2: {
+            const allies = target.dimension.getPlayers({ location: target.location, maxDistance: 15 });
+            for (const ally of allies) {
+                const randomBuff = BUFF_LIST[Math.floor(Math.random() * BUFF_LIST.length)];
+                ally.addEffect(randomBuff, EFFECT_DURATION_TICKS, { amplifier: effectAmplifier });
+                ally.dimension.spawnParticle("minecraft:totem_particle", ally.location);
+            }
+            player.sendMessage("§aBạn đã ban phước cho các đồng minh xung quanh mục tiêu!");
+            endSpiritSight(player, ""); // Kết thúc kỹ năng sau khi hành động
+            break;
+        }
+
+        // --- Case 3: Nguyền Rủa (Debuff) ---
+        case 3: {
+            const enemies = target.dimension.getEntities({ location: target.location, maxDistance: 15, families: ["monster"] });
+            for (const enemy of enemies) {
+                const randomDebuff = DEBUFF_LIST[Math.floor(Math.random() * DEBUFF_LIST.length)];
+                enemy.addEffect(randomDebuff, EFFECT_DURATION_TICKS, { amplifier: effectAmplifier });
+                enemy.dimension.spawnParticle("minecraft:knockback_roar_particle", enemy.location);
+            }
+            player.sendMessage("§cBạn đã nguyền rủa kẻ địch xung quanh mục tiêu!");
+            endSpiritSight(player, ""); // Kết thúc kỹ năng sau khi hành động
+            break;
+        }
+    }
+}

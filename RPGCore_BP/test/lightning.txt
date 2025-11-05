@@ -1,0 +1,244 @@
+import { EntityComponentTypes, system } from "@minecraft/server";
+
+export function activateTargetedLightning(player, stats) {
+    try {
+        const skillLevel = stats.skills.targeted_lightning ?? 1;
+        const searchRadius = 10 + skillLevel * 3;
+        
+        // Đánh tất cả mục tiêu trong phạm vi, không giới hạn số lượng
+        
+        // Số lightning bolt cho mỗi mục tiêu
+        const strikesPerTarget = 3 + Math.floor(skillLevel / 2);
+
+        const queryOptions = {
+            location: player.location,
+            maxDistance: searchRadius,
+            excludeTypes: [
+                'minecraft:player', 'minecraft:item', 'minecraft:armor_stand',
+                'minecraft:item_frame', 'minecraft:painting', 'minecraft:boat',
+                'minecraft:chest_boat', 'minecraft:minecart'
+            ] 
+        };
+
+        const nearbyEntities = player.dimension.getEntities(queryOptions);
+        
+        if (nearbyEntities.length === 0) {
+            player.sendMessage("§cKhông có mục tiêu nào trong phạm vi!");
+            return false;
+        }
+
+        // Lọc mục tiêu - chỉ loại trừ thần thú và người chơi
+        const validTargets = nearbyEntities.filter(entity => {
+            const tameableComponent = entity.getComponent(EntityComponentTypes.Tameable);
+            
+            // Chỉ bỏ qua thần thú được triệu hồi
+            if (entity.hasTag("dhh_spirit_beast")) {
+                return false;
+            }
+            
+            // Tất cả mob và động vật khác đều là mục tiêu hợp lệ
+            return true;
+        });
+        
+        if (validTargets.length === 0) {
+            player.sendMessage("§cKhông có mục tiêu hợp lệ nào trong phạm vi!");
+            return false;
+        }
+
+        // Sắp xếp theo khoảng cách - ưu tiên gần nhất
+        validTargets.sort((a, b) => {
+            const distA = Math.sqrt(
+                Math.pow(a.location.x - player.location.x, 2) + 
+                Math.pow(a.location.z - player.location.z, 2)
+            );
+            const distB = Math.sqrt(
+                Math.pow(b.location.x - player.location.x, 2) + 
+                Math.pow(b.location.z - player.location.z, 2)
+            );
+            return distA - distB;
+        });
+        
+        // Đánh TẤT CẢ mục tiêu trong phạm vi - không giới hạn số lượng
+        const targetsToHit = validTargets;
+        
+        // Bắt đầu tấn công
+        player.sendMessage(`§b⚡ Lôi Vực§f nhắm mục tiêu ${targetsToHit.length} sinh vật với ${strikesPerTarget} tia sét mỗi con!`);
+        player.playSound("ambient.weather.thunder", { volume: 1.5 });
+        
+        for (let targetIndex = 0; targetIndex < targetsToHit.length; targetIndex++) {
+            const target = targetsToHit[targetIndex];
+            
+            // Tấn công mỗi mục tiêu với nhiều lightning bolt
+            for (let strikeIndex = 0; strikeIndex < strikesPerTarget; strikeIndex++) {
+                system.runTimeout(() => {
+                    if (!target.isValid) return;
+                    
+                    // Spawn lightning bolt
+                    target.dimension.spawnEntity("minecraft:lightning_bolt", target.location);
+                    
+                    // Áp dụng debuff sau mỗi lightning
+                    applyLightningDebuff(target, skillLevel, strikeIndex);
+                    
+                    // Hiệu ứng đặc biệt cho lightning cuối cùng
+                    if (strikeIndex === strikesPerTarget - 1) {
+                        applyFinalLightningEffects(target, skillLevel);
+                    }
+                    
+                }, (targetIndex * 20) + (strikeIndex * 8)); // 0.4s giữa các lightning
+            }
+        }
+        
+        return true;
+
+    } catch (e) {
+        player.sendMessage("§cKhông thể thực hiện kỹ năng!");
+        console.error("Focused Lightning skill failed: ", e);
+        return false;
+    }
+}
+
+function applyLightningDebuff(target, skillLevel, strikeIndex) {
+    if (!target.isValid) return;
+    
+    // Debuff cơ bản cho mọi lightning
+    const baseDebuffs = [
+        { effect: "slowness", duration: 80 + skillLevel * 10, amplifier: 0 },
+        { effect: "weakness", duration: 60 + skillLevel * 10, amplifier: 0 }
+    ];
+    
+    // Áp dụng debuff cơ bản
+    for (const debuff of baseDebuffs) {
+        target.addEffect(debuff.effect, debuff.duration, { 
+            amplifier: debuff.amplifier, 
+            showParticles: false 
+        });
+    }
+    
+    // Debuff bổ sung dựa trên skill level và số lightning
+    if (skillLevel >= 3) {
+        // Poison từ lightning thứ 2 trở đi
+        if (strikeIndex >= 1) {
+            target.addEffect("poison", 40 + skillLevel * 5, { 
+                amplifier: 0, 
+                showParticles: false 
+            });
+        }
+    }
+    
+    if (skillLevel >= 5) {
+        // Wither từ lightning thứ 3 trở đi
+        if (strikeIndex >= 2) {
+            target.addEffect("wither", 30 + skillLevel * 5, { 
+                amplifier: 0, 
+                showParticles: false 
+            });
+        }
+    }
+    
+    if (skillLevel >= 7) {
+        // Mining fatigue (không thể phá block/tấn công nhanh)
+        if (strikeIndex >= 1) {
+            target.addEffect("mining_fatigue", 60 + skillLevel * 10, { 
+                amplifier: 1, 
+                showParticles: false 
+            });
+        }
+    }
+    
+    // Hiệu ứng đặc biệt cho lightning đầu tiên
+    if (strikeIndex === 0) {
+        target.addEffect("glowing", 100 + skillLevel * 20, { 
+            amplifier: 0, 
+            showParticles: true 
+        });
+        
+        // Particles cảnh báo
+        for (let i = 0; i < 8; i++) {
+            const angle = (Math.PI * 2 / 8) * i;
+            const particleLoc = {
+                x: target.location.x + Math.cos(angle) * 1.5,
+                y: target.location.y + 1,
+                z: target.location.z + Math.sin(angle) * 1.5
+            };
+            target.dimension.spawnParticle("minecraft:critical_hit_emitter", particleLoc);
+        }
+    }
+}
+
+function applyFinalLightningEffects(target, skillLevel) {
+    if (!target.isValid) return;
+    
+    // Hiệu ứng kết thúc mạnh mẽ
+    target.addEffect("nausea", 100, { amplifier: 0, showParticles: true });
+    
+    // Knockback mạnh
+    const knockbackStrength = 1.0 + (skillLevel * 0.1);
+    target.applyKnockback(0, 0, knockbackStrength, 0.5);
+    
+    // Hiệu ứng visual đặc biệt
+    const effectCount = 12 + skillLevel * 2;
+    for (let i = 0; i < effectCount; i++) {
+        system.runTimeout(() => {
+            if (target.isValid) {
+                target.dimension.spawnParticle("minecraft:enchanted_hit_particle", {
+                    x: target.location.x + (Math.random() - 0.5) * 3,
+                    y: target.location.y + Math.random() * 2,
+                    z: target.location.z + (Math.random() - 0.5) * 3
+                });
+            }
+        }, i * 5);
+    }
+    
+    // Tạo "electric field" nhỏ quanh mục tiêu ở level cao
+    if (skillLevel >= 6) {
+        createElectricField(target, skillLevel);
+    }
+}
+
+function createElectricField(target, skillLevel) {
+    if (!target.isValid) return;
+    
+    const fieldRadius = 3;
+    const fieldDuration = 40 + skillLevel * 10;
+    let fieldTicks = 0;
+    
+    const fieldInterval = system.runInterval(() => {
+        if (!target.isValid || fieldTicks >= fieldDuration) {
+            system.clearRun(fieldInterval);
+            return;
+        }
+        
+        // Particles cho electric field
+        const particleCount = 6;
+        for (let i = 0; i < particleCount; i++) {
+            const angle = (Math.PI * 2 / particleCount) * i + (fieldTicks * 0.1);
+            const particleLoc = {
+                x: target.location.x + Math.cos(angle) * fieldRadius,
+                y: target.location.y + 0.5,
+                z: target.location.z + Math.sin(angle) * fieldRadius
+            };
+            target.dimension.spawnParticle("minecraft:electric_spark_particle", particleLoc);
+        }
+        
+        // Gây damage cho entities gần electric field (trừ target chính)
+        if (fieldTicks % 20 === 0) { // Mỗi giây
+            const nearbyEntities = target.dimension.getEntities({
+                location: target.location,
+                maxDistance: fieldRadius,
+                excludeTypes: ['minecraft:player', 'minecraft:item']
+            });
+            
+            for (const entity of nearbyEntities) {
+                if (entity.id !== target.id && !entity.hasTag("dhh_spirit_beast")) {
+                    entity.applyDamage(2 + Math.floor(skillLevel / 2), { 
+                        cause: "lightning" 
+                    });
+                    entity.addEffect("slowness", 40, { amplifier: 0 });
+                    entity.dimension.spawnParticle("minecraft:critical_hit_emitter", entity.location);
+                }
+            }
+        }
+        
+        fieldTicks += 4;
+    }, 4);
+}

@@ -1,0 +1,23 @@
+{
+    "format_version": "1.19.50",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "dhh:di_aggregate"
+        },
+        "features": [
+            [ "dhh:di1", 3 ],
+            [ "dhh:di2", 4 ],
+            [ "dhh:di3", 3 ],
+            [ "dhh:di4", 4 ],
+            [ "dhh:di5", 3 ],
+            [ "dhh:di6", 4 ],
+            [ "dhh:di7", 3 ],
+            [ "dhh:di8", 4 ],
+            [ "dhh:di9", 3 ],
+            [ "dhh:di10", 4 ],
+            [ "dhh:di11", 3 ],
+            [ "dhh:di12", 4 ],
+            [ "dhh:di13", 3 ]
+        ]
+    }
+}

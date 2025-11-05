@@ -1,0 +1,22 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:palm_generator"
+        },
+        "components": {
+            "minecraft:tick": {
+                "interval_range": [
+                    5,
+                    15
+                ],
+                "looping": true
+            },
+            "sert:generator": {
+                "id": "palm",
+                "replaceWithSideBlock": true
+            },
+            "tag:sys": {}
+        }
+    }
+}

@@ -1,0 +1,35 @@
+{
+  "format_version": "1.8.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "dhh:phantom_sharpshooter_boss",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/pamobile/ty"
+      },
+      "geometry": {
+        "default": "geometry.ty"
+      },
+      "animations": {
+        "idle": "animation.ty.idle",
+        "walk": "animation.ty.walk",
+        "jump": "animation.ty.jump",
+        "run": "animation.ty.run",
+        "sit": "animation.ty.sit",
+        "attack": "animation.ty.attack"
+      },
+      "animation_controllers": [
+        { "main_control": "controller.animation.ty_pet.main" }
+      ],
+      "render_controllers": [
+        "controller.render.default"
+      ],
+      "spawn_egg": {
+        "texture": "spawn_egg",
+        "texture_index": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:forest_dungeon_room_generator",
+            "states": {
+                "sert:room_index": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                ]
+            }
+        },
+        "components": {
+            "minecraft:tick": {
+                "interval_range": [
+                    1,
+                    15
+                ],
+                "looping": true
+            },
+            "sert:generator": {
+                "id": "forest_dungeon_room"
+            },
+            "tag:sys": {}
+        }
+    }
+}

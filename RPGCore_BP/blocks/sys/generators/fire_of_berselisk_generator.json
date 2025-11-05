@@ -1,0 +1,23 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:fire_of_berselisk_generator"
+        },
+        "components": {
+            "minecraft:tick": {
+                "interval_range": [
+                    5,
+                    15
+                ],
+                "looping": true
+            },
+            "sert:generator": {
+                "id": "wild_plants",
+                "data": "('types': ['sert:fire_of_berselisk'], 'radius': [3, 5], 'count': [1, 3])",
+                "replaceWithBlock": "acacia_log"
+            },
+            "tag:sys": {}
+        }
+    }
+}

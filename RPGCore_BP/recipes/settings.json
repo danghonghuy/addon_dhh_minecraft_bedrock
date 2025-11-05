@@ -1,0 +1,33 @@
+{
+	"format_version": "1.20.30",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "dhh:settings"
+		},
+		"tags": [
+			"crafting_table"
+		],
+		"key": {
+			"N": {
+				"item": "iron_nugget"
+			}
+		},
+		"unlock": {
+			"context": "AlwaysUnlocked"
+		},
+		"pattern": [
+			"NN",
+			"NN"
+		],
+		"result": [
+			{
+				"item": "dhh:settings",
+				"count": 1
+			},
+			{
+				"item": "iron_nugget",
+				"count": 4
+			}
+		]
+	}
+}

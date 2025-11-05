@@ -1,0 +1,18 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:random_jungle_tree"
+        },
+        "features": [
+            [
+                "sert:jungle_surface",
+                5
+            ],
+            [
+                "sert:jungle_tree_with_cocoa",
+                1
+            ]
+        ]
+    }
+}

@@ -1,0 +1,128 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:white_lotus_waterlily",
+            "menu_category": {
+                "category": "none"
+            },
+            "states": {
+                "sert:placed": [
+                    false,
+                    true
+                ]
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ]
+                }
+            }
+        },
+        "components": {
+            "minecraft:collision_box": {
+                "origin": [
+                    -8,
+                    0,
+                    -8
+                ],
+                "size": [
+                    16,
+                    1,
+                    16
+                ]
+            },
+            "minecraft:selection_box": {
+                "origin": [
+                    -8,
+                    0,
+                    -8
+                ],
+                "size": [
+                    16,
+                    1,
+                    16
+                ]
+            },
+            "minecraft:light_dampening": 4,
+            "minecraft:geometry": "geometry.white.lotus.waterlily",
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "white_lotus_waterlily"
+                }
+            },
+            "minecraft:display_name": "item.sert:small_waterlily",
+            "sert:add_placed_components": 0,
+            "sert:place_on_water": {}
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('sert:placed')",
+                "components": {
+                    "minecraft:placement_filter": {
+                        "conditions": [
+                            {
+                                "allowed_faces": [
+                                    "up"
+                                ],
+                                "block_filter": [
+                                    "minecraft:water"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            270,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

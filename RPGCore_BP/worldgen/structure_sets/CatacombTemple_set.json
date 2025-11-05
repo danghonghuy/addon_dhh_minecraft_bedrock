@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:structure_set": {
+        "description": {
+            "identifier": "hg:CatacombTemple"
+        },
+        "placement": {
+            "type": "minecraft:random_spread",
+            "salt": 99950180,
+            "separation": 10,
+            "spacing": 41   ,
+            "spread_type": "linear"
+        },
+        "structures": [
+            {
+                "structure": "hg:CatacombTemple",
+                "weight": 1
+            }
+        ]
+    }
+}

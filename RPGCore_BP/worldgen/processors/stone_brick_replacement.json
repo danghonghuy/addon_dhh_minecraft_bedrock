@@ -1,0 +1,221 @@
+{
+  "format_version": "1.21.20",
+  "minecraft:processor_list": {
+    "description": {
+      "identifier": "hg:stone_brick_replacement"
+    },
+    "processors": [
+      {
+        "processor_type": "minecraft:rule",
+        "rules": [
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:stone_bricks",
+              "probability": 0.3
+            },
+            "output_state": {
+              "name": "minecraft:moss_block"
+            }
+          },
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:cracked_stone_bricks",
+              "probability": 0.3
+            },
+            "output_state": {
+              "name": "minecraft:moss_block"
+            }
+          },
+        
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.01
+            },
+            "output_state": {
+              "name": "minecraft:lapis_ore"
+            }
+          },
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.01
+            },
+            "output_state": {
+              "name": "minecraft:deepslate_lapis_ore"
+            }
+          },
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.05
+            },
+            "output_state": {
+              "name": "minecraft:lapis_block"
+            }
+          },
+
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.1
+            },
+            "output_state": {
+              "name": "minecraft:redstone_ore"
+            }
+          },
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.1
+            },
+            "output_state": {
+              "name": "minecraft:deepslate_redstone_ore"
+            }
+          },
+
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.1
+            },
+            "output_state": {
+              "name": "minecraft:iron_ore"
+            }
+          },
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.15
+            },
+            "output_state": {
+              "name": "minecraft:raw_iron_block"
+            }
+          },
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.03
+            },
+            "output_state": {
+              "name": "minecraft:iron_block"
+            }
+          },
+     
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.1
+            },
+            "output_state": {
+              "name": "minecraft:gold_ore"
+            }
+          },
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.1
+            },
+            "output_state": {
+              "name": "minecraft:deepslate_gold_ore"
+            }
+          },
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.2
+            },
+            "output_state": {
+              "name": "minecraft:gold_block"
+            }
+          },
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.15
+            },
+            "output_state": {
+              "name": "minecraft:raw_gold_block"
+            }
+          },
+        
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.1
+            },
+            "output_state": {
+              "name": "minecraft:emerald_ore"
+            }
+          },
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.01
+            },
+            "output_state": {
+              "name": "minecraft:deepslate_emerald_ore"
+            }
+          },
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.2
+            },
+            "output_state": {
+              "name": "minecraft:emerald_block"
+            }
+          },
+   
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.1
+            },
+            "output_state": {
+              "name": "minecraft:diamond_ore"
+            }
+          },
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.01
+            },
+            "output_state": {
+              "name": "minecraft:deepslate_diamond_ore"
+            }
+          },
+          {
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:redstone_block",
+              "probability": 0.2
+            },
+            "output_state": {
+              "name": "minecraft:diamond_block"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

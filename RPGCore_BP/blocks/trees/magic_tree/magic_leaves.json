@@ -1,0 +1,32 @@
+{
+    "format_version": "1.20.50",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:magic_leaves"
+        },
+        "components": {
+            "minecraft:loot": "loot_tables/empty.json",
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 0.2
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 0.2
+            },
+            "minecraft:light_emission": 6,
+            "minecraft:geometry": "geometry.block",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "magic_leaves",
+                    "render_method": "blend"
+                }
+            },
+            "minecraft:custom_components": [
+                "sert:leaves",
+                "sert:player_leaves"
+            ],
+            "minecraft:flammable": true,
+            "tag:leaves": {},
+            "tag:minecraft:is_hoe_item_destructible": {}
+        }
+    }
+}

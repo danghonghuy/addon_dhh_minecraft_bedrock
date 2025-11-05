@@ -1,0 +1,1264 @@
+{
+	"format_version": "1.20.0",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "dhh:thunderdrum",
+			"is_summonable": true,
+			"is_spawnable": true,
+			"animations": {
+				"fly": "controller.animation.reset_levitation",
+				"reset_speed": "controller.animation.reset_speed"
+			},
+			"scripts": {
+				"animate": [
+					"fly",
+					"reset_speed"
+				]
+			},
+			"properties": {
+				"dhh:sitting": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				},
+				"dhh:sleeping": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				},
+				"dhh:trained": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				},
+				"dhh:flying": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				},
+				"dhh:diving": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				}
+			}
+		},
+		"component_groups": {
+			"dhh:flying": {
+				"minecraft:physics": {
+					"has_gravity": true
+				}
+			},
+			"dhh:chested": {
+				"minecraft:strength": {
+					"value": 4
+				},
+				"minecraft:is_chested": {}
+			},
+			"dhh:unchested": {
+				"minecraft:strength": {
+					"value": 0
+				},
+				"minecraft:interact": {
+					"interactions": [
+						{
+							"play_sounds": "armor.equip_generic",
+							"on_interact": {
+								"filters": {
+									"all_of": [
+										{
+											"test": "has_equipment",
+											"subject": "other",
+											"domain": "hand",
+											"value": "minecraft:chest"
+										},
+										{
+											"test": "is_family",
+											"subject": "other",
+											"value": "player"
+										}
+									]
+								},
+								"event": "dhh:chested",
+								"target": "self"
+							},
+							"use_item": true,
+							"interact_text": "action.interact.attachchest"
+						}
+					]
+				}
+			},
+			"dhh:lay_egg": {
+				"minecraft:spawn_entity": {
+					"entities": {
+						"min_wait_time": 0,
+						"max_wait_time": 0,
+						"spawn_sound": "plop",
+						"spawn_item": "dhh:thunderdrum_egg",
+						"spawn_item_event": {
+							"event": "on_egg_spawned",
+							"target": "self"
+						},
+						"single_use": true
+					}
+				},
+				"minecraft:is_pregnant": {}
+			},
+			"dhh:baby": {
+				"minecraft:behavior.follow_parent": {
+					"priority": 6,
+					"speed_multiplier": 1.3
+				},
+				"minecraft:ageable": {
+					"duration": 1200,
+					"grow_up": {
+						"event": "minecraft:ageable_grow_up",
+						"target": "self"
+					}
+				},
+				"minecraft:is_baby": {},
+				"minecraft:scale_by_age": {
+					"start_scale": 0.5,
+					"end_scale": 1
+				},
+				"minecraft:tameable": {
+					"probability": 0.1,
+					"tame_event": {
+						"event": "dhh:trained_baby",
+						"target": "self"
+					},
+					"tame_items": [
+						"cod",
+						"salmon",
+						 "beef",
+        "porkchop",
+        "chicken",
+        "mutton",
+        "rabbit"
+					]
+				},
+				"minecraft:type_family": {
+					"family": [
+						"dhh_dragon",
+						"baby_dragon",
+						"tidal_class",
+						"thunderdrum",
+						"mob"
+					]
+				}
+			},
+			"dhh:blue_thunderdrum": {
+				"minecraft:variant": {
+					"value": 0
+				}
+			},
+			"dhh:dark_blue_thunderdrum": {
+				"minecraft:variant": {
+					"value": 1
+				}
+			},
+			"dhh:orange_thunderdrum": {
+				"minecraft:variant": {
+					"value": 2
+				}
+			},
+			"dhh:peach_thunderdrum": {
+				"minecraft:variant": {
+					"value": 3
+				}
+			},
+			"dhh:white_thunderdrum": {
+				"minecraft:variant": {
+					"value": 4
+				}
+			},
+			"dhh:black_thunderdrum": {
+				"minecraft:variant": {
+					"value": 5
+				}
+			},
+			"dhh:green_thunderdrum": {
+				"minecraft:variant": {
+					"value": 6
+				}
+			},
+			"dhh:purple_thunderdrum": {
+				"minecraft:variant": {
+					"value": 7
+				}
+			},
+			"dhh:red_thunderdrum": {
+				"minecraft:variant": {
+					"value": 8
+				}
+			},
+			"dhh:brown_thunderdrum": {
+				"minecraft:variant": {
+					"value": 9
+				}
+			},
+			"dhh:baby_blue_thunderdrum": {
+				"minecraft:variant": {
+					"value": 10
+				}
+			},
+			"dhh:baby_dark_blue_thunderdrum": {
+				"minecraft:variant": {
+					"value": 11
+				}
+			},
+			"dhh:baby_orange_thunderdrum": {
+				"minecraft:variant": {
+					"value": 12
+				}
+			},
+			"dhh:baby_peach_thunderdrum": {
+				"minecraft:variant": {
+					"value": 13
+				}
+			},
+			"dhh:baby_white_thunderdrum": {
+				"minecraft:variant": {
+					"value": 14
+				}
+			},
+			"dhh:baby_black_thunderdrum": {
+				"minecraft:variant": {
+					"value": 15
+				}
+			},
+			"dhh:baby_green_thunderdrum": {
+				"minecraft:variant": {
+					"value": 16
+				}
+			},
+			"dhh:baby_purple_thunderdrum": {
+				"minecraft:variant": {
+					"value": 17
+				}
+			},
+			"dhh:baby_red_thunderdrum": {
+				"minecraft:variant": {
+					"value": 18
+				}
+			},
+			"dhh:baby_brown_thunderdrum": {
+				"minecraft:variant": {
+					"value": 19
+				}
+			},
+			"dhh:adult": {
+				"minecraft:collision_box": {
+					"width": 3.5,
+					"height": 1.9
+				},
+				"minecraft:experience_reward": {
+					"on_death": "query.last_hit_by_player?math.random(2,8):0"
+				},
+				"minecraft:on_target_acquired": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				}
+			},
+			"dhh:hatched": {
+				"minecraft:persistent": {}
+			},
+			"minecraft:angry": {
+				"minecraft:timer": {
+					"looping": true,
+					"time": [
+						10,
+						15
+					],
+					"time_down_event": {
+						"event": "dhh:become_angry"
+					}
+				},
+				"minecraft:angry": {
+					"duration": 30,
+					"calm_event": {
+						"event": "dhh:on_calm",
+						"target": "self"
+					}
+				},
+				"minecraft:on_target_acquired": {}
+			},
+			"dhh:saddled": {
+				"minecraft:is_saddled": {},
+				"minecraft:input_ground_controlled": {},
+				"minecraft:horse.jump_strength": {
+					"value": 0
+				},
+				"minecraft:can_power_jump": {},
+				"minecraft:behavior.player_ride_tamed": {}
+			},
+			"dhh:unsaddled": {},
+			"dhh:wild": {
+				"minecraft:on_hurt_by_player": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				},
+				"minecraft:on_hurt": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				},
+				"minecraft:tameable": {
+					"probability": 0.1,
+					"tame_event": {
+						"event": "dhh:trained_adult",
+						"target": "self"
+					},
+					"tame_items": [
+						"cod",
+						"salmon",
+						 "beef",
+        "porkchop",
+        "chicken",
+        "mutton",
+        "rabbit"
+					]
+				},
+				"minecraft:behavior.move_to_land": {
+					"priority": 6,
+					"search_range": 16,
+					"search_height": 5,
+					"goal_radius": 0.5
+				},
+				"minecraft:behavior.random_stroll": {
+					"priority": 9,
+					"interval": 100
+				},
+				"minecraft:on_target_acquired": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				},
+				"minecraft:behavior.nearest_attackable_target": {
+					"priority": 7,
+					"reselect_targets": true,
+					"scan_interval": 20,
+					"within_radius": 48,
+					"must_see_forget_duration": 0.5,
+					"target_search_height": 25,
+					"entity_types": [
+						{
+							"filters": {
+								"all_of": [
+									{
+										"test": "is_family",
+										"subject": "other",
+										"value": "dragon_hunter"
+									}
+								]
+							},
+							"max_dist": 48
+						},
+						{
+							"filters": {
+								"all_of": [
+									{
+										"test": "is_family",
+										"subject": "other",
+										"value": "player"
+									},
+									{
+										"any_of": [
+											{
+												"test": "has_equipment",
+												"subject": "other",
+												"domain": "hand",
+												"operator": "==",
+												"value": "netherite_sword"
+											},
+											{
+												"test": "has_equipment",
+												"subject": "other",
+												"domain": "hand",
+												"operator": "==",
+												"value": "diamond_sword"
+											},
+											{
+												"test": "has_equipment",
+												"subject": "other",
+												"domain": "hand",
+												"operator": "==",
+												"value": "golden_sword"
+											},
+											{
+												"test": "has_equipment",
+												"subject": "other",
+												"domain": "hand",
+												"operator": "==",
+												"value": "iron_sword"
+											},
+											{
+												"test": "has_equipment",
+												"subject": "other",
+												"domain": "hand",
+												"operator": "==",
+												"value": "stone_sword"
+											},
+											{
+												"test": "has_equipment",
+												"subject": "other",
+												"domain": "hand",
+												"operator": "==",
+												"value": "wooden_sword"
+											}
+										]
+									}
+								]
+							},
+							"max_dist": 48
+						}
+					]
+				}
+			},
+			"dhh:trained": {
+				"minecraft:behavior.stay_while_sitting": {
+					"priority": 1
+				},
+				"minecraft:sittable": {},
+				"minecraft:persistent": {},
+				"minecraft:healable": {
+					"items": [
+						{
+							"item": "cod",
+							"heal_amount": 5
+						},
+						{
+							"item": "salmon",
+							"heal_amount": 5
+						}
+					]
+				},
+				"minecraft:behavior.owner_hurt_target": {
+					"priority": 2
+				},
+				"minecraft:behavior.owner_hurt_by_target": {
+					"priority": 3
+				},
+				"minecraft:behavior.follow_owner": {
+					"priority": 2,
+					"speed_multiplier": 2,
+					"start_distance": 10,
+					"can_teleport": false,
+					"stop_distance": 2
+				},
+				"minecraft:is_tamed": {},
+				"minecraft:on_target_acquired": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				}
+			},
+			"dhh:trained_baby": {
+				"minecraft:ageable": {
+					"duration": 600,
+					"feed_items": [
+						{
+							"item": "cod",
+							"growth": 0.2
+						},
+						{
+							"item": "salmon",
+							"growth": 0.2
+						}
+					],
+					"grow_up": {
+						"event": "minecraft:ageable_grow_up",
+						"target": "self"
+					}
+				}
+			},
+			"dhh:trained_adult": {
+				"minecraft:interact": {
+					"interactions": {
+						"on_interact": {
+							"event": "dhh:sit",
+							"filters": {
+								"test": "is_sneaking",
+								"operator": "==",
+								"subject": "player",
+								"value": true
+							},
+							"target": "self"
+						}
+					}
+				},
+				"minecraft:behavior.breed": {
+					"priority": 3,
+					"speed_multiplier": 1
+				},
+				"minecraft:breedable": {
+					"require_tame": true,
+					"causes_pregnancy": true,
+					"breeds_with": [
+						{
+							"mate_type": "dhh:thunderdrum",
+							"breed_event": {
+								"event": "on_pregnant",
+								"target": "self"
+							}
+						}
+					],
+					"breed_items": [
+						"cod",
+						"salmon"
+					]
+				},
+				"minecraft:inventory": {
+					"additional_slots_per_strength": 3,
+					"inventory_size": 1,
+					"restrict_to_owner": true,
+					"container_type": "horse"
+				},
+				"minecraft:persistent": {},
+				"minecraft:healable": {
+					"items": [
+						{
+							"item": "cod",
+							"heal_amount": 5
+						},
+						{
+							"item": "salmon",
+							"heal_amount": 5
+						}
+					]
+				},
+				"minecraft:equippable": {
+					"slots": [
+						{
+							"slot": 0,
+							"item": "dhh:dragon_saddle",
+							"accepted_items": [
+								"dhh:dragon_saddle"
+							],
+							"on_equip": {
+								"event": "dhh:saddled"
+							},
+							"on_unequip": {
+								"event": "dhh:unsaddled"
+							}
+						}
+					]
+				},
+				"minecraft:variable_max_auto_step": {
+					"base_value": 1,
+					"controlled_value": 1,
+					"jump_prevented_value": 1
+				},
+				"minecraft:rideable": {
+					"seat_count": 1,
+					"crouching_skip_interact": true,
+					"family_types": [
+						"player"
+					],
+					"interact_text": "action.interact.ride.horse",
+					"seats": {
+						"position": [
+							0,
+							1.55,
+							2
+						]
+					}
+				},
+				"minecraft:behavior.owner_hurt_target": {
+					"priority": 2
+				},
+				"minecraft:behavior.owner_hurt_by_target": {
+					"priority": 3
+				},
+				"minecraft:behavior.follow_owner": {
+					"priority": 2,
+					"speed_multiplier": 2,
+					"start_distance": 10,
+					"can_teleport": false,
+					"stop_distance": 2
+				},
+				"minecraft:is_tamed": {}
+			}
+		},
+		"components": {
+			 "minecraft:leashable": {},
+			"minecraft:behavior.move_to_water": {
+				"priority": 4,
+				"search_range": 16,
+				"search_height": 5,
+				"goal_radius": 1.5
+			},
+			"minecraft:behavior.random_swim": {
+				"priority": 7,
+				"interval": 0,
+				"xz_dist": 30,
+				"y_dist": 15
+			},
+			"minecraft:movement": {
+				"value": 0.2
+			},
+			"minecraft:water_movement": {
+				"drag_factor": 0.95
+			},
+			"minecraft:navigation.generic": {
+				"is_amphibious": true,
+				"can_path_over_water": true,
+				"can_swim": true,
+				"can_walk": true,
+				"can_sink": true,
+				"avoid_damage_blocks": true
+			},
+			"minecraft:movement.amphibious": {
+				"max_turn": 5
+			},
+			"minecraft:physics": {
+				"has_gravity": true
+			},
+			"minecraft:despawn": {
+				"despawn_from_distance": {}
+			},
+			"minecraft:fire_immune": true,
+			"minecraft:damage_sensor": {
+				"triggers": [
+					{
+						"cause": "fall",
+						"deals_damage": false
+					},
+					{
+						"cause": "entity_explosion",
+						"deals_damage": false
+					}
+				]
+			},
+			"minecraft:behavior.hurt_by_target": {
+				"priority": 1,
+				"entity_types": [
+					{
+						"filters": {
+							"test": "is_family",
+							"subject": "other",
+							"operator": "!=",
+							"value": "thunderdrum"
+						},
+						"max_dist": 16
+					}
+				]
+			},
+			"minecraft:on_target_escape": {
+				"event": "dhh:on_calm",
+				"target": "self"
+			},
+			"minecraft:health": {
+				"value": 60,
+				"max": 60
+			},
+			"minecraft:breathable": {
+				"total_supply": 15,
+				"breathes_water": true,
+				"generates_bubbles": false,
+				"suffocate_time": 0
+			},
+			"minecraft:type_family": {
+				"family": [
+					"dhh_dragon",
+					"tidal_class",
+					"thunderdrum",
+					"mob"
+				]
+			},
+			"minecraft:conditional_bandwidth_optimization": {},
+			"minecraft:jump.static": {},
+			"minecraft:nameable": {},
+			"minecraft:behavior.random_stroll": {
+				"priority": 14,
+				"speed_multiplier": 1
+			},
+			"minecraft:behavior.random_look_around": {
+				"priority": 15
+			},
+			"minecraft:behavior.look_at_player": {
+				"priority": 13,
+				"look_distance": 6,
+				"probability": 0.02
+			},
+			"minecraft:flying_speed": {
+				"value": 1
+			},
+			"minecraft:can_fly": {},
+			"minecraft:pushable": {
+				"is_pushable": true,
+				"is_pushable_by_piston": true
+			}
+		},
+		"events": {
+			"dhh:sit": {
+				"queue_command": {
+					"command": "scriptevent dhh:dragon sit"
+				}
+			},
+			"on_pregnant": {
+				"queue_command": {
+					"command": "setblock ~~~ dhh:thunderdrum_egg"
+				}
+			},
+			"on_egg_spawned": {
+				"remove": {
+					"component_groups": [
+						"dhh:lay_egg"
+					]
+				}
+			},
+			"dhh:hatched": {
+				"queue_command": {
+					"command": "playsound block.turtle_egg.crack @a[r=15] ~~~ 1 1 1"
+				},
+				"trigger": "dhh:baby_select_color",
+				"remove": {
+					"component_groups": [
+						"dhh:wild",
+						"dhh:unsaddled",
+						"dhh:unchested",
+						"dhh:adult"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"dhh:hatched",
+						"dhh:baby"
+					]
+				}
+			},
+			"dhh:become_angry": {
+				"add": {
+					"component_groups": [
+						"minecraft:angry"
+					]
+				},
+				"queue_command": {
+					"command": [
+						"tp @s ~ ~ ~ facing @e[c=1,family=!inanimate,family=!dhh_dragon]",
+						"scriptevent dhh:thunderdrum_roar"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:wild"
+					]
+				}
+			},
+			"dhh:on_calm": {
+				"add": {
+					"component_groups": [
+						"dhh:wild"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"minecraft:angry"
+					]
+				}
+			},
+			"minecraft:entity_spawned": {
+				"randomize": [
+					{
+						"trigger": "dhh:adult_select_color",
+						"add": {
+							"component_groups": [
+								"dhh:wild",
+								"dhh:unsaddled",
+								"dhh:adult"
+							]
+						},
+						"weight": 6
+					},
+					{
+						"trigger": "dhh:baby_select_color",
+						"add": {
+							"component_groups": [
+								"dhh:baby"
+							]
+						},
+						"weight": 1
+					}
+				]
+			},
+			"dhh:baby_to_adult": {
+				"sequence": [
+					{
+						"filters": {
+							"test": "is_variant",
+							"operator": "==",
+							"value": 10
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby_blue_thunderdrum"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:blue_thunderdrum"
+							]
+						}
+					},
+					{
+						"filters": {
+							"test": "is_variant",
+							"operator": "==",
+							"value": 11
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby_dark_blue_thunderdrum"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:dark_blue_thunderdrum"
+							]
+						}
+					},
+					{
+						"filters": {
+							"test": "is_variant",
+							"operator": "==",
+							"value": 12
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby_orange_thunderdrum"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:orange_thunderdrum"
+							]
+						}
+					},
+					{
+						"filters": {
+							"test": "is_variant",
+							"operator": "==",
+							"value": 13
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby_peach_thunderdrum"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:peach_thunderdrum"
+							]
+						}
+					},
+					{
+						"filters": {
+							"test": "is_variant",
+							"operator": "==",
+							"value": 14
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby_white_thunderdrum"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:white_thunderdrum"
+							]
+						}
+					},
+					{
+						"filters": {
+							"test": "is_variant",
+							"operator": "==",
+							"value": 15
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby_black_thunderdrum"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:black_thunderdrum"
+							]
+						}
+					},
+					{
+						"filters": {
+							"test": "is_variant",
+							"operator": "==",
+							"value": 16
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby_green_thunderdrum"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:green_thunderdrum"
+							]
+						}
+					},
+					{
+						"filters": {
+							"test": "is_variant",
+							"operator": "==",
+							"value": 17
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby_purple_thunderdrum"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:purple_thunderdrum"
+							]
+						}
+					},
+					{
+						"filters": {
+							"test": "is_variant",
+							"operator": "==",
+							"value": 18
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby_red_thunderdrum"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:red_thunderdrum"
+							]
+						}
+					},
+					{
+						"filters": {
+							"test": "is_variant",
+							"operator": "==",
+							"value": 19
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby_brown_thunderdrum"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:brown_thunderdrum"
+							]
+						}
+					}
+				]
+			},
+			"minecraft:ageable_grow_up": {
+				"sequence": [
+					{
+						"filters": {
+							"test": "has_component",
+							"operator": "!=",
+							"value": "minecraft:is_tamed"
+						},
+						"add": {
+							"component_groups": [
+								"dhh:adult",
+								"dhh:unsaddled",
+								"dhh:wild"
+							]
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby"
+							]
+						},
+						"trigger": "dhh:baby_to_adult"
+					},
+					{
+						"filters": {
+							"test": "has_component",
+							"operator": "==",
+							"value": "minecraft:is_tamed"
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby",
+								"dhh:wild",
+								"dhh:trained_baby"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:adult",
+								"dhh:unsaddled",
+								"dhh:unchested",
+								"dhh:trained_adult"
+							]
+						},
+						"trigger": "dhh:baby_to_adult"
+					}
+				]
+			},
+			"dhh:adult_select_color": {
+				"randomize": [
+					{
+						"add": {
+							"component_groups": [
+								"dhh:blue_thunderdrum"
+							]
+						},
+						"weight": 10
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:dark_blue_thunderdrum"
+							]
+						},
+						"weight": 10
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:orange_thunderdrum"
+							]
+						},
+						"weight": 2
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:peach_thunderdrum"
+							]
+						},
+						"weight": 1
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:white_thunderdrum"
+							]
+						},
+						"weight": 1
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:black_thunderdrum"
+							]
+						},
+						"weight": 1
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:green_thunderdrum"
+							]
+						},
+						"weight": 3
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:purple_thunderdrum"
+							]
+						},
+						"weight": 3
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:red_thunderdrum"
+							]
+						},
+						"weight": 1
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:brown_thunderdrum"
+							]
+						},
+						"weight": 1
+					}
+				]
+			},
+			"dhh:baby_select_color": {
+				"randomize": [
+					{
+						"add": {
+							"component_groups": [
+								"dhh:baby_blue_thunderdrum"
+							]
+						},
+						"weight": 10
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:baby_dark_blue_thunderdrum"
+							]
+						},
+						"weight": 10
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:baby_orange_thunderdrum"
+							]
+						},
+						"weight": 2
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:baby_peach_thunderdrum"
+							]
+						},
+						"weight": 1
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:baby_white_thunderdrum"
+							]
+						},
+						"weight": 1
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:baby_black_thunderdrum"
+							]
+						},
+						"weight": 1
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:baby_green_thunderdrum"
+							]
+						},
+						"weight": 3
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:baby_purple_thunderdrum"
+							]
+						},
+						"weight": 3
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:baby_red_thunderdrum"
+							]
+						},
+						"weight": 1
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:baby_brown_thunderdrum"
+							]
+						},
+						"weight": 1
+					}
+				]
+			},
+			"dhh:chested": {
+				"add": {
+					"component_groups": [
+						"dhh:chested"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:unchested"
+					]
+				}
+			},
+			"dhh:unchested": {
+				"remove": {
+					"component_groups": [
+						"dhh:chested"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"dhh:unchested"
+					]
+				}
+			},
+			"dhh:saddled": {
+				"add": {
+					"component_groups": [
+						"dhh:saddled"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:unsaddled"
+					]
+				}
+			},
+			"dhh:unsaddled": {
+				"remove": {
+					"component_groups": [
+						"dhh:saddled"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"dhh:unsaddled"
+					]
+				}
+			},
+			"dhh:trained_baby": {
+				"queue_command": {
+					"command": "scriptevent dhh:dragon trained"
+				},
+				"add": {
+					"component_groups": [
+						"dhh:trained",
+						"dhh:trained_baby"
+					]
+				}
+			},
+			"dhh:trained_adult": {
+				"queue_command": {
+					"command": "scriptevent dhh:dragon trained"
+				},
+				"add": {
+					"component_groups": [
+						"dhh:trained",
+						"dhh:unchested",
+						"dhh:trained_adult"
+					]
+				}
+			},
+			"dhh:start_flying": {
+				"add": {
+					"component_groups": [
+						"dhh:flying"
+					]
+				},
+				"set_property": {
+					"dhh:flying": true
+				}
+			},
+			"dhh:stop_flying": {
+				"remove": {
+					"component_groups": [
+						"dhh:flying"
+					]
+				},
+				"set_property": {
+					"dhh:flying": false
+				}
+			}
+		}
+	}
+}

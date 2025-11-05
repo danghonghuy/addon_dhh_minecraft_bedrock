@@ -1,0 +1,42 @@
+{
+  "pools": [
+    {
+      "rolls": {
+        "min": 2,
+        "max": 4
+      },
+      "entries": [
+        {
+          "type": "item",
+          "name": "minecraft:bread",
+          "weight": 5
+        },
+        {
+          "type": "item",
+          "name": "minecraft:fishing_rod",
+          "weight": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:map",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:paper",
+          "weight": 4
+        },
+        {
+          "type": "item",
+          "name": "minecraft:boat",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:leather_boots",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+{
+    "format_version": [
+        1,
+        0,
+        0
+    ],
+    "sert:blueberry_bush": {
+        "sound": "sweet_berry_bush"
+    },
+    "sert:clovers": {
+        "textures": "clovers",
+        "sound": "grass"
+    },
+    "sert:cocoa_for_jungle_tree_generator": {
+        "textures": "false",
+        "sound": "wood"
+    },
+    "sert:cucumber_plant": {
+        "textures": "cucumber_age_1",
+        "sound": "grass"
+    },
+    "sert:desert_rose": {
+        "textures": "desert_rose",
+        "sound": "grass"
+    },
+    "sert:dirt_dungeon_boss_spawner": {
+        "sound": "metal",
+        "textures": "spawner"
+    },
+    "sert:dirt_dungeon_spawner": {
+        "sound": "metal",
+        "textures": "spawner"
+    },
+    "sert:fire_of_berselisk": {
+        "textures": "fire_of_berselisk",
+        "sound": "grass"
+    },
+    "sert:forest_bell": {
+        "textures": "forest_bell",
+        "sound": "grass"
+    },
+    "sert:forest_dungeon_boss_spawner": {
+        "sound": "metal",
+        "textures": "spawner"
+    },
+    "sert:forest_dungeon_spawner": {
+        "sound": "metal",
+        "textures": "spawner"
+    },
+    "sert:honey_clover": {
+        "textures": "honey_clover",
+        "sound": "grass"
+    },
+    "sert:jart": {
+        "sound": "grass",
+        "textures": "jart"
+    },
+    "sert:jigsaw_in": {
+        "sound": "metal",
+        "textures": "jigsaw_in"
+    },
+    "sert:jigsaw_out": {
+        "sound": "metal",
+        "textures": "jigsaw_out"
+    },
+    "sert:jute_plant": {
+        "textures": "jute_age_1",
+        "sound": "grass"
+    },
+    "sert:leaves_bush": {
+        "textures": "leaves_bush",
+        "sound": "grass"
+    },
+    "sert:lightning_spawner_v2": {
+        "sound": "metal",
+        "textures": "spawner"
+    },
+    "sert:linuim": {
+        "sound": "grass",
+        "textures": "linuim"
+    },
+    "sert:lotar": {
+        "sound": "grass",
+        "textures": "lotar"
+    },
+    "sert:magic_conventor": {
+        "sound": "stone",
+        "textures": "magic_conventor"
+    },
+    "sert:magic_flower": {
+        "textures": "magic_flower",
+        "sound": "grass"
+    },
+    "sert:magic_grass": {
+        "textures": "magic_grass_day",
+        "sound": "grass"
+    },
+    "sert:magic_leaves": {
+        "sound": "grass",
+        "textures": "magic_leaves"
+    },
+    "sert:magic_leaves_player": {
+        "sound": "grass",
+        "textures": "magic_leaves"
+    },
+    "sert:magic_log": {
+        "sound": "wood",
+        "textures": {
+            "down": "magic_log_top",
+            "side": "magic_log_side",
+            "up": "magic_log_top"
+        }
+    },
+    "sert:magic_mushroom": {
+        "sound": "grass",
+        "textures": "magic_mushroom"
+    },
+    "sert:magic_mushroom_base": {
+        "sound": "wood",
+        "textures": "magic_mushroom_base"
+    },
+    "sert:magic_mushroom_hat": {
+        "sound": "wood",
+        "textures": "magic_mushroom_hat"
+    },
+    "sert:magic_mushroom_resin": {
+        "textures": "magic_mushroom_resin",
+        "sound": "wood"
+    },
+    "sert:magic_orb_stand": {
+        "sound": "stone",
+        "textures": "magic_orb_stand"
+    },
+    "sert:magic_planks": {
+        "sound": "wood",
+        "textures": "magic_planks"
+    },
+    "sert:magic_sapling": {
+        "sound": "grass",
+        "textures": "magic_sapling"
+    },
+    "sert:magic_wood": {
+        "sound": "wood",
+        "textures": "magic_log_side"
+    },
+    "sert:mana_container_stand": {
+        "sound": "stone",
+        "textures": "mana_container_stand"
+    },
+    "sert:mana_crystal_block": {
+        "sound": "large_amethyst_bud",
+        "textures": "mana_crystal"
+    },
+    "sert:mana_crystal_stone": {
+        "sound": "amethyst_block",
+        "textures": "mana_crystal_stone"
+    },
+    "sert:mana_dungeon_spawner": {
+        "sound": "metal",
+        "textures": "spawner"
+    },
+    "sert:mana_stone": {
+        "sound": "amethyst_block",
+        "textures": "mana_stone"
+    },
+    "sert:mana_stone_bricks": {
+        "sound": "stone",
+        "textures": "mana_stone_bricks"
+    },
+    "sert:pink_lotus_waterlily": {
+        "sound": "grass",
+        "textures": "pink_lotus_waterlily"
+    },
+    "sert:reed": {
+        "textures": "reed",
+        "sound": "grass"
+    },
+    "sert:shells": {
+        "textures": "shells",
+        "sound": "candle"
+    },
+    "sert:small_waterlily": {
+        "sound": "grass",
+        "textures": "small_waterlily"
+    },
+    "sert:strawberry_bush": {
+        "sound": "sweet_berry_bush",
+        "textures": "strawberry_age_1"
+    },
+    "sert:stripped_magic_log": {
+        "sound": "wood",
+        "textures": {
+            "down": "stripped_magic_log_top",
+            "side": "stripped_magic_log_side",
+            "up": "stripped_magic_log_top"
+        }
+    },
+    "sert:stripped_magic_wood": {
+        "sound": "wood",
+        "textures": "stripped_magic_log_side"
+    },
+    "sert:tinder_fungus": {
+        "textures": "tinder_fungus_1",
+        "sound": "candle"
+    },
+    "sert:tomato_plant": {
+        "textures": "tomato_age_1",
+        "sound": "grass"
+    },
+    "sert:tropical_flower": {
+        "textures": "tropical_flower",
+        "sound": "grass"
+    },
+    "sert:white_lotus_waterlily": {
+        "sound": "grass",
+        "textures": "white_lotus_waterlily"
+    },
+    "sert:xp_generator": {
+        "sound": "stone",
+        "textures": "xp_generator"
+    }
+}

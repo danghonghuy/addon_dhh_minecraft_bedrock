@@ -1,0 +1,30 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:magic_mushroom_resin",
+            "menu_category": {
+                "category": "nature",
+                "group": "minecraft:itemGroup.name.mushroom"
+            }
+        },
+        "components": {
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 2
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 1.25
+            },
+            "minecraft:light_emission": 13,
+            "minecraft:geometry": "minecraft:geometry.full_block",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "magic_mushroom_resin",
+                    "render_method": "opaque",
+                    "isotropic": true
+                }
+            },
+            "tag:minecraft:is_axe_item_destructible": {}
+        }
+    }
+}

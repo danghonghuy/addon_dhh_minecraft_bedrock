@@ -1,0 +1,15 @@
+{
+    "format_version": "1.19.50",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "dhh:hezi_aggregate"
+        },
+        "features": [
+            [ "dhh:hezi1", 3 ],
+            [ "dhh:hezi2", 4 ],
+            [ "dhh:hezi3", 3 ],
+            [ "dhh:hezi4", 4 ],
+            [ "dhh:hezi5", 3 ]
+        ]
+    }
+}

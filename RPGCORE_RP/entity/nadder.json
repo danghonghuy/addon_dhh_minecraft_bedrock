@@ -1,0 +1,62 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "dhh:nadder",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"textures": {
+				"default": "textures/entity/nadder/blue",
+				"baby": "textures/entity/nadder/baby",
+				"purple": "textures/entity/nadder/purple",
+				"orange": "textures/entity/nadder/orange",
+				"pink": "textures/entity/nadder/pink",
+				"dark_blue": "textures/entity/nadder/dark_blue",
+				"red": "textures/entity/nadder/red"
+			},
+			"geometry": {
+				"default": "geometry.nadder",
+				"baby": "geometry.baby_nadder"
+			},
+			"animations": {
+				"main_controller": "controller.animation.nadder.main",
+				"baby_controller": "controller.animation.nadder.baby",
+				"baby_walk": "animation.baby_nadder.walk",
+				"baby_idle": "animation.baby_nadder.idle",
+				"baby_fly": "animation.baby_nadder.fly",
+				"baby_sit": "animation.baby_nadder.sit",
+				"baby_hover": "animation.baby_nadder.hover",
+				"walk": "animation.nadder.walk",
+				"idle": "animation.nadder.idle",
+				"fly": "animation.nadder.fly",
+				"sit": "animation.nadder.sit",
+				"glide": "animation.nadder.glide",
+				"fire_ball": "animation.nadder.blast",
+				"look_at_target": "animation.common.look_at_target",
+				"rotate": "animation.dragon.rotate"
+			},
+			"scripts": {
+				"animate": [
+					{
+						"main_controller": "!query.is_baby"
+					},
+					{
+						"baby_controller": "query.is_baby"
+					},
+					"look_at_target",
+					{
+						"rotate": "!query.is_on_ground"
+					}
+				]
+			},
+			"render_controllers": [
+				"controller.render.nadder"
+			],
+			"spawn_egg": {
+				"base_color": "#3D7E9F",
+				"overlay_color": "#B9BD41"
+			}
+		}
+	}
+}

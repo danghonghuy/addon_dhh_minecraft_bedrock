@@ -1,0 +1,82 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:mana_container_stand",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+        "components": {
+            "minecraft:loot": "loot_tables/blocks/mana_container_stand.json",
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 9
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3
+            },
+            "minecraft:collision_box": {
+                "origin": [
+                    -8,
+                    0,
+                    -8
+                ],
+                "size": [
+                    16,
+                    9,
+                    16
+                ]
+            },
+            "minecraft:selection_box": {
+                "origin": [
+                    -8,
+                    0,
+                    -8
+                ],
+                "size": [
+                    16,
+                    9,
+                    16
+                ]
+            },
+            "minecraft:light_dampening": 2,
+            "minecraft:geometry": "geometry.mana.container.stand",
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "mana_container_stand"
+                }
+            },
+            "minecraft:tick": {
+                "interval_range": [
+                    10,
+                    20
+                ],
+                "looping": true
+            },
+            "sert:bind_entities": [
+                {
+                    "type": "sert:mana_container",
+                    "offset": [
+                        0,
+                        1,
+                        0
+                    ],
+                    "commands": [
+                        "particle sert:mana ~~1 ~"
+                    ]
+                }
+            ],
+            "sert:mana_storage": {
+                "max_value": 300,
+                "has_ui": true,
+                "mana_loss_particles": "sert:mana_regen"
+            },
+            "tag:connection:manaIn": {},
+            "tag:connection:manaOut": {},
+            "tag:connection:switchable": {},
+            "tag:minecraft:is_pickaxe_item_destructible": {},
+            "tag:stone": {}
+        }
+    }
+}

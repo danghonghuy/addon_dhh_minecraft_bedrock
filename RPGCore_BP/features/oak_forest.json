@@ -1,0 +1,54 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:oak_forest"
+        },
+        "features": [
+            [
+                "sert:flower_linuim",
+                1
+            ],
+            [
+                "sert:flower_forest_bell",
+                3
+            ],
+            [
+                "sert:oak_bush",
+                1
+            ],
+            [
+                "sert:strawberry_bush",
+                1
+            ],
+            [
+                "sert:blueberry_bush",
+                1
+            ],
+            [
+                "sert:flower_clovers",
+                1
+            ],
+            [
+                "sert:grass_with_moss",
+                1600
+            ],
+            [
+                "sert:oak_tree",
+                194
+            ],
+            [
+                "sert:oak_stump",
+                6
+            ],
+            [
+                "sert:rock",
+                2
+            ],
+            [
+                "sert:tinder_fungus_generator",
+                5
+            ]
+        ]
+    }
+}

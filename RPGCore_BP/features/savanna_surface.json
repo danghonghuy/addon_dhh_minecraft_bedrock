@@ -1,0 +1,30 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:savanna_surface"
+        },
+        "features": [
+            [
+                "sert:grass",
+                310
+            ],
+            [
+                "sert:acacia_tree",
+                87
+            ],
+            [
+                "sert:acacia_stump",
+                3
+            ],
+            [
+                "sert:acacia_tree_with_fire_of_berselisk",
+                10
+            ],
+            [
+                "sert:rock",
+                1
+            ]
+        ]
+    }
+}

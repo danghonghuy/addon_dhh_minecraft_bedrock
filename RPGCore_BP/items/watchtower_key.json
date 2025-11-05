@@ -1,0 +1,14 @@
+{
+	"format_version": "1.20.20",
+	"minecraft:item": {
+		"description": {
+			"identifier": "dhh:watchtower_key",
+			"category": "items"
+		},
+		"components": {
+			"minecraft:icon": {
+				"texture": "dhh_watchtower_key"
+			}
+		}
+	}
+}

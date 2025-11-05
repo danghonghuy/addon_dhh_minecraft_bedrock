@@ -1,0 +1,81 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.reset_levitation": {
+			"initial_state": "no_rider",
+			"states": {
+				"no_rider": {
+					"transitions": [
+						{
+							"has_rider": "q.has_rider"
+						}
+					]
+				},
+				"has_rider": {
+					"on_exit": [
+						"/tag @s remove has_rider",
+						"/execute as @s[type=dhh:gronckle,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_gronckle",
+						"/execute as @s[type=dhh:nadder,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_nadder",
+						"/execute as @s[type=dhh:zippleback,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_zippleback",
+						"/execute as @s[type=dhh:nightmare,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_nightmare",
+						"/execute as @s[type=dhh:night_fury,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_night_fury",
+						"/execute as @s[type=dhh:light_fury,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_light_fury",
+						"/execute as @s[type=dhh:whispering_death,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_whispering_death",
+						"/execute as @s[type=dhh:thunderdrum,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_thunderdrum",
+						"/execute as @s[type=dhh:sand_wraith,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_sand_wraith",
+						"/execute as @s[type=dhh:timberjack,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_timberjack",
+						"/execute as @s[type=dhh:flamewhipper,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_flamewhipper",
+						"/execute as @s[type=dhh:snow_wraith,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_snow_wraith",
+						"/execute as @s[type=dhh:hobblegrunt,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_hobblegrunt",
+						"/execute as @s[type=dhh:rumblehorn,tag=!flightless,tag=!sitting] at @s run tag @p remove riding_rumblehorn"
+					],
+					"on_entry": [
+						"/tag @s add has_rider",
+						"/execute as @s[type=dhh:gronckle,tag=!flightless,tag=!sitting] at @s run tag @p[r=1.7] add riding_gronckle",
+						"/execute as @s[type=dhh:nadder,tag=!flightless,tag=!sitting] at @s run tag @p[r=5.5] add riding_nadder",
+						"/execute as @s[type=dhh:zippleback,tag=!flightless,tag=!sitting] at @s run tag @p add riding_zippleback",
+						"/execute as @s[type=dhh:nightmare,tag=!flightless,tag=!sitting] at @s run tag @p add riding_nightmare",
+						"/execute as @s[type=dhh:night_fury,tag=!flightless,tag=!sitting] at @s run tag @p add riding_night_fury",
+						"/execute as @s[type=dhh:light_fury,tag=!flightless,tag=!sitting] at @s run tag @p add riding_light_fury",
+						"/execute as @s[type=dhh:whispering_death,tag=!flightless,tag=!sitting] at @s run tag @p add riding_whispering_death",
+						"/execute as @s[type=dhh:thunderdrum,tag=!flightless,tag=!sitting] at @s run tag @p add riding_thunderdrum",
+						"/execute as @s[type=dhh:sand_wraith,tag=!flightless,tag=!sitting] at @s run tag @p add riding_sand_wraith",
+						"/execute as @s[type=dhh:timberjack,tag=!flightless,tag=!sitting] at @s run tag @p add riding_timberjack",
+						"/execute as @s[type=dhh:flamewhipper,tag=!flightless,tag=!sitting] at @s run tag @p add riding_flamewhipper",
+						"/execute as @s[type=dhh:skrill,tag=!flightless,tag=!sitting] at @s run tag @p add riding_skrill",
+						"/execute as @s[type=dhh:snow_wraith,tag=!flightless,tag=!sitting] at @s run tag @p add riding_snow_wraith",
+						"/execute as @s[type=dhh:hobblegrunt,tag=!flightless,tag=!sitting] at @s run tag @p add riding_hobblegrunt",
+						"/execute as @s[type=dhh:rumblehorn,tag=!flightless,tag=!sitting] at @s run tag @p add riding_rumblehorn"
+					],
+					"transitions": [
+						{
+							"no_rider": "!q.has_rider"
+						}
+					]
+				}
+			}
+		},
+		"controller.animation.reset_speed": {
+			"initial_state": "not_flying",
+			"states": {
+				"not_flying": {
+					"transitions": [
+						{
+							"flying": "q.has_rider&&!q.is_on_ground"
+						}
+					]
+				},
+				"flying": {
+					"on_exit": [
+						"/effect @s speed 0"
+					],
+					"transitions": [
+						{
+							"not_flying": "!q.has_rider||q.is_on_ground"
+						}
+					]
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"format_version": "1.21.10",
+	"minecraft:item": {
+		"description": {
+			"identifier": "dhh:dragon_horn",
+			"menu_category": {
+				"category": "equipment"
+			}
+		},
+		"components": {
+			"minecraft:icon": "dhh_dragon_horn",
+			"minecraft:custom_components": [
+				"dhh:dragon_horn"
+			]
+		}
+	}
+}

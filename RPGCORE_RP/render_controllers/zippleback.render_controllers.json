@@ -1,0 +1,51 @@
+{
+	"format_version": "1.8.0",
+	"render_controllers": {
+		"controller.render.zippleback": {
+			"part_visibility": [
+				{
+					"saddleBagL": "query.is_chested"
+				},
+				{
+					"saddleBagR": "query.is_chested"
+				},
+				{
+					"leftSaddle": "query.is_saddled"
+				},
+				{
+					"rightSaddle": "query.is_saddled"
+				}
+			],
+			"geometry": "array.geo[query.is_baby]",
+			"materials": [
+				{
+					"*": "material.default"
+				}
+			],
+			"textures": [
+				"array.base[query.variant]"
+			],
+			"arrays": {
+				"geometries": {
+					"Array.geo": [
+						"Geometry.default",
+						"Geometry.baby"
+					]
+				},
+				"textures": {
+					"Array.base": [
+						"Texture.baby",
+						"Texture.default",
+						"Texture.dark_red",
+						"Texture.purple",
+						"Texture.red",
+						"Texture.light_blue",
+						"Texture.yellow",
+						"Texture.blue",
+						"Texture.gray"
+					]
+				}
+			}
+		}
+	}
+}

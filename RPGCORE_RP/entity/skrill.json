@@ -1,0 +1,60 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "dhh:skrill",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"textures": {
+				"default": "textures/entity/skrill/dark",
+				"gray": "textures/entity/skrill/gray",
+				"green": "textures/entity/skrill/green",
+				"magenta": "textures/entity/skrill/magenta",
+				"orange": "textures/entity/skrill/orange",
+				"pink": "textures/entity/skrill/pink",
+				"purple": "textures/entity/skrill/purple",
+				"red": "textures/entity/skrill/red",
+				"saddled_default": "textures/entity/skrill/saddled_dark",
+				"saddled_gray": "textures/entity/skrill/saddled_gray",
+				"saddled_green": "textures/entity/skrill/saddled_green",
+				"saddled_magenta": "textures/entity/skrill/saddled_magenta",
+				"saddled_orange": "textures/entity/skrill/saddled_orange",
+				"saddled_pink": "textures/entity/skrill/saddled_pink",
+				"saddled_purple": "textures/entity/skrill/saddled_purple",
+				"saddled_red": "textures/entity/skrill/saddled_red"
+			},
+			"geometry": {
+				"default": "geometry.skrill"
+			},
+			"animations": {
+				"main_controller": "controller.animation.skrill.main",
+				"walk": "animation.skrill.walk",
+				"idle": "animation.skrill.idle",
+				"fly": "animation.skrill.fly",
+				"glide": "animation.skrill.glide",
+				"sit": "animation.skrill.sit",
+				"blast": "animation.skrill.breath",
+				"hover": "animation.skrill.air_idle",
+				"look_at_target": "animation.common.look_at_target",
+				"rotate": "animation.dragon.rotate"
+			},
+			"scripts": {
+				"animate": [
+					"main_controller",
+					"look_at_target",
+					{
+						"rotate": "!query.is_on_ground"
+					}
+				]
+			},
+			"render_controllers": [
+				"controller.render.skrill"
+			],
+			"spawn_egg": {
+				"base_color": "#101018",
+				"overlay_color": "#37163f"
+			}
+		}
+	}
+}

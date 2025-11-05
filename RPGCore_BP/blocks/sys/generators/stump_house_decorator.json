@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:stump_house_decorator"
+        },
+        "components": {
+            "minecraft:tick": {
+                "interval_range": [
+                    5,
+                    15
+                ],
+                "looping": true
+            },
+            "sert:generator": {
+                "id": "stump_house"
+            },
+            "tag:sys": {}
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+	"format_version": "1.8.0",
+	"render_controllers": {
+		"controller.render.flame_whipper": {
+			"geometry": "geometry.default",
+			"materials": [
+				{
+					"*": "material.default"
+				}
+			],
+			"textures": [
+				"array.base[query.variant]"
+			],
+			"arrays": {
+				"textures": {
+					"Array.base": [
+						"Texture.default",
+						"Texture.tiger",
+						"Texture.red",
+						"Texture.orange",
+						"Texture.yellow"
+					]
+				}
+			}
+		}
+	}
+}

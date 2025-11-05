@@ -1,0 +1,43 @@
+{
+	"format_version": "1.8.0",
+	"render_controllers": {
+		"controller.render.nadder": {
+			"part_visibility": [
+				{
+					"saddleBags": "query.is_chested"
+				},
+				{
+					"equipement": "query.is_saddled"
+				}
+			],
+			"geometry": "array.geo[query.is_baby]",
+			"materials": [
+				{
+					"*": "material.default"
+				}
+			],
+			"textures": [
+				"array.base[query.variant]"
+			],
+			"arrays": {
+				"geometries": {
+					"Array.geo": [
+						"Geometry.default",
+						"Geometry.baby"
+					]
+				},
+				"textures": {
+					"Array.base": [
+						"Texture.default",
+						"Texture.dark_blue",
+						"Texture.purple",
+						"Texture.orange",
+						"Texture.pink",
+						"Texture.red",
+						"Texture.baby"
+					]
+				}
+			}
+		}
+	}
+}

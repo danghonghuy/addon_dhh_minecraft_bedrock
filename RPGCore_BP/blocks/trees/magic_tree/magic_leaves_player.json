@@ -1,0 +1,32 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:magic_leaves_player",
+            "menu_category": {
+                "category": "nature",
+                "group": "minecraft:itemGroup.name.leaves"
+            }
+        },
+        "components": {
+            "minecraft:loot": "loot_tables/empty.json",
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 0.2
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 0.2
+            },
+            "minecraft:light_emission": 6,
+            "minecraft:geometry": "minecraft:geometry.full_block",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "magic_leaves",
+                    "render_method": "alpha_test_single_sided_to_opaque",
+                    "isotropic": true
+                }
+            },
+            "minecraft:flammable": true,
+            "tag:leaves": {}
+        }
+    }
+}

@@ -1,0 +1,40 @@
+{
+	"format_version": "1.20.30",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "dhh:dragon_horn"
+		},
+		"tags": [
+			"crafting_table"
+		],
+		"key": {
+			"L": {
+				"item": "leather"
+			},
+			"S": {
+				"item": "string"
+			},
+			"G": {
+				"item": "goat_horn"
+			}
+		},
+		"unlock": [
+			{
+				"item": "minecraft:leather"
+			},
+			{
+				"item": "minecraft:string"
+			},
+			{
+				"item": "minecraft:goat_horn"
+			}
+		],
+		"pattern": [
+			" L ",
+			"SGS"
+		],
+		"result": {
+			"item": "dhh:dragon_horn"
+		}
+	}
+}

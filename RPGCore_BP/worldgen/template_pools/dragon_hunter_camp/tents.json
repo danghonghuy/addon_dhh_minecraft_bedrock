@@ -1,0 +1,19 @@
+{
+  "format_version": "1.21.20", 
+  "minecraft:template_pool": { 
+    "description": { 
+      "identifier": "dhh:dragon_hunter_camp/tents" 
+    }, 
+    "elements": [ 
+      { 
+        "element": { 
+          "element_type": "minecraft:single_pool_element", 
+          "location": "tent1", 
+          "processors": "dhh:dragon_hunter_tent_processors" 
+        }, 
+        "weight": 1,
+        "projection": "rigid"
+      }
+    ] 
+  } 
+}

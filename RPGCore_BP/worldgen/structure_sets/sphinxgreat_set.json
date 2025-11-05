@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:structure_set": {
+        "description": {
+            "identifier": "hg:sphinxgreat"
+        },
+        "placement": {
+            "type": "minecraft:random_spread",
+            "salt": 10050180,
+            "separation": 23,
+            "spacing": 52,
+            "spread_type": "linear"
+        },
+        "structures": [
+            {
+                "structure": "hg:sphinxgreat",
+                "weight": 1
+            }
+        ]
+    }
+}

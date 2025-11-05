@@ -1,0 +1,85 @@
+{
+    "format_version": "1.20.60",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:jigsaw_out",
+            "states": {
+                "sert:direction": [
+                    1,
+                    2,
+                    3,
+                    4
+                ]
+            }
+        },
+        "components": {
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 3
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 0.4
+            },
+            "minecraft:light_dampening": 0,
+            "minecraft:geometry": "geometry.face.block",
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "jigsaw_out"
+                }
+            },
+            "minecraft:custom_components": [
+                "sert:rotate_4"
+            ]
+        },
+        "permutations": [
+            {
+                "condition": "query.block_state('sert:direction') == 1",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('sert:direction') == 2",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            270,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('sert:direction') == 3",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('sert:direction') == 4",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

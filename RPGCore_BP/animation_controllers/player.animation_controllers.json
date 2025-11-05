@@ -1,0 +1,46 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.test_shoot": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"transitions": [
+						{
+							"trigger": "v.attack_time>=0.01"
+						}
+					]
+				},
+				"trigger": {
+					"on_entry": [
+						"/scriptevent dhh:dragon hitAir"
+					],
+					"transitions": [
+						{
+							"default": "1"
+						}
+					]
+				}
+			}
+		},
+		"controller.animation.test_controls": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"transitions": [
+						{
+							"touch": "query.is_riding"
+						}
+					]
+				},
+				"touch": {
+					"transitions": [
+						{
+							"default": "!query.is_riding"
+						}
+					]
+				}
+			}
+		}
+	}
+}

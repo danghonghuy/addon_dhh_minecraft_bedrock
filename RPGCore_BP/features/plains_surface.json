@@ -1,0 +1,38 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:plains_surface"
+        },
+        "features": [
+            [
+                "sert:grass_with_moss",
+                990
+            ],
+            [
+                "sert:oak_tree",
+                10
+            ],
+            [
+                "sert:birch_tree",
+                8
+            ],
+            [
+                "sert:rock",
+                2
+            ],
+            [
+                "sert:oak_bush",
+                7
+            ],
+            [
+                "sert:flower_honey_clover",
+                2
+            ],
+            [
+                "sert:flower_clovers",
+                2
+            ]
+        ]
+    }
+}

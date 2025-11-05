@@ -1,0 +1,30 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:oak_stump"
+        },
+        "features": [
+            [
+                "sert:oak_stump_1",
+                3
+            ],
+            [
+                "sert:oak_stump_2",
+                3
+            ],
+            [
+                "sert:oak_stump_3",
+                1
+            ],
+            [
+                "sert:oak_stump_4",
+                3
+            ],
+            [
+                "sert:oak_stump_5",
+                3
+            ]
+        ]
+    }
+}

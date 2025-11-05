@@ -1,0 +1,74 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "minecraft:swamp_tree_feature"
+        },
+        "features": [
+            [
+                "sert:swamp_tree_1",
+                12
+            ],
+            [
+                "sert:swamp_tree_2",
+                3
+            ],
+            [
+                "sert:swamp_tree_3",
+                1
+            ],
+            [
+                "sert:swamp_tree_4",
+                1
+            ],
+            [
+                "sert:swamp_tree_5",
+                1
+            ],
+            [
+                "sert:swamp_tree_6",
+                1
+            ],
+            [
+                "sert:swamp_tree_7",
+                5
+            ],
+            [
+                "sert:swamp_tree_8",
+                5
+            ],
+            [
+                "sert:swamp_tree_9",
+                1
+            ],
+            [
+                "sert:swamp_tree_10",
+                1
+            ],
+            [
+                "sert:swamp_tree_11",
+                1
+            ],
+            [
+                "sert:swamp_tree_12",
+                1
+            ],
+            [
+                "sert:swamp_tree_13",
+                1
+            ],
+            [
+                "sert:swamp_tree_14",
+                1
+            ],
+            [
+                "sert:swamp_tree_15",
+                15
+            ],
+            [
+                "sert:swamp_tree_16",
+                15
+            ]
+        ]
+    }
+}

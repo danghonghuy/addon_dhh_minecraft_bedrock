@@ -1,0 +1,324 @@
+{
+  "format_version": "1.14.0",
+  "sound_definitions": {
+    "music.menu1": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/music/menu/menu1",
+          "stream": true,
+          "volume": 0.7
+        }
+      ]
+    },
+    "music.menu2": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/music/menu/menu2",
+          "stream": true,
+          "volume": 0.7
+        }
+      ]
+    },
+    "music.menu3": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/music/menu/menu3",
+          "stream": true,
+          "volume": 0.7
+        }
+      ]
+    },
+    "music.menu4": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/music/menu/menu4",
+          "stream": true,
+          "volume": 0.7
+        }
+      ]
+    },
+    "dhh.explosion.chant": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/music/menu/megumin_voice",
+          "stream": true,
+          "volume": 6.0
+        }
+      ]
+    },
+    "dhh.explosion.boom": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/music/menu/explosion",
+          "stream": true,
+          "volume": 10.0
+        }
+      ]
+    },
+    "dhh.sword_sound": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/music/menu/sword_sound",
+          "stream": true,
+          "volume": 5.0
+        }
+      ]
+    },
+    "dhh.hit": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/music/menu/hit",
+          "stream": true,
+          "volume": 2.0
+        }
+      ]
+    },
+    "dhh.godzilla_sound": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/music/menu/godzilla_sound",
+          "stream": true,
+          "volume": 5.0
+        }
+      ]
+    },
+    "dhh.teleport": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/music/menu/teleport",
+          "stream": true,
+          "volume": 2.0
+        }
+      ]
+    },
+    "mob.flamewhipper.ambient": {
+      "category": "neutral",
+      "max_distance": 24,
+      "sounds": [
+        "sounds/flamewhipper/ambient"
+      ]
+    },
+    "mob.gronckle.roar": {
+      "category": "neutral",
+      "max_distance": 24,
+      "sounds": [
+        "sounds/gronckle/roar_1",
+        "sounds/gronckle/roar_2"
+      ]
+    },
+    "mob.gronckle.idle": {
+      "category": "neutral",
+      "max_distance": 12,
+      "sounds": [
+        "sounds/gronckle/idle_1",
+        "sounds/gronckle/idle_2"
+      ]
+    },
+    "mob.gronckle.fly": {
+      "category": "neutral",
+      "max_distance": 24,
+      "sounds": [
+        {
+          "name": "sounds/gronckle/gronckle_fly",
+          "volume": 0.5,
+          "stream": true
+        }
+      ]
+    },
+    "mob.night_fury.idle": {
+      "category": "neutral",
+      "max_distance": 12,
+      "sounds": [
+        "sounds/night_fury/idle_1",
+        "sounds/night_fury/idle_2",
+        "sounds/night_fury/idle_3"
+      ]
+    },
+    "mob.night_fury.blast": {
+      "category": "neutral",
+      "max_distance": 32,
+      "sounds": [
+        "sounds/night_fury/blast"
+      ]
+    },
+    "mob.nightmare.idle": {
+      "category": "neutral",
+      "max_distance": 12,
+      "sounds": [
+        "sounds/nightmare/idle_1",
+        "sounds/nightmare/idle_2"
+      ]
+    },
+    "mob.nightmare.roar": {
+      "category": "neutral",
+      "max_distance": 24,
+      "sounds": [
+        "sounds/nightmare/roar_1",
+        "sounds/nightmare/roar_2"
+      ]
+    },
+    "mob.nadder.roar": {
+      "category": "neutral",
+      "max_distance": 24,
+      "sounds": [
+        "sounds/nadder/roar_1",
+        "sounds/nadder/roar_2"
+      ]
+    },
+    "mob.nadder.idle": {
+      "category": "neutral",
+      "max_distance": 12,
+      "sounds": [
+        "sounds/nadder/idle_1",
+        "sounds/nadder/idle_2"
+      ]
+    },
+    "mob.skrill.blast": {
+      "category": "neutral",
+      "max_distance": 32,
+      "sounds": [
+        "sounds/skrill/blast1",
+        "sounds/skrill/blast2",
+        "sounds/skrill/blast3",
+        "sounds/skrill/blast4"
+      ]
+    },
+    "mob.dragon_cage.open": {
+      "category": "neutral",
+      "max_distance": 32,
+      "sounds": [
+        {
+          "name": "sounds/dragon_cage/open",
+          "volume": 1.5,
+          "stream": true
+        }
+      ]
+    },
+    "mob.tufei.die": {
+      "category": " neutral",
+      "sounds": [
+        "sounds/mob/man_die_01",
+        "sounds/mob/man_die_02",
+        "sounds/mob/man_die_03",
+        "sounds/mob/man_die_04",
+        "sounds/mob/man_die_05",
+        "sounds/mob/man_die_06",
+        "sounds/mob/man_die_07",
+        "sounds/mob/man_die_08",
+        "sounds/mob/man_die_09",
+        "sounds/mob/man_die_10",
+        "sounds/mob/man_die_11",
+        "sounds/mob/man_die_12",
+        "sounds/mob/man_die_13",
+        "sounds/mob/man_die_14",
+        "sounds/mob/man_die_15",
+        "sounds/mob/man_die_16",
+        "sounds/mob/man_die_17",
+        "sounds/mob/man_die_18",
+        "sounds/mob/man_die_19",
+        "sounds/mob/man_die_20",
+        "sounds/mob/man_die_21",
+        "sounds/mob/man_die_22",
+        "sounds/mob/man_die_23",
+        "sounds/mob/man_die_24",
+        "sounds/mob/man_die_25",
+        "sounds/mob/man_die_26",
+        "sounds/mob/man_die_27",
+        "sounds/mob/man_die_28",
+        "sounds/mob/man_die_29",
+        "sounds/mob/man_die_30",
+        "sounds/mob/man_die_31",
+        "sounds/mob/man_die_32"
+      ]
+    },
+    "mob.woman.hurt": {
+      "category": " neutral",
+      "sounds": [
+        "sounds/mob/nw_woman_pain_2",
+        "sounds/mob/nw_woman_pain_3",
+        "sounds/mob/nw_woman_pain_4",
+        "sounds/mob/nw_woman_pain_5",
+        "sounds/mob/nw_woman_pain_6",
+        "sounds/mob/nw_woman_pain_7",
+        "sounds/mob/nw_woman_pain_8",
+        "sounds/mob/nw_woman_pain_9",
+        "sounds/mob/nw_woman_pain_10"
+      ]
+    },
+    "mob.woman.die": {
+      "category": " neutral",
+      "sounds": [
+        "sounds/mob/woman_death_1",
+        "sounds/mob/woman_death_2",
+        "sounds/mob/woman_death_3",
+        "sounds/mob/woman_death_4",
+        "sounds/mob/woman_death_5",
+        "sounds/mob/woman_death_6",
+        "sounds/mob/woman_death_7",
+        "sounds/mob/woman_death_8",
+        "sounds/mob/woman_death_9",
+        "sounds/mob/woman_death_10"
+      ]
+    },
+    "mob.tufei.hurt": {
+      "category": " neutral",
+      "sounds": [
+        "sounds/mob/man_hurt_01",
+        "sounds/mob/man_hurt_02",
+        "sounds/mob/man_hurt_03",
+        "sounds/mob/man_hurt_04",
+        "sounds/mob/man_hurt_05",
+        "sounds/mob/man_hurt_06",
+        "sounds/mob/man_hurt_07",
+        "sounds/mob/man_hurt_08",
+        "sounds/mob/man_hurt_09",
+        "sounds/mob/man_hurt_10",
+        "sounds/mob/man_hurt_11",
+        "sounds/mob/man_hurt_12",
+        "sounds/mob/man_hurt_13",
+        "sounds/mob/man_hurt_14",
+        "sounds/mob/man_hurt_15",
+        "sounds/mob/man_hurt_16",
+        "sounds/mob/man_hurt_17",
+        "sounds/mob/man_hurt_18",
+        "sounds/mob/man_hurt_19",
+        "sounds/mob/man_hurt_20",
+        "sounds/mob/man_hurt_21",
+        "sounds/mob/man_hurt_22",
+        "sounds/mob/man_hurt_23",
+        "sounds/mob/man_hurt_24",
+        "sounds/mob/man_hurt_25",
+        "sounds/mob/knight_hurt_01",
+        "sounds/mob/knight_hurt_02",
+        "sounds/mob/knight_hurt_03",
+        "sounds/mob/knight_hurt_04",
+        "sounds/mob/knight_hurt_05",
+        "sounds/mob/knight_hurt_06",
+        "sounds/mob/knight_hurt_07",
+        "sounds/mob/knight_hurt_08",
+        "sounds/mob/knight_hurt_09",
+        "sounds/mob/knight_hurt_10",
+        "sounds/mob/hit_metal_metal_1",
+        "sounds/mob/hit_metal_metal_2",
+        "sounds/mob/hit_metal_metal_3",
+        "sounds/mob/hit_metal_metal_4",
+        "sounds/mob/hit_metal_metal_5",
+        "sounds/mob/hit_metal_metal_6",
+        "sounds/mob/hit_metal_metal_7",
+        "sounds/mob/hit_metal_metal_8",
+        "sounds/mob/hit_metal_metal_9",
+        "sounds/mob/hit_metal_metal_10"
+      ]
+    }
+  }
+}

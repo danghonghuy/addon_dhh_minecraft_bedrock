@@ -1,0 +1,433 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "minecraft:player",
+      "enable_attachables": true,
+      "spawn_category": "creature",
+      "is_spawnable": false,
+      "is_summonable": false,
+      "properties": {
+        "dhh:is_transformed": {
+          "type": "bool",
+          "default": false,
+          "client_sync": true
+        },
+        "dhh:riding_dragon": {
+          "type": "bool",
+          "default": false,
+          "client_sync": true
+        },
+        "dhh:quest": {
+          "client_sync": true,
+          "default": 0,
+          "range": [
+            0,
+            255
+          ],
+          "type": "int"
+        }
+      },
+      "animations": {
+        "test_shoot": "controller.animation.test_shoot",
+        "test_controls": "controller.animation.test_controls"
+      },
+      "scripts": {
+        "animate": [
+          {
+            "test_shoot": "q.is_riding"
+          },
+          "test_controls"
+        ]
+      }
+    },
+    "component_groups": {
+      "dhh:primal_form_default": {
+        "minecraft:attack": {
+          "damage": 1
+        },
+        "minecraft:scale": {
+          "value": 1
+        },
+        "minecraft:collision_box": {
+          "width": 0.6,
+          "height": 1.8
+        },
+        "minecraft:jump.static": {
+          "jump_power": 0.42
+        },
+        "minecraft:movement": {
+          "value": 0.1
+        }
+      },
+      "dhh:primal_form": {
+        "minecraft:attack": {
+          "damage": 10
+        },
+        "minecraft:scale": {
+          "value": 1.2
+        },
+        "minecraft:collision_box": {
+          "width": 0.6,
+          "height": 1.8
+        },
+        "minecraft:movement": {
+          "value": 0.13
+        },
+        "minecraft:jump.static": {
+          "jump_power": 0.42
+        }
+      },
+      "dhh:spawn_tamed_gronckle": {
+        "minecraft:spawn_entity": {
+          "entities": {
+            "min_wait_time": 0,
+            "max_wait_time": 0,
+            "spawn_entity": "dhh:pretamed_gronckle",
+            "single_use": true,
+            "num_to_spawn": 1
+          }
+        }
+      },
+      "dhh:spawn_tamed_nadder": {
+        "minecraft:spawn_entity": {
+          "entities": {
+            "min_wait_time": 0,
+            "max_wait_time": 0,
+            "spawn_entity": "dhh:pretamed_nadder",
+            "single_use": true,
+            "num_to_spawn": 1
+          }
+        }
+      },
+      "dhh:spawn_tamed_sand_wraith": {
+        "minecraft:spawn_entity": {
+          "entities": {
+            "min_wait_time": 0,
+            "max_wait_time": 0,
+            "spawn_entity": "dhh:pretamed_sand_wraith",
+            "single_use": true,
+            "num_to_spawn": 1
+          }
+        }
+      },
+      "dhh:spawn_tamed_skrill": {
+        "minecraft:spawn_entity": {
+          "entities": {
+            "min_wait_time": 0,
+            "max_wait_time": 0,
+            "spawn_entity": "dhh:pretamed_skrill",
+            "single_use": true,
+            "num_to_spawn": 1
+          }
+        }
+      },
+      "dhh:spawn_tamed_light_fury": {
+        "minecraft:spawn_entity": {
+          "entities": {
+            "min_wait_time": 0,
+            "max_wait_time": 0,
+            "spawn_entity": "dhh:pretamed_light_fury",
+            "single_use": true,
+            "num_to_spawn": 1
+          }
+        }
+      },
+      "minecraft:add_raid_omen": {
+        "minecraft:spell_effects": {
+          "add_effects": [
+            {
+              "effect": "raid_omen",
+              "duration": 30,
+              "display_on_screen_animation": true
+            }
+          ],
+          "remove_effects": "bad_omen"
+        },
+        "minecraft:timer": {
+          "time": [
+            0,
+            0
+          ],
+          "looping": false,
+          "time_down_event": {
+            "event": "minecraft:clear_add_raid_omen",
+            "target": "self"
+          }
+        }
+      },
+      "minecraft:clear_raid_omen_spell_effect": {
+        "minecraft:spell_effects": {}
+      },
+      "minecraft:raid_trigger": {
+        "minecraft:raid_trigger": {
+          "triggered_event": {
+            "event": "minecraft:remove_raid_trigger",
+            "target": "self"
+          }
+        }
+      }
+    },
+    "components": {
+       "minecraft:leashable": {},
+      "minecraft:is_stackable": {},
+      "minecraft:scale": {
+        "value": 1
+      },
+      "minecraft:experience_reward": {
+        "on_death": "Math.Min(query.player_level * 7, 100)"
+      },
+      "minecraft:type_family": {
+        "family": [
+          "player"
+        ]
+      },
+      "minecraft:is_hidden_when_invisible": {},
+      "minecraft:loot": {
+        "table": "loot_tables/empty.json"
+      },
+      "minecraft:collision_box": {
+        "width": 0.6,
+        "height": 1.8
+      },
+      "minecraft:can_climb": {},
+      "minecraft:movement": {
+        "value": 0.1
+      },
+      "minecraft:jump.static": {
+        "jump_power": 0.42
+      },
+      "minecraft:hurt_on_condition": {
+        "damage_conditions": [
+          {
+            "filters": {
+              "test": "in_lava",
+              "subject": "self",
+              "operator": "==",
+              "value": true
+            },
+            "cause": "lava",
+            "damage_per_tick": 4
+          }
+        ]
+      },
+      "minecraft:attack": {
+        "damage": 1
+      },
+   "minecraft:exhaustion_values": {
+        "heal": 6.0,
+        "jump": 0.1,
+        "sprint_jump": 0.2,
+        "mine": 0.1,
+        "attack": 0.2,
+        "damage": 0.3,
+        "walk": 0.05,
+        "sprint": 0.3,
+        "swim": 0.015
+      },
+      "minecraft:player.saturation": {
+        "value": 5,
+        "max": 20
+      },
+      "minecraft:player.exhaustion": {
+        "value": 0,
+        "max": 20
+      },
+      "minecraft:player.level": {
+        "value": 0,
+        "max": 24791
+      },
+      "minecraft:player.experience": {
+        "value": 0,
+        "max": 1
+      },
+      "minecraft:breathable": {
+        "total_supply": 15,
+        "suffocate_time": -1,
+        "inhale_time": 3.75,
+        "generates_bubbles": false
+      },
+      "minecraft:nameable": {
+        "always_show": true,
+        "allow_name_tag_renaming": false
+      },
+      "minecraft:physics": {
+        "push_towards_closest_space": true
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:insomnia": {
+        "days_until_insomnia": 3
+      },
+      "minecraft:rideable": {
+        "seat_count": 2,
+        "family_types": [
+          "parrot_tame"
+        ],
+        "pull_in_entities": true,
+        "seats": [
+          {
+            "position": [
+              0.4,
+              -0.2,
+              -0.1
+            ],
+            "min_rider_count": 0,
+            "max_rider_count": 0,
+            "lock_rider_rotation": 0
+          },
+          {
+            "position": [
+              -0.4,
+              -0.2,
+              -0.1
+            ],
+            "min_rider_count": 1,
+            "max_rider_count": 2,
+            "lock_rider_rotation": 0
+          }
+        ]
+      },
+      "minecraft:conditional_bandwidth_optimization": {},
+      "minecraft:block_climber": {},
+      "minecraft:environment_sensor": {
+        "triggers": {
+          "filters": {
+            "all_of": [
+              {
+                "test": "has_mob_effect",
+                "subject": "self",
+                "value": "bad_omen"
+              },
+              {
+                "test": "is_in_village",
+                "subject": "self",
+                "value": true
+              }
+            ]
+          },
+          "event": "minecraft:gain_raid_omen"
+        }
+      }
+    },
+    "events": {
+      "dhh:activate_primal_form": {
+        "set_property": {
+          "dhh:is_transformed": true
+        },
+        "add": {
+          "component_groups": [
+            "dhh:primal_form"
+          ]
+        }
+      },
+      "dhh:deactivate_primal_form": {
+        "set_property": {
+          "dhh:is_transformed": false
+        },
+        "remove": {
+          "component_groups": [
+            "dhh:primal_form"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "dhh:primal_form_default"
+          ]
+        }
+      },
+      "dhh:spawn_tamed_gronckle": {
+        "add": {
+          "component_groups": [
+            "dhh:spawn_tamed_gronckle"
+          ]
+        }
+      },
+      "dhh:spawn_tamed_nadder": {
+        "add": {
+          "component_groups": [
+            "dhh:spawn_tamed_nadder"
+          ]
+        }
+      },
+      "dhh:spawn_tamed_sand_wraith": {
+        "add": {
+          "component_groups": [
+            "dhh:spawn_tamed_sand_wraith"
+          ]
+        }
+      },
+      "dhh:spawn_tamed_skrill": {
+        "add": {
+          "component_groups": [
+            "dhh:spawn_tamed_skrill"
+          ]
+        }
+      },
+      "dhh:spawn_tamed_light_fury": {
+        "add": {
+          "component_groups": [
+            "dhh:spawn_tamed_light_fury"
+          ]
+        }
+      },
+      "dhh:start_riding_dragon": {
+        "set_property": {
+          "dhh:riding_dragon": true
+        },
+        "queue_command": {
+          "command": [
+            "camera @s set minecraft:follow_orbit",
+            "tag @s add riding_dragon"
+          ]
+        }
+      },
+      "dhh:stop_riding_dragon": {
+        "set_property": {
+          "dhh:riding_dragon": false
+        },
+        "queue_command": {
+          "command": [
+            "camera @s clear",
+            "tag @s remove riding_dragon"
+          ]
+        }
+      },
+      "minecraft:gain_raid_omen": {
+        "add": {
+          "component_groups": [
+            "minecraft:add_raid_omen"
+          ]
+        }
+      },
+      "minecraft:clear_add_raid_omen": {
+        "remove": {
+          "component_groups": [
+            "minecraft:add_raid_omen"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "minecraft:clear_raid_omen_spell_effect"
+          ]
+        }
+      },
+      "minecraft:trigger_raid": {
+        "add": {
+          "component_groups": [
+            "minecraft:raid_trigger"
+          ]
+        }
+      },
+      "minecraft:remove_raid_trigger": {
+        "remove": {
+          "component_groups": [
+            "minecraft:raid_trigger"
+          ]
+        }
+      }
+    }
+  }
+}

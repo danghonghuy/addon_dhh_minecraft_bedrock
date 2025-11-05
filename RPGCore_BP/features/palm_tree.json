@@ -1,0 +1,42 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:palm_tree"
+        },
+        "features": [
+            [
+                "sert:palm_tree_1",
+                5
+            ],
+            [
+                "sert:palm_tree_2",
+                5
+            ],
+            [
+                "sert:palm_tree_3",
+                5
+            ],
+            [
+                "sert:palm_tree_4",
+                5
+            ],
+            [
+                "sert:palm_tree_5",
+                5
+            ],
+            [
+                "sert:palm_tree_6",
+                5
+            ],
+            [
+                "sert:palm_tree_7",
+                5
+            ],
+            [
+                "sert:palm_tree_8",
+                5
+            ]
+        ]
+    }
+}

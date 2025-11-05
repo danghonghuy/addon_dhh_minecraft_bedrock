@@ -1,0 +1,50 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.loyal_skeleton.idle": {
+			"loop": true,
+			"bones": {
+				"rightArm": {
+					"rotation": [0, 0, 0]
+				},
+				"leftArm": {
+					"rotation": [0, 0, 0]
+				}
+			}
+		},
+		"animation.loyal_skeleton.walk": {
+			"loop": true,
+			"anim_time_update": "query.modified_distance_moved * 1.5",
+			"bones": {
+				"rightArm": {
+					"rotation": ["math.cos(query.anim_time * 57.25) * 80.0", 0, 0]
+				},
+				"leftArm": {
+					"rotation": ["math.cos(query.anim_time * 57.25 + 180.0) * 80.0", 0, 0]
+				},
+				"rightLeg": {
+					"rotation": ["math.cos(query.anim_time * 57.25 + 180.0) * 80.0", 0, 0]
+				},
+				"leftLeg": {
+					"rotation": ["math.cos(query.anim_time * 57.25) * 80.0", 0, 0]
+				}
+			}
+		},
+		"animation.loyal_skeleton.attack": {
+			"loop": true,
+			"bones": {
+				"rightArm": {
+					"rotation": ["-90 - math.sin(query.life_time * 690) * 11.5", 0, 0]
+				}
+			}
+		},
+		"animation.loyal_skeleton.bow": {
+			"loop": true,
+			"bones": {
+				"rightArm": {
+					"rotation": [-90, 0, 0]
+				}
+			}
+		}
+	}
+}

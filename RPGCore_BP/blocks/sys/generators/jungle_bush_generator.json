@@ -1,0 +1,23 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:jungle_bush_generator"
+        },
+        "components": {
+            "minecraft:tick": {
+                "interval_range": [
+                    1,
+                    25
+                ],
+                "looping": true
+            },
+            "sert:generator": {
+                "id": "bush",
+                "data": "('length':[3, 5], 'size': [1.7, 1.9], 'dynamic_size': [0.0, 0.1], 'wood': 'minecraft:jungle_wood','leaves': 'minecraft:jungle_leaves')",
+                "replaceWithSideBlock": true
+            },
+            "tag:sys": {}
+        }
+    }
+}

@@ -1,0 +1,135 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:blueberry_bush",
+            "states": {
+                "sert:growth": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7
+                ]
+            }
+        },
+        "components": {
+            "minecraft:loot": "loot_tables/empty.json",
+            "minecraft:placement_filter": {
+                "conditions": [
+                    {
+                        "allowed_faces": [
+                            "up"
+                        ],
+                        "block_filter": [
+                            "minecraft:grass_block",
+                            "minecraft:podzol",
+                            "minecraft:dirt",
+                            "minecraft:mycelium",
+                            "minecraft:coarse_dirt",
+                            {
+                                "tags": "q.any_tag(['dirt'])"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "minecraft:liquid_detection": {
+                "detection_rules": [
+                    {
+                        "liquid_type": "water",
+                        "on_liquid_touches": "broken"
+                    }
+                ]
+            },
+            "minecraft:collision_box": false,
+            "minecraft:selection_box": {
+                "origin": [
+                    -6,
+                    0,
+                    -6
+                ],
+                "size": [
+                    12,
+                    15,
+                    12
+                ]
+            },
+            "minecraft:light_dampening": 0,
+            "minecraft:geometry": "geometry.tintable.bush",
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test_single_sided",
+                    "texture": "blueberry_bush_0"
+                },
+                "tint_part": {
+                    "render_method": "alpha_test_single_sided",
+                    "texture": "blueberry_bush_0",
+                    "tint_method": "grass"
+                }
+            },
+            "sert:berry_bush": {
+                "berry_type": "sert:blueberry",
+                "amount": [
+                    3,
+                    5
+                ]
+            },
+            "sert:growing_plant": {},
+            "tag:isair": {}
+        },
+        "permutations": [
+            {
+                "condition": "query.block_state('sert:growth') == 5",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "render_method": "alpha_test_single_sided",
+                            "texture": "blueberry_bush_1"
+                        },
+                        "tint_part": {
+                            "render_method": "alpha_test_single_sided",
+                            "texture": "blueberry_bush_1",
+                            "tint_method": "grass"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('sert:growth') == 6",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "render_method": "alpha_test_single_sided",
+                            "texture": "blueberry_bush_2"
+                        },
+                        "tint_part": {
+                            "render_method": "alpha_test_single_sided",
+                            "texture": "blueberry_bush_2",
+                            "tint_method": "grass"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('sert:growth') == 7",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "render_method": "alpha_test_single_sided",
+                            "texture": "blueberry_bush_3"
+                        },
+                        "tint_part": {
+                            "render_method": "alpha_test_single_sided",
+                            "texture": "blueberry_bush_3",
+                            "tint_method": "grass"
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

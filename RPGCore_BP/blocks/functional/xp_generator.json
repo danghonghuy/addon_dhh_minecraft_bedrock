@@ -1,0 +1,70 @@
+{
+    "format_version": "1.21.10",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:xp_generator",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+        "components": {
+            "minecraft:loot": "loot_tables/blocks/xp_generator.json",
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 6
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3
+            },
+            "minecraft:collision_box": {
+                "origin": [
+                    -7,
+                    0,
+                    -7
+                ],
+                "size": [
+                    14,
+                    16,
+                    14
+                ]
+            },
+            "minecraft:selection_box": {
+                "origin": [
+                    -7,
+                    0,
+                    -7
+                ],
+                "size": [
+                    14,
+                    16,
+                    14
+                ]
+            },
+            "minecraft:light_dampening": 3,
+            "minecraft:geometry": "geometry.xp.generator",
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "xp_generator"
+                }
+            },
+            "minecraft:tick": {
+                "interval_range": [
+                    20,
+                    20
+                ],
+                "looping": true
+            },
+            "sert:mana_storage": {
+                "max_value": 1
+            },
+            "sert:xp_generator": {},
+            "sert:xp_storage": {
+                "max_value": 100
+            },
+            "tag:connection:manaIn": {},
+            "tag:connection:switchable": {},
+            "tag:minecraft:is_pickaxe_item_destructible": {},
+            "tag:stone": {}
+        }
+    }
+}

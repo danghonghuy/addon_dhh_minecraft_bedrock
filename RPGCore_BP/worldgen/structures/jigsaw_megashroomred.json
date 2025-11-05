@@ -1,0 +1,25 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:jigsaw": {
+        "description": {
+            "identifier": "hg:megashroomred"
+        },
+        "biome_filters": [
+            {
+                "test": "has_biome_tag",
+                "value": "mooshroom_island"
+            }
+        ],
+        "heightmap_projection": "world_surface",
+        "max_depth": 1,
+        "start_height":{
+            "type":"constant",
+            "value":{
+                "absolute":-1
+            }
+        },
+        "start_pool": "hg:megashroomred_pool",
+        "step": "surface_structures",
+        "terrain_adaptation": "none"
+    }
+}

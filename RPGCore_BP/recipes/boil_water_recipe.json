@@ -1,0 +1,14 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "dhh:recipe_boil_water"
+    },
+    "tags": ["furnace", "smoker", "campfire"],
+    "input": {
+      "item": "minecraft:potion",
+      "data": 0
+    },
+    "output": "dhh:boiled_water_bottle"
+  }
+}

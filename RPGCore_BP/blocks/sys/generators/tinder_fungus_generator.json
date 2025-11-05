@@ -1,0 +1,25 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:tinder_fungus_generator"
+        },
+        "components": {
+            "minecraft:tick": {
+                "interval_range": [
+                    1,
+                    25
+                ],
+                "looping": true
+            },
+            "sert:generator": {
+                "id": "tinder_fungus",
+                "startOptions": {
+                    "checkConditions": false,
+                    "checkWeight": false
+                }
+            },
+            "tag:sys": {}
+        }
+    }
+}

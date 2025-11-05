@@ -1,0 +1,14 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:weighted_random_feature": {
+    "description": {
+      "identifier": "hungkaio:snowcastle_feature_mcstructure"
+    },
+    "features": [
+      [ "minecraft:snowcastle01_feature_mcstructure", 100 ],
+      [ "minecraft:snowcastle02_feature_mcstructure", 100 ],
+      [ "minecraft:snowcastle03_feature_mcstructure", 100 ],
+      [ "minecraft:snowcastle04_feature_mcstructure", 100 ]
+    ]
+  }
+}

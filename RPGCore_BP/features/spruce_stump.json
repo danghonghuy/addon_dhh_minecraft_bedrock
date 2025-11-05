@@ -1,0 +1,38 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:spruce_stump"
+        },
+        "features": [
+            [
+                "sert:spruce_stump_1",
+                4
+            ],
+            [
+                "sert:spruce_stump_2",
+                6
+            ],
+            [
+                "sert:spruce_stump_3",
+                8
+            ],
+            [
+                "sert:spruce_stump_4",
+                2
+            ],
+            [
+                "sert:spruce_stump_5",
+                10
+            ],
+            [
+                "sert:spruce_stump_6",
+                1
+            ],
+            [
+                "sert:spruce_stump_7",
+                1
+            ]
+        ]
+    }
+}

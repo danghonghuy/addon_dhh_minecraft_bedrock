@@ -1,0 +1,164 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:small_waterlily",
+            "menu_category": {
+                "category": "none"
+            },
+            "states": {
+                "sert:stack_amount": [
+                    1,
+                    2,
+                    3
+                ],
+                "sert:placed": [
+                    false,
+                    true
+                ]
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ]
+                }
+            }
+        },
+        "components": {
+            "minecraft:loot": "loot_tables/blocks/small_waterlily_1.json",
+            "minecraft:collision_box": {
+                "origin": [
+                    -8,
+                    0,
+                    -8
+                ],
+                "size": [
+                    16,
+                    1,
+                    16
+                ]
+            },
+            "minecraft:selection_box": {
+                "origin": [
+                    -8,
+                    0,
+                    -8
+                ],
+                "size": [
+                    16,
+                    1,
+                    16
+                ]
+            },
+            "minecraft:light_dampening": 4,
+            "minecraft:geometry": {
+                "bone_visibility": {
+                    "small": "q.block_state('sert:stack_amount') >= 1",
+                    "mid": "q.block_state('sert:stack_amount') >= 2",
+                    "big": "q.block_state('sert:stack_amount') >= 3"
+                },
+                "identifier": "geometry.small.waterlily"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "small_waterlily"
+                }
+            },
+            "minecraft:display_name": "item.sert:small_waterlily",
+            "sert:add_placed_components": 0,
+            "sert:place_on_water": {},
+            "sert:stackable_block": {
+                "fillers": [
+                    "sert:small_waterlily"
+                ]
+            }
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('sert:placed')",
+                "components": {
+                    "minecraft:placement_filter": {
+                        "conditions": [
+                            {
+                                "allowed_faces": [
+                                    "up"
+                                ],
+                                "block_filter": [
+                                    "minecraft:water"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('sert:stack_amount') == 1",
+                "components": {
+                    "minecraft:loot": "loot_tables/blocks/small_waterlily_1.json"
+                }
+            },
+            {
+                "condition": "q.block_state('sert:stack_amount') == 2",
+                "components": {
+                    "minecraft:loot": "loot_tables/blocks/small_waterlily_2.json"
+                }
+            },
+            {
+                "condition": "q.block_state('sert:stack_amount') == 3",
+                "components": {
+                    "minecraft:loot": "loot_tables/blocks/small_waterlily_3.json"
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            270,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

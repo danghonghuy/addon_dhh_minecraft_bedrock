@@ -1,0 +1,26 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:jungle_tree_mutated"
+        },
+        "features": [
+            [
+                "sert:jungle_tree_mutated_1",
+                1
+            ],
+            [
+                "sert:jungle_tree_mutated_2",
+                2
+            ],
+            [
+                "sert:jungle_tree_mutated_3",
+                4
+            ],
+            [
+                "sert:jungle_tree_mutated_4",
+                4
+            ]
+        ]
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:dead_swamp_tree"
+        },
+        "features": [
+            [
+                "sert:dead_swamp_tree_1",
+                1
+            ],
+            [
+                "sert:dead_swamp_tree_2",
+                1
+            ],
+            [
+                "sert:dead_swamp_tree_3",
+                1
+            ],
+            [
+                "sert:dead_swamp_tree_4",
+                1
+            ],
+            [
+                "sert:dead_swamp_tree_5",
+                1
+            ],
+            [
+                "sert:dead_swamp_tree_6",
+                1
+            ],
+            [
+                "sert:dead_swamp_tree_7",
+                1
+            ]
+        ]
+    }
+}

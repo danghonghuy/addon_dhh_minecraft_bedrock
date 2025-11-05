@@ -1,0 +1,1 @@
+execute as @r at @s unless score world night_fury_spawned matches 0 run scriptevent dhh:night_fury_spawn night_fury

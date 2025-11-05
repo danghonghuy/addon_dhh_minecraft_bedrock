@@ -1,0 +1,13 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:aggregate_feature": {
+        "description": {
+            "identifier": "sert:dohliy_oak_dirt_block_test"
+        },
+        "features": [
+            "sert:dirt_block_feature",
+            "sert:dohliy_oak_tree"
+        ],
+        "early_out": "first_failure"
+    }
+}

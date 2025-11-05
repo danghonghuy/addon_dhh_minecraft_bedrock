@@ -1,0 +1,18 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "dhh Core Resource Pack",
+    "description": "meomeo6",
+    "uuid": "99ab8a61-fcf9-4a29-92a6-8dfacf06c8d6", 
+    "version": [1, 0, 18],
+    "min_engine_version": [1, 19, 0] 
+  },
+  "modules": [
+    {
+      "description": "Resource Pack Module",
+      "type": "resources",
+      "uuid": "d586b008-4776-4791-a0f9-6b1afc30d75d",
+      "version": [1, 0,18]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:block": {
+		"description": {
+			"identifier": "dhh:dragon_nip",
+			"menu_category": {
+				"category": "none",
+				"is_hidden_in_commands": true
+			}
+		},
+		"components": {
+			"minecraft:loot": "loot_tables/empty.json",
+			"minecraft:collision_box": false,
+			"minecraft:selection_box": true,
+			"minecraft:geometry": {
+				"identifier": "geometry.dragon_nip"
+			},
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "dragon_nip",
+					"render_method": "alpha_test"
+				}
+			}
+		}
+	}
+}

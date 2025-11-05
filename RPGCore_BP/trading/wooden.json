@@ -1,0 +1,128 @@
+{
+  "tiers": [
+    {
+      "groups": [
+        {
+          "num_to_select": 2,
+          "trades": [
+            {
+              "wants": [{"item": "minecraft:coal","quantity": 1}],
+              "gives": [{"item": "minecraft:oak_log","quantity": 3}],
+              "max_uses": 8
+            },
+            {
+              "wants": [{"item": "minecraft:cobblestone","quantity": 1}],
+              "gives": [{"item": "minecraft:oak_log","quantity": 1}],
+              "max_uses": 16
+            },
+            {
+              "wants": [{"item": "minecraft:apple","quantity": 1}],
+              "gives": [{"item": "minecraft:oak_log","quantity": 4}],
+              "max_uses": 3
+            },
+            {
+              "wants": [{"item": "minecraft:wheat_seeds","quantity": 1}],
+              "gives": [{"item": "minecraft:oak_planks","quantity": 2}],
+              "max_uses": 5
+            },
+            {
+              "wants": [{"item": "minecraft:feather","quantity": 1}],
+              "gives": [{"item": "minecraft:stick","quantity": 1}],
+              "max_uses": 10
+            }
+          ]
+        },
+        {
+          "num_to_select": 2,
+          "trades": [
+            {
+              "wants": [{"item": "minecraft:oak_log","quantity": 2}],
+              "gives": [{"item": "minecraft:wooden_pickaxe","quantity": 1}],
+              "max_uses": 2
+            },
+            {
+              "wants": [{"item": "minecraft:oak_log","quantity": 2}],
+              "gives": [{"item": "minecraft:wooden_axe","quantity": 1}],
+              "max_uses": 2
+            },
+            {
+              "wants": [{"item": "minecraft:oak_log","quantity": 4}],
+              "gives": [{"item": "minecraft:crafting_table","quantity": 1}],
+              "max_uses": 1
+            },
+            {
+              "wants": [{"item": "minecraft:oak_planks","quantity": 3}],
+              "gives": [{"item": "minecraft:stick","quantity": 4}],
+              "max_uses": 4
+            },
+            {
+              "wants": [{"item": "minecraft:oak_log","quantity": 1}],
+              "gives": [{"item": "minecraft:oak_planks","quantity": 3}],
+              "max_uses": 10
+            }
+          ]
+        },
+        {
+          "num_to_select": 1,
+          "trades": [
+            {
+              "wants": [{"item": "minecraft:dandelion","quantity": 1}],
+              "gives": [{"item": "minecraft:oak_sapling","quantity": 1}],
+              "max_uses": 5
+            },
+            {
+              "wants": [{"item": "minecraft:dirt","quantity": 1}],
+              "gives": [{"item": "minecraft:dirt","quantity": 1}],
+              "max_uses": 1
+            },
+            {
+              "wants": [{"item": "minecraft:stick","quantity": 1}],
+              "gives": [{"item": "minecraft:stick","quantity": 2}],
+              "max_uses": 2
+            },
+            {
+              "wants": [{"item": "minecraft:rotten_flesh","quantity": 1}],
+              "gives": [{"item": "minecraft:oak_planks","quantity": 1}],
+              "max_uses": 4
+            },
+            {
+              "wants": [{"item": "minecraft:bone","quantity": 1}],
+              "gives": [{"item": "minecraft:oak_log","quantity": 3}],
+              "max_uses": 2
+            }
+          ]
+        },
+        {
+          "num_to_select": 1,
+          "trades": [
+            {
+              "wants": [{"item": "minecraft:oak_log","quantity": 5}],
+              "gives": [{"item": "minecraft:spider_eye","quantity": 1}],
+              "max_uses": 1
+            },
+            {
+              "wants": [{"item": "minecraft:oak_planks","quantity": 3}],
+              "gives": [{"item": "minecraft:string","quantity": 1}],
+              "max_uses": 3
+            },
+            {
+              "wants": [{"item": "minecraft:oak_log","quantity": 8}],
+              "gives": [{"item": "minecraft:chicken","quantity": 1}],
+              "max_uses": 1
+            },
+            {
+              "wants": [{"item": "minecraft:cobblestone","quantity": 1}],
+              "gives": [{"item": "minecraft:andesite","quantity": 1}],
+              "max_uses": 6
+            },
+            {
+              "wants": [{"item": "minecraft:oak_planks","quantity": 1}],
+              "gives": [{"item": "minecraft:wooden_button","quantity": 1}],
+              "max_uses": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

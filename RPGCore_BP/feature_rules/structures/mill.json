@@ -1,0 +1,50 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:feature_rules": {
+        "description": {
+            "identifier": "sert:mill",
+            "places_feature": "sert:structures/mill"
+        },
+        "conditions": {
+            "placement_pass": "first_pass",
+            "minecraft:biome_filter": {
+                "all_of": [
+                    {
+                        "test": "has_biome_tag",
+                        "operator": "==",
+                        "value": "plains"
+                    },
+                    {
+                        "test": "has_biome_tag",
+                        "operator": "!=",
+                        "value": "frozen"
+                    },
+                    {
+                        "test": "has_biome_tag",
+                        "operator": "!=",
+                        "value": "cold"
+                    }
+                ]
+            }
+        },
+        "distribution": {
+            "iterations": 5,
+            "x": {
+                "extent": [
+                    0,
+                    16
+                ],
+                "distribution": "uniform"
+            },
+            "y": "q.heightmap(v.worldx, v.worldz)",
+            "z": {
+                "extent": [
+                    0,
+                    16
+                ],
+                "distribution": "uniform"
+            },
+            "scatter_chance": 0.5
+        }
+    }
+}

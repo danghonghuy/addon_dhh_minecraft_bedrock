@@ -1,0 +1,19 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:structure_template_feature": {
+        "description": {
+            "identifier": "sert:fire_of_berselisk_generator"
+        },
+        "structure_name": "mystructure:fire_of_berselisk_generator",
+        "adjustment_radius": 4,
+        "facing_direction": "random",
+        "constraints": {
+            "block_intersection": {
+                "block_allowlist": [
+                    "minecraft:acacia_log",
+                    "minecraft:acacia_wood"
+                ]
+            }
+        }
+    }
+}

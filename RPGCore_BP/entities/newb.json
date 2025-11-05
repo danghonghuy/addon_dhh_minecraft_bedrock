@@ -1,0 +1,5314 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "dhh:newb",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "is_experimental": false
+    },
+    "component_groups": {
+      "update_stone": {
+        "minecraft:equipment": {
+          "table": "loot_tables/stone_equip.json",
+          "slot_drop_chance": [
+            {
+              "slot": "slot.weapon.mainhand",
+              "drop_chance": 1.0
+            }
+          ]
+        },
+        "minecraft:trade_table": {
+          "display_name": "Xem hàng đi...",
+          "table": "trading/stone.json",
+          "new_screen": true
+        },
+        "minecraft:loot": {
+          "table": "loot_tables/stone_loot.json"
+        }
+      },
+      "update_copper": {
+        "minecraft:equipment": {
+          "table": "loot_tables/copper_equip.json",
+          "slot_drop_chance": [
+            {
+              "slot": "slot.weapon.mainhand",
+              "drop_chance": 1.0
+            }
+          ]
+        },
+        "minecraft:trade_table": {
+          "display_name": "Xem hàng đi...",
+          "table": "trading/copper.json",
+          "new_screen": true
+        },
+        "minecraft:loot": {
+          "table": "loot_tables/copper_loot.json"
+        }
+      },
+      "update_iron": {
+        "minecraft:equipment": {
+          "table": "loot_tables/iron_equip.json",
+          "slot_drop_chance": [
+            {
+              "slot": "slot.weapon.mainhand",
+              "drop_chance": 1.0
+            }
+          ]
+        },
+        "minecraft:trade_table": {
+          "display_name": "Xem hàng đi...",
+          "table": "trading/iron.json",
+          "new_screen": true
+        },
+        "minecraft:loot": {
+          "table": "loot_tables/iron_loot.json"
+        }
+      },
+      "update_diamond": {
+        "minecraft:equipment": {
+          "table": "loot_tables/diamond_equip.json",
+          "slot_drop_chance": [
+            {
+              "slot": "slot.weapon.mainhand",
+              "drop_chance": 1.0
+            }
+          ]
+        },
+        "minecraft:trade_table": {
+          "display_name": "Xem hàng đi...",
+          "table": "trading/diamond.json",
+          "new_screen": true
+        },
+        "minecraft:loot": {
+          "table": "loot_tables/diamond_loot.json"
+        }
+      },
+      "update_diamond_pro": {
+        "minecraft:equipment": {
+          "table": "loot_tables/diamond_pro_equip.json",
+          "slot_drop_chance": [
+            {
+              "slot": "slot.weapon.mainhand",
+              "drop_chance": 1.0
+            }
+          ]
+        },
+        "minecraft:trade_table": {
+          "display_name": "Xem hàng đi...",
+          "table": "trading/diamond.json",
+          "new_screen": true
+        },
+        "minecraft:loot": {
+          "table": "loot_tables/diamond_loot.json"
+        }
+      },
+      "go_to_work": {
+        "minecraft:behavior.move_to_block": {
+          "priority": 3,
+          "tick_interval": 1,
+          "search_range": 16,
+          "search_height": 4,
+          "goal_radius": 2,
+          "stay_duration": 130,
+          "target_selection_method": "random",
+          "target_offset": [
+            0,
+            0,
+            0
+          ],
+          "target_blocks": [
+            "minecraft:crafting_table"
+          ]
+        }
+      },
+      "good_no_follow_players": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 8,
+          "search_range": 48,
+          "stop_distance": 8,
+          "speed_multiplier": 1.33,
+          "filters": {
+            "all_of": [
+              {
+                "test": "is_underwater",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_family",
+                "subject": "other",
+                "value": "good",
+                "operator": "="
+              },
+              {
+                "test": "has_tag",
+                "subject": "self",
+                "operator": "!=",
+                "value": "captain"
+              },
+              {
+                "test": "has_tag",
+                "subject": "other",
+                "operator": "=",
+                "value": "captain"
+              }
+            ]
+          }
+        }
+      },
+      "bad_no_follow_players": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 8,
+          "search_range": 48,
+          "stop_distance": 8,
+          "speed_multiplier": 1.33,
+          "filters": {
+            "all_of": [
+              {
+                "test": "is_underwater",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_family",
+                "subject": "other",
+                "value": "bad",
+                "operator": "="
+              },
+              {
+                "test": "has_tag",
+                "subject": "self",
+                "operator": "!=",
+                "value": "captain"
+              },
+              {
+                "test": "has_tag",
+                "subject": "other",
+                "operator": "=",
+                "value": "captain"
+              }
+            ]
+          }
+        }
+      },
+      "follow_players": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 8,
+          "search_range": 24,
+          "stop_distance": 5,
+          "speed_multiplier": 1.33,
+          "filters": {
+            "all_of": [
+              {
+                "test": "is_underwater",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_family",
+                "subject": "other",
+                "value": "player",
+                "operator": "="
+              },
+              {
+                "test": "has_tag",
+                "subject": "self",
+                "operator": "=",
+                "value": "follow_player"
+              },
+              {
+                "test": "has_tag",
+                "subject": "other",
+                "operator": "=",
+                "value": "can_followed"
+              }
+            ]
+          }
+        }
+      },
+      "tx01": {
+        "minecraft:variant": {
+          "value": 0
+        }
+      },
+      "tx02": {
+        "minecraft:variant": {
+          "value": 1
+        }
+      },
+      "tx03": {
+        "minecraft:variant": {
+          "value": 2
+        }
+      },
+      "tx04": {
+        "minecraft:variant": {
+          "value": 3
+        }
+      },
+      "tx05": {
+        "minecraft:variant": {
+          "value": 4
+        }
+      },
+      "tx06": {
+        "minecraft:variant": {
+          "value": 5
+        }
+      },
+      "tx07": {
+        "minecraft:variant": {
+          "value": 6
+        }
+      },
+      "tx08": {
+        "minecraft:variant": {
+          "value": 7
+        }
+      },
+      "tx09": {
+        "minecraft:variant": {
+          "value": 8
+        }
+      },
+      "tx10": {
+        "minecraft:variant": {
+          "value": 9
+        }
+      },
+      "tx11": {
+        "minecraft:variant": {
+          "value": 10
+        }
+      },
+      "tx12": {
+        "minecraft:variant": {
+          "value": 11
+        }
+      },
+      "tx13": {
+        "minecraft:variant": {
+          "value": 12
+        }
+      },
+      "tx14": {
+        "minecraft:variant": {
+          "value": 13
+        }
+      },
+      "tx15": {
+        "minecraft:variant": {
+          "value": 14
+        }
+      },
+      "tx16": {
+        "minecraft:variant": {
+          "value": 15
+        }
+      },
+      "tx17": {
+        "minecraft:variant": {
+          "value": 16
+        }
+      },
+      "tx18": {
+        "minecraft:variant": {
+          "value": 17
+        }
+      },
+      "tx19": {
+        "minecraft:variant": {
+          "value": 18
+        }
+      },
+      "tx20": {
+        "minecraft:variant": {
+          "value": 19
+        }
+      },
+      "tx21": {
+        "minecraft:variant": {
+          "value": 20
+        }
+      },
+      "tx22": {
+        "minecraft:variant": {
+          "value": 21
+        }
+      },
+      "tx23": {
+        "minecraft:variant": {
+          "value": 22
+        }
+      },
+      "tx24": {
+        "minecraft:variant": {
+          "value": 23
+        }
+      },
+      "tx25": {
+        "minecraft:variant": {
+          "value": 24
+        }
+      },
+      "tx26": {
+        "minecraft:variant": {
+          "value": 25
+        }
+      },
+      "tx27": {
+        "minecraft:variant": {
+          "value": 26
+        }
+      },
+      "tx28": {
+        "minecraft:variant": {
+          "value": 27
+        }
+      },
+      "tx29": {
+        "minecraft:variant": {
+          "value": 28
+        }
+      },
+      "tx30": {
+        "minecraft:variant": {
+          "value": 29
+        }
+      },
+      "tx31": {
+        "minecraft:variant": {
+          "value": 30
+        }
+      },
+      "tx32": {
+        "minecraft:variant": {
+          "value": 31
+        }
+      },
+      "tx33": {
+        "minecraft:variant": {
+          "value": 32
+        }
+      },
+      "tx34": {
+        "minecraft:variant": {
+          "value": 33
+        }
+      },
+      "tx35": {
+        "minecraft:variant": {
+          "value": 34
+        }
+      },
+      "tx36": {
+        "minecraft:variant": {
+          "value": 35
+        }
+      },
+      "tx37": {
+        "minecraft:variant": {
+          "value": 36
+        }
+      },
+      "tx38": {
+        "minecraft:variant": {
+          "value": 37
+        }
+      },
+      "0movement": {
+        "minecraft:movement": {
+          "value": 0
+        }
+      },
+      "normal_movement": {
+        "minecraft:movement": {
+          "value": 0.31
+        }
+      },
+      "wooden_trade": {
+        "minecraft:trade_table": {
+          "display_name": "Xem hàng đi...",
+          "table": "trading/wooden.json",
+          "new_screen": true
+        },
+        "minecraft:behavior.trade_with_player": {
+          "priority": 1,
+          "filters": {
+            "all_of": [
+              {
+                "test": "has_target",
+                "subject": "self",
+                "operator": "equals",
+                "value": false
+              }
+            ]
+          }
+        }
+      },
+      "copper_trade": {
+        "minecraft:trade_table": {
+          "display_name": "Xem hàng đi...",
+          "table": "trading/copper.json",
+          "new_screen": true
+        },
+        "minecraft:behavior.trade_with_player": {
+          "priority": 1,
+          "filters": {
+            "all_of": [
+              {
+                "test": "has_target",
+                "subject": "self",
+                "operator": "equals",
+                "value": false
+              }
+            ]
+          }
+        }
+      },
+      "iron_trade": {
+        "minecraft:trade_table": {
+          "display_name": "Xem hàng đi...",
+          "table": "trading/iron.json",
+          "new_screen": true
+        },
+        "minecraft:behavior.trade_with_player": {
+          "priority": 1,
+          "filters": {
+            "all_of": [
+              {
+                "test": "has_target",
+                "subject": "self",
+                "operator": "equals",
+                "value": false
+              }
+            ]
+          }
+        }
+      },
+      "diamond_trade": {
+        "minecraft:trade_table": {
+          "display_name": "Xem hàng đi...",
+          "table": "trading/diamond.json",
+          "new_screen": true
+        },
+        "minecraft:behavior.trade_with_player": {
+          "priority": 1,
+          "filters": {
+            "all_of": [
+              {
+                "test": "has_target",
+                "subject": "self",
+                "operator": "equals",
+                "value": false
+              }
+            ]
+          }
+        }
+      },
+      "stone_trade": {
+        "minecraft:trade_table": {
+          "display_name": "Xem hàng đi...",
+          "table": "trading/stone.json",
+          "new_screen": true
+        },
+        "minecraft:behavior.trade_with_player": {
+          "priority": 1,
+          "filters": {
+            "all_of": [
+              {
+                "test": "has_target",
+                "subject": "self",
+                "operator": "equals",
+                "value": false
+              }
+            ]
+          }
+        }
+      },
+      "log": {
+        "minecraft:behavior.tempt": {
+          "priority": 9,
+          "speed_multiplier": 1.33,
+          "stop_distance": 4,
+          "items": [
+            "oak_log"
+          ]
+        }
+      },
+      "beef": {
+        "minecraft:behavior.tempt": {
+          "priority": 9,
+          "speed_multiplier": 1.33,
+          "stop_distance": 4,
+          "items": [
+            "cooked_beef"
+          ]
+        }
+      },
+      "iron_need": {
+        "minecraft:behavior.tempt": {
+          "priority": 9,
+          "speed_multiplier": 1.33,
+          "stop_distance": 4,
+          "items": [
+            "iron_ingot"
+          ]
+        }
+      },
+      "diamond_need": {
+        "minecraft:behavior.tempt": {
+          "priority": 9,
+          "speed_multiplier": 1.33,
+          "stop_distance": 4,
+          "items": [
+            "diamond"
+          ]
+        }
+      },
+      "apple": {
+        "minecraft:behavior.tempt": {
+          "priority": 9,
+          "speed_multiplier": 1.33,
+          "stop_distance": 4,
+          "items": [
+            "enchanted_golden_apple"
+          ]
+        }
+      },
+      "good": {
+        "minecraft:behavior.avoid_mob_type": {
+          "priority": 1,
+          "entity_types": [
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "monster"
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": "<="
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "blocking"
+                  }
+                ]
+              },
+              "max_dist": 10,
+              "remove_target": true,
+              "sprint_speed_multiplier": 1.33
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "bad"
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": "<="
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "blocking"
+                  }
+                ]
+              },
+              "max_dist": 16,
+              "remove_target": true,
+              "sprint_speed_multiplier": 1.33
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "good",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "bad",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "crazy",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "player",
+                    "operator": "="
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": "<="
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "blocking"
+                  }
+                ]
+              },
+              "max_dist": 16,
+              "remove_target": true,
+              "sprint_speed_multiplier": 1.33
+            }
+          ]
+        },
+        "minecraft:type_family": {
+          "family": [
+            "player",
+            "mob",
+            "good"
+          ]
+        },
+        "minecraft:behavior.nearest_attackable_target": {
+          "priority": 7,
+          "must_see": true,
+          "reselect_targets": true,
+          "within_radius": 25,
+          "must_see_forget_duration": 17,
+          "entity_types": [
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "monster"
+                  },
+                  {
+                    "test": "is_underwater",
+                    "subject": "other",
+                    "operator": "==",
+                    "value": false
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "piglin",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "allow_attack"
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "warden",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "enderman",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": ">"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "regeneration"
+                  },
+                  {
+                    "test": "is_avoiding_mobs",
+                    "subject": "self",
+                    "operator": "equals",
+                    "value": false
+                  }
+                ]
+              },
+              "max_dist": 6,
+              "reevaluate_description": false
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "monster"
+                  },
+                  {
+                    "test": "is_underwater",
+                    "subject": "other",
+                    "operator": "==",
+                    "value": false
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "piglin",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "=",
+                    "value": "allow_attack"
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "warden",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "enderman",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": ">"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "regeneration"
+                  },
+                  {
+                    "test": "is_avoiding_mobs",
+                    "subject": "self",
+                    "operator": "equals",
+                    "value": false
+                  }
+                ]
+              },
+              "max_dist": 24,
+              "reevaluate_description": false
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_underwater",
+                    "subject": "other",
+                    "operator": "==",
+                    "value": false
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "=",
+                    "value": "allow_attack"
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": ">"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "regeneration"
+                  },
+                  {
+                    "test": "is_avoiding_mobs",
+                    "subject": "self",
+                    "operator": "equals",
+                    "value": false
+                  },
+                  {
+                    "any_of": [
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "pig"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "cow"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "sheep"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "chicken"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "max_dist": 24,
+              "reevaluate_description": false
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "bad"
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": ">"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "regeneration"
+                  },
+                  {
+                    "test": "is_avoiding_mobs",
+                    "subject": "self",
+                    "operator": "equals",
+                    "value": false
+                  }
+                ]
+              },
+              "max_dist": 20,
+              "reevaluate_description": true
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "crazy"
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": ">"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "regeneration"
+                  },
+                  {
+                    "test": "is_avoiding_mobs",
+                    "subject": "self",
+                    "operator": "equals",
+                    "value": false
+                  }
+                ]
+              },
+              "max_dist": 20,
+              "reevaluate_description": true
+            }
+          ]
+        }
+      },
+      "bad": {
+        "minecraft:behavior.avoid_mob_type": {
+          "priority": 1,
+          "entity_types": [
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "monster"
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": "<="
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "blocking"
+                  }
+                ]
+              },
+              "max_dist": 10,
+              "remove_target": true,
+              "sprint_speed_multiplier": 1.33
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "good"
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": "<="
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "blocking"
+                  }
+                ]
+              },
+              "max_dist": 16,
+              "remove_target": true,
+              "sprint_speed_multiplier": 1.33
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "good",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "bad",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "crazy",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "player",
+                    "operator": "="
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": "<="
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "blocking"
+                  }
+                ]
+              },
+              "max_dist": 16,
+              "remove_target": true,
+              "sprint_speed_multiplier": 1.33
+            }
+          ]
+        },
+        "minecraft:type_family": {
+          "family": [
+            "player",
+            "mob",
+            "bad"
+          ]
+        },
+        "minecraft:behavior.nearest_attackable_target": {
+          "priority": 7,
+          "must_see": true,
+          "reselect_targets": true,
+          "within_radius": 25,
+          "must_see_forget_duration": 17,
+          "entity_types": [
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "monster"
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "allow_attack"
+                  },
+                  {
+                    "test": "is_underwater",
+                    "subject": "other",
+                    "operator": "==",
+                    "value": false
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "piglin",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "warden",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "enderman",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": ">"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "regeneration"
+                  },
+                  {
+                    "test": "is_avoiding_mobs",
+                    "subject": "self",
+                    "operator": "equals",
+                    "value": false
+                  }
+                ]
+              },
+              "max_dist": 6,
+              "reevaluate_description": false
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "monster"
+                  },
+                  {
+                    "test": "is_underwater",
+                    "subject": "other",
+                    "operator": "==",
+                    "value": false
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "piglin",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "=",
+                    "value": "allow_attack"
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "warden",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "enderman",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": ">"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "regeneration"
+                  },
+                  {
+                    "test": "is_avoiding_mobs",
+                    "subject": "self",
+                    "operator": "equals",
+                    "value": false
+                  }
+                ]
+              },
+              "max_dist": 24,
+              "reevaluate_description": false
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_underwater",
+                    "subject": "other",
+                    "operator": "==",
+                    "value": false
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "=",
+                    "value": "allow_attack"
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": ">"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "regeneration"
+                  },
+                  {
+                    "test": "is_avoiding_mobs",
+                    "subject": "self",
+                    "operator": "equals",
+                    "value": false
+                  },
+                  {
+                    "any_of": [
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "pig"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "cow"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "sheep"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "chicken"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "max_dist": 24,
+              "reevaluate_description": false
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "good"
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": ">"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "regeneration"
+                  },
+                  {
+                    "test": "is_avoiding_mobs",
+                    "subject": "self",
+                    "operator": "equals",
+                    "value": false
+                  }
+                ]
+              },
+              "max_dist": 20,
+              "reevaluate_description": true
+            },
+        
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "crazy"
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": ">"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "regeneration"
+                  },
+                  {
+                    "test": "is_avoiding_mobs",
+                    "subject": "self",
+                    "operator": "equals",
+                    "value": false
+                  }
+                ]
+              },
+              "max_dist": 20,
+              "reevaluate_description": true
+            }
+          ]
+        }
+      },
+      "crazy": {
+        "minecraft:behavior.avoid_mob_type": {
+          "priority": 1,
+          "entity_types": [
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "monster"
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": "<="
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "blocking"
+                  }
+                ]
+              },
+              "max_dist": 10,
+              "remove_target": true,
+              "sprint_speed_multiplier": 1.33
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "player"
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": "<="
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "blocking"
+                  }
+                ]
+              },
+              "max_dist": 16,
+              "remove_target": true,
+              "sprint_speed_multiplier": 1.33
+            }
+          ]
+        },
+        "minecraft:type_family": {
+          "family": [
+            "player",
+            "mob",
+            "crazy"
+          ]
+        },
+        "minecraft:behavior.nearest_attackable_target": {
+          "priority": 7,
+          "must_see": true,
+          "reselect_targets": true,
+          "within_radius": 25,
+          "must_see_forget_duration": 17,
+          "entity_types": [
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "monster"
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "allow_attack"
+                  },
+                  {
+                    "test": "is_underwater",
+                    "subject": "other",
+                    "operator": "==",
+                    "value": false
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "piglin",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "warden",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "enderman",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": ">"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "regeneration"
+                  },
+                  {
+                    "test": "is_avoiding_mobs",
+                    "subject": "self",
+                    "operator": "equals",
+                    "value": false
+                  }
+                ]
+              },
+              "max_dist": 6,
+              "reevaluate_description": false
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "monster"
+                  },
+                  {
+                    "test": "is_underwater",
+                    "subject": "other",
+                    "operator": "==",
+                    "value": false
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "piglin",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "=",
+                    "value": "allow_attack"
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "warden",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "enderman",
+                    "operator": "!="
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": ">"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "regeneration"
+                  },
+                  {
+                    "test": "is_avoiding_mobs",
+                    "subject": "self",
+                    "operator": "equals",
+                    "value": false
+                  }
+                ]
+              },
+              "max_dist": 24,
+              "reevaluate_description": false
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_underwater",
+                    "subject": "other",
+                    "operator": "==",
+                    "value": false
+                  },
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "operator": "=",
+                    "value": "allow_attack"
+                  },
+                  {
+                    "test": "actor_health",
+                    "subject": "self",
+                    "value": 8,
+                    "operator": ">"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "self",
+                    "operator": "!=",
+                    "value": "regeneration"
+                  },
+                  {
+                    "test": "is_avoiding_mobs",
+                    "subject": "self",
+                    "operator": "equals",
+                    "value": false
+                  },
+                  {
+                    "any_of": [
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "pig"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "cow"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "sheep"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "chicken"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "max_dist": 24,
+              "reevaluate_description": false
+            }
+           
+          ]
+        }
+      },
+      "tame": {
+        "minecraft:sittable": {},
+        "minecraft:behavior.follow_owner": {
+          "priority": 6,
+          "speed_multiplier": 1.33,
+          "start_distance": 16,
+          "stop_distance": 6
+        },
+        "minecraft:behavior.teleport_to_owner": {
+          "priority": 1,
+          "filters": {
+            "any_of": [
+              {
+                "all_of": [
+                  {
+                    "test": "owner_distance",
+                    "operator": ">",
+                    "value": 24
+                  },
+                  {
+                    "test": "is_panicking"
+                  }
+                ]
+              },
+              {
+                "all_of": [
+                  {
+                    "test": "owner_distance",
+                    "operator": ">",
+                    "value": 24
+                  },
+                  {
+                    "test": "has_target"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "minecraft:behavior.owner_hurt_target": {
+          "priority": 4
+        },
+        "minecraft:behavior.owner_hurt_by_target": {
+          "priority": 5
+        },
+        "minecraft:tameable": {
+          "probability": 1,
+          "tame_items": "diamond",
+          "tame_event": {
+            "event": "on_tameh",
+            "target": "self"
+          }
+        }
+      },
+      "ask_need": {
+        "minecraft:interact": {
+          "interactions": [
+            {
+              "on_interact": {
+                "filters": {
+                  "all_of": [
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "player"
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "other",
+                      "value": "iron_sword"
+                    },
+                    {
+                      "test": "has_target",
+                      "subject": "self",
+                      "operator": "equals",
+                      "value": false
+                    }
+                  ]
+                },
+                "event": "ask_neede",
+                "target": "self"
+              },
+              "use_item": false,
+              "swing": true,
+              "interact_text": "action.interact.ask"
+            },
+            {
+              "on_interact": {
+                "filters": {
+                  "all_of": [
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "player"
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "other",
+                      "value": "oak_log"
+                    },
+                    {
+                      "test": "has_tag",
+                      "subject": "self",
+                      "operator": "=",
+                      "value": "need"
+                    },
+                    {
+                      "test": "has_tag",
+                      "subject": "self",
+                      "operator": "=",
+                      "value": "need_log"
+                    },
+                    {
+                      "test": "has_target",
+                      "subject": "self",
+                      "operator": "equals",
+                      "value": false
+                    }
+                  ]
+                },
+                "event": "give_event",
+                "target": "self"
+              },
+              "use_item": true,
+              "swing": true,
+              "interact_text": "action.interact.give"
+            },
+            {
+              "on_interact": {
+                "filters": {
+                  "all_of": [
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "player"
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "other",
+                      "value": "cooked_beef"
+                    },
+                    {
+                      "test": "has_tag",
+                      "subject": "self",
+                      "operator": "=",
+                      "value": "need"
+                    },
+                    {
+                      "test": "has_tag",
+                      "subject": "self",
+                      "operator": "=",
+                      "value": "need_beef"
+                    },
+                    {
+                      "test": "has_target",
+                      "subject": "self",
+                      "operator": "equals",
+                      "value": false
+                    }
+                  ]
+                },
+                "event": "give_event",
+                "target": "self"
+              },
+              "use_item": true,
+              "swing": true,
+              "interact_text": "action.interact.give"
+            },
+            {
+              "on_interact": {
+                "filters": {
+                  "all_of": [
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "player"
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "other",
+                      "value": "iron_ingot"
+                    },
+                    {
+                      "test": "has_tag",
+                      "subject": "self",
+                      "operator": "=",
+                      "value": "need"
+                    },
+                    {
+                      "test": "has_tag",
+                      "subject": "self",
+                      "operator": "=",
+                      "value": "need_iron"
+                    },
+                    {
+                      "test": "has_target",
+                      "subject": "self",
+                      "operator": "equals",
+                      "value": false
+                    }
+                  ]
+                },
+                "event": "give_event",
+                "target": "self"
+              },
+              "use_item": true,
+              "swing": true,
+              "interact_text": "action.interact.give"
+            },
+            {
+              "on_interact": {
+                "filters": {
+                  "all_of": [
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "player"
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "other",
+                      "value": "diamond"
+                    },
+                    {
+                      "test": "has_tag",
+                      "subject": "self",
+                      "operator": "=",
+                      "value": "need"
+                    },
+                    {
+                      "test": "has_tag",
+                      "subject": "self",
+                      "operator": "=",
+                      "value": "need_diamond"
+                    },
+                    {
+                      "test": "has_target",
+                      "subject": "self",
+                      "operator": "equals",
+                      "value": false
+                    }
+                  ]
+                },
+                "event": "give_event",
+                "target": "self"
+              },
+              "use_item": true,
+              "swing": true,
+              "interact_text": "action.interact.give"
+            },
+            {
+              "on_interact": {
+                "filters": {
+                  "all_of": [
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "player"
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "other",
+                      "value": "enchanted_golden_apple"
+                    },
+                    {
+                      "test": "has_tag",
+                      "subject": "self",
+                      "operator": "=",
+                      "value": "need"
+                    },
+                    {
+                      "test": "has_tag",
+                      "subject": "self",
+                      "operator": "=",
+                      "value": "need_apple"
+                    },
+                    {
+                      "test": "has_target",
+                      "subject": "self",
+                      "operator": "equals",
+                      "value": false
+                    }
+                  ]
+                },
+                "event": "give_event",
+                "target": "self"
+              },
+              "use_item": true,
+              "swing": true,
+              "interact_text": "action.interact.give"
+            }
+          ]
+        }
+      },
+      "walk_stroll": {
+        "minecraft:behavior.move_to_random_block": {
+          "priority": 11,
+          "speed_multiplier": 1.05,
+          "within_radius": 8,
+          "block_distance": 512
+        }
+      },
+      "run_stroll": {
+        "minecraft:behavior.move_to_random_block": {
+          "priority": 11,
+          "speed_multiplier": 1.33,
+          "within_radius": 8,
+          "block_distance": 512
+        }
+      },
+      "random_stone": {
+        "minecraft:timer": {
+          "time": 0.1,
+          "looping": false,
+          "time_down_event": {
+            "event": "stone_random"
+          }
+        }
+      },
+      "random_copper": {
+        "minecraft:timer": {
+          "time": 0.1,
+          "looping": false,
+          "time_down_event": {
+            "event": "copper_random"
+          }
+        }
+      },
+      "random_iron": {
+        "minecraft:timer": {
+          "time": 0.1,
+          "looping": false,
+          "time_down_event": {
+            "event": "iron_random"
+          }
+        }
+      },
+      "random_diamond": {
+        "minecraft:timer": {
+          "time": 0.1,
+          "looping": false,
+          "time_down_event": {
+            "event": "diamond_random"
+          }
+        }
+      },
+      "random_diamond_pro": {
+        "minecraft:timer": {
+          "time": 0.1,
+          "looping": false,
+          "time_down_event": {
+            "event": "diamond_pro_random"
+          }
+        }
+      },
+      "quit_blocking_ani": {
+        "minecraft:mark_variant": {
+          "value": 0
+        }
+      },
+      "blocking_ani": {
+        "minecraft:mark_variant": {
+          "value": 1
+        }
+      },
+      "use_bow": {
+        "minecraft:behavior.ranged_attack": {
+          "priority": 2,
+          "speed_multiplier": 1.2,
+          "attack_interval_min": 1.0,
+          "attack_interval_max": 2.0,
+          "attack_radius_min": 5,
+          "attack_radius": 24,
+          "burst_shots": 1,
+          "burst_interval": 0.1,
+          "charge_charged_trigger": 0,
+          "charge_shoot_trigger": 0
+        },
+        "minecraft:shooter": {
+          "def": "minecraft:arrow"
+        }
+      },
+      "wooden": {
+        "minecraft:equipment": {
+          "table": "loot_tables/newb_equip.json",
+          "slot_drop_chance": [
+            {
+              "slot": "slot.weapon.mainhand",
+              "drop_chance": 1.0
+            }
+          ]
+        },
+        "minecraft:experience_reward": {
+          "on_death": "query.last_hit_by_player ? 1 + (query.equipment_count * Math.Random(1,6)) : 0"
+        },
+        "minecraft:loot": {
+          "table": "loot_tables/newb.json"
+        }
+      },
+      "stone": {
+        "minecraft:equipment": {
+          "table": "loot_tables/stone_equip.json",
+          "slot_drop_chance": [
+            {
+              "slot": "slot.weapon.mainhand",
+              "drop_chance": 1.0
+            }
+          ]
+        },
+        "minecraft:experience_reward": {
+          "on_death": "query.last_hit_by_player ? 1 + (query.equipment_count * Math.Random(4,12)) : 0"
+        },
+        "minecraft:loot": {
+          "table": "loot_tables/stone_loot.json"
+        }
+      },
+      "copper": {
+        "minecraft:equipment": {
+          "table": "loot_tables/copper_equip.json",
+          "slot_drop_chance": [
+            {
+              "slot": "slot.weapon.mainhand",
+              "drop_chance": 1.0
+            }
+          ]
+        },
+        "minecraft:experience_reward": {
+          "on_death": "query.last_hit_by_player ? 1 + (query.equipment_count * Math.Random(8,18)) : 0"
+        },
+        "minecraft:loot": {
+          "table": "loot_tables/copper_loot.json"
+        }
+      },
+      "iron": {
+        "minecraft:equipment": {
+          "table": "loot_tables/iron_equip.json",
+          "slot_drop_chance": [
+            {
+              "slot": "slot.weapon.mainhand",
+              "drop_chance": 1.0
+            }
+          ]
+        },
+        "minecraft:experience_reward": {
+          "on_death": "query.last_hit_by_player ? 1 + (query.equipment_count * Math.Random(12,24)) : 0"
+        },
+        "minecraft:loot": {
+          "table": "loot_tables/iron_loot.json"
+        }
+      },
+      "diamond": {
+        "minecraft:equipment": {
+          "table": "loot_tables/diamond_equip.json",
+          "slot_drop_chance": [
+            {
+              "slot": "slot.weapon.mainhand",
+              "drop_chance": 1.0
+            }
+          ]
+        },
+        "minecraft:experience_reward": {
+          "on_death": "query.last_hit_by_player ? 1 + (query.equipment_count * Math.Random(16,32)) : 0"
+        },
+        "minecraft:loot": {
+          "table": "loot_tables/diamond_loot.json"
+        }
+      },
+      "diamond_pro": {
+        "minecraft:equipment": {
+          "table": "loot_tables/diamond_pro_equip.json",
+          "slot_drop_chance": [
+            {
+              "slot": "slot.weapon.mainhand",
+              "drop_chance": 1.0
+            }
+          ]
+        },
+        "minecraft:experience_reward": {
+          "on_death": "query.last_hit_by_player ? 1 + (query.equipment_count * Math.Random(20,40)) : 0"
+        },
+        "minecraft:loot": {
+          "table": "loot_tables/diamond_loot.json"
+        }
+      },
+      "Lv1": {
+        "minecraft:behavior.melee_attack": {
+          "priority": 2
+        },
+        "minecraft:attack": {
+          "damage": 2
+        }
+      },
+      "Lv2": {
+        "minecraft:behavior.ranged_attack": {
+          "priority": 2,
+          "speed_multiplier": 1.5,
+          "attack_interval_min": 0.7,
+          "attack_interval_max": 1,
+          "attack_radius_min": 2.3,
+          "attack_radius": 3.9,
+          "burst_shots": 1,
+          "burst_interval": 0.1,
+          "charge_charged_trigger": 0,
+          "charge_shoot_trigger": 0,
+          "swing": true
+        },
+        "minecraft:shooter": {
+          "def": "dhh:melee_strike_projectile"
+        }
+      },
+      "Lv2_shield": {
+        "minecraft:behavior.ranged_attack": {
+          "priority": 2,
+          "speed_multiplier": 1.5,
+          "attack_interval_min": 1.1,
+          "attack_interval_max": 1.5,
+          "attack_radius_min": 1.5,
+          "attack_radius": 3.9,
+          "burst_shots": 1,
+          "burst_interval": 0.1,
+          "charge_charged_trigger": 0,
+          "charge_shoot_trigger": 0,
+          "swing": true
+        },
+        "minecraft:shooter": {
+          "def": "dhh:melee_strike_projectile"
+        }
+      },
+      "Lv3": {
+        "minecraft:behavior.ranged_attack": {
+          "priority": 2,
+          "speed_multiplier": 1.5,
+          "attack_interval_min": 0.6,
+          "attack_interval_max": 0.9,
+          "attack_radius_min": 2.4,
+          "attack_radius": 4,
+          "burst_shots": 1,
+          "burst_interval": 0.1,
+          "charge_charged_trigger": 0,
+          "charge_shoot_trigger": 0,
+          "swing": true
+        },
+        "minecraft:shooter": {
+          "def": "dhh:melee_strike_projectile"
+        }
+      },
+      "Lv3_shield": {
+        "minecraft:behavior.ranged_attack": {
+          "priority": 2,
+          "speed_multiplier": 1.5,
+          "attack_interval_min": 1.0,
+          "attack_interval_max": 1.4,
+          "attack_radius_min": 1.5,
+          "attack_radius": 4,
+          "burst_shots": 1,
+          "burst_interval": 0.1,
+          "charge_charged_trigger": 0,
+          "charge_shoot_trigger": 0,
+          "swing": true
+        },
+        "minecraft:shooter": {
+          "def": "dhh:melee_strike_projectile"
+        }
+      },
+      "Lv4": {
+        "minecraft:behavior.ranged_attack": {
+          "priority": 2,
+          "speed_multiplier": 1.5,
+          "attack_interval_min": 0.5,
+          "attack_interval_max": 0.8,
+          "attack_radius_min": 2.5,
+          "attack_radius": 4.1,
+          "burst_shots": 1,
+          "burst_interval": 0.1,
+          "charge_charged_trigger": 0,
+          "charge_shoot_trigger": 0,
+          "swing": true
+        },
+        "minecraft:shooter": {
+          "def": "dhh:melee_strike_projectile"
+        }
+      },
+      "Lv4_shield": {
+        "minecraft:behavior.ranged_attack": {
+          "priority": 2,
+          "speed_multiplier": 1.5,
+          "attack_interval_min": 0.9,
+          "attack_interval_max": 1.3,
+          "attack_radius_min": 1.5,
+          "attack_radius": 4.1,
+          "burst_shots": 1,
+          "burst_interval": 0.1,
+          "charge_charged_trigger": 0,
+          "charge_shoot_trigger": 0,
+          "swing": true
+        },
+        "minecraft:shooter": {
+          "def": "dhh:melee_strike_projectile"
+        }
+      },
+      "Lv5": {
+        "minecraft:behavior.ranged_attack": {
+          "priority": 2,
+          "speed_multiplier": 1.5,
+          "attack_interval_min": 0.4,
+          "attack_interval_max": 0.7,
+          "attack_radius_min": 2.5,
+          "attack_radius": 4.1,
+          "burst_shots": 1,
+          "burst_interval": 0.1,
+          "charge_charged_trigger": 0,
+          "charge_shoot_trigger": 0,
+          "swing": true
+        },
+        "minecraft:shooter": {
+          "def": "dhh:melee_strike_projectile"
+        }
+      },
+      "Lv5_shield": {
+        "minecraft:behavior.ranged_attack": {
+          "priority": 2,
+          "speed_multiplier": 1.5,
+          "attack_interval_min": 0.8,
+          "attack_interval_max": 1.2,
+          "attack_radius_min": 1.5,
+          "attack_radius": 4.1,
+          "burst_shots": 1,
+          "burst_interval": 0.1,
+          "charge_charged_trigger": 0,
+          "charge_shoot_trigger": 0,
+          "swing": true
+        },
+        "minecraft:shooter": {
+          "def": "dhh:melee_strike_projectile"
+        }
+      },
+      "Lv6": {
+        "minecraft:behavior.ranged_attack": {
+          "priority": 2,
+          "speed_multiplier": 1.5,
+          "attack_interval_min": 0.35,
+          "attack_interval_max": 0.55,
+          "attack_radius_min": 2.5,
+          "attack_radius": 4.2,
+          "burst_shots": 1,
+          "burst_interval": 0.1,
+          "charge_charged_trigger": 0,
+          "charge_shoot_trigger": 0,
+          "swing": true
+        },
+        "minecraft:shooter": {
+          "def": "dhh:melee_strike_projectile"
+        }
+      },
+      "Lv6_shield": {
+        "minecraft:behavior.ranged_attack": {
+          "priority": 2,
+          "speed_multiplier": 1.5,
+          "attack_interval_min": 0.7,
+          "attack_interval_max": 1.1,
+          "attack_radius_min": 1.5,
+          "attack_radius": 4.2,
+          "burst_shots": 1,
+          "burst_interval": 0.1,
+          "charge_charged_trigger": 0,
+          "charge_shoot_trigger": 0,
+          "swing": true
+        },
+        "minecraft:shooter": {
+          "def": "dhh:melee_strike_projectile"
+        }
+      }
+    },
+    "components": {
+       "minecraft:leashable": {},
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "on_damage": {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "value": "blocking"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:wooden_axe"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:stone_axe"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:iron_axe"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:diamond_axe"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:golden_axe"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:netherite_axe"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:copper_axe"
+                  },
+                  {
+                    "any_of": [
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "mob"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "player"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "cause": "entity_attack",
+            "deals_damage": "no"
+          },
+          {
+            "on_damage": {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "has_tag",
+                    "subject": "self",
+                    "value": "blocking"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:wooden_axe"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:stone_axe"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:iron_axe"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:diamond_axe"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:golden_axe"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:netherite_axe"
+                  },
+                  {
+                    "test": "has_equipment",
+                    "subject": "other",
+                    "domain": "hand",
+                    "operator": "!=",
+                    "value": "minecraft:copper_axe"
+                  },
+                  {
+                    "any_of": [
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "mob"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "player"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "cause": "projectile",
+            "deals_damage": "no"
+          }
+        ]
+      },
+      "minecraft:environment_sensor": {
+        "triggers": [
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "operator": "equals",
+                  "value": false
+                }
+              ]
+            },
+            "event": "no_has_target"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "operator": "equals",
+                  "value": true
+                }
+              ]
+            },
+            "event": "has_target"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "operator": "equals",
+                  "value": false
+                }
+              ]
+            },
+            "event": "rdm_item"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "operator": "equals",
+                  "value": true
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "prepare"
+                },
+                {
+                  "any_of": [
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "self",
+                      "value": "wooden_sword",
+                      "operator": "="
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "self",
+                      "value": "wooden_axe",
+                      "operator": "="
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "self",
+                      "value": "stone_sword",
+                      "operator": "="
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "self",
+                      "value": "stone_axe",
+                      "operator": "="
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "self",
+                      "value": "copper_sword",
+                      "operator": "="
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "self",
+                      "value": "copper_axe",
+                      "operator": "="
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "self",
+                      "value": "iron_sword",
+                      "operator": "="
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "self",
+                      "value": "iron_axe",
+                      "operator": "="
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "self",
+                      "value": "diamond_sword",
+                      "operator": "="
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "self",
+                      "value": "diamond_axe",
+                      "operator": "="
+                    },
+                    {
+                      "test": "has_equipment",
+                      "domain": "hand",
+                      "subject": "self",
+                      "value": "bow",
+                      "operator": "="
+                    },
+                    {
+                      "test": "has_tag",
+                      "subject": "self",
+                      "operator": "=",
+                      "value": "on_eat"
+                    }
+                  ]
+                }
+              ]
+            },
+            "event": "remove_prepare"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "operator": "equals",
+                  "value": true
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "prepare"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "wooden"
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "wooden_sword",
+                  "operator": "!="
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "wooden_axe",
+                  "operator": "!="
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "bow",
+                  "operator": "!="
+                }
+              ]
+            },
+            "event": "switch_sword"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "operator": "equals",
+                  "value": true
+                },
+                {
+                  "test": "target_distance",
+                  "subject": "self",
+                  "operator": ">=",
+                  "value": 7.0
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "blocking"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "bow"
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "bow",
+                  "operator": "!="
+                }
+              ]
+            },
+            "event": "switch_bow"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "operator": "equals",
+                  "value": true
+                },
+                {
+                  "test": "target_distance",
+                  "subject": "self",
+                  "operator": "<",
+                  "value": 4.5
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "bow"
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "bow",
+                  "operator": "="
+                }
+              ]
+            },
+            "event": "cancel_bow"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "operator": "equals",
+                  "value": true
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "prepare"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "stone"
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "stone_sword",
+                  "operator": "!="
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "stone_axe",
+                  "operator": "!="
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "bow",
+                  "operator": "!="
+                }
+              ]
+            },
+            "event": "switch_stone_sword"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "operator": "equals",
+                  "value": true
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "prepare"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "copper"
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "copper_sword",
+                  "operator": "!="
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "copper_axe",
+                  "operator": "!="
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "bow",
+                  "operator": "!="
+                }
+              ]
+            },
+            "event": "switch_copper_sword"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "operator": "equals",
+                  "value": true
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "iron"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "prepare"
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "iron_sword",
+                  "operator": "!="
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "iron_axe",
+                  "operator": "!="
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "bow",
+                  "operator": "!="
+                }
+              ]
+            },
+            "event": "switch_iron_sword"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "operator": "equals",
+                  "value": true
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "diamond"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "prepare"
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "diamond_axe",
+                  "operator": "!="
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "diamond_sword",
+                  "operator": "!="
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "bow",
+                  "operator": "!="
+                }
+              ]
+            },
+            "event": "switch_diamond_sword"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "operator": "equals",
+                  "value": true
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "diamond_pro"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "prepare"
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "diamond_axe",
+                  "operator": "!="
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "diamond_sword",
+                  "operator": "!="
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "bow",
+                  "operator": "!="
+                }
+              ]
+            },
+            "event": "switch_diamond_sword"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "operator": "equals",
+                  "value": true
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "can_block"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "blocking"
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "shield",
+                  "operator": "="
+                },
+                {
+                  "test": "has_equipment",
+                  "domain": "hand",
+                  "subject": "self",
+                  "value": "bow",
+                  "operator": "!="
+                }
+              ]
+            },
+            "event": "block"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_mob_effect",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "regeneration"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "wooden"
+                },
+                {
+                  "test": "actor_health",
+                  "subject": "self",
+                  "value": 8,
+                  "operator": "<="
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "blocking"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                }
+              ]
+            },
+            "event": "eat_food"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_mob_effect",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "regeneration"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "stone"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "actor_health",
+                  "subject": "self",
+                  "value": 8,
+                  "operator": "<="
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "blocking"
+                }
+              ]
+            },
+            "event": "stone_eat_food"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_mob_effect",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "regeneration"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "copper"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "actor_health",
+                  "subject": "self",
+                  "value": 8,
+                  "operator": "<="
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "blocking"
+                }
+              ]
+            },
+            "event": "copper_eat_food"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_mob_effect",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "regeneration"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "iron"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "actor_health",
+                  "subject": "self",
+                  "value": 8,
+                  "operator": "<="
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "blocking"
+                }
+              ]
+            },
+            "event": "iron_eat_food"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_mob_effect",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "regeneration"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "diamond"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "actor_health",
+                  "subject": "self",
+                  "value": 8,
+                  "operator": "<="
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "blocking"
+                }
+              ]
+            },
+            "event": "diamond_eat_food"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_mob_effect",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "regeneration"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "=",
+                  "value": "diamond_pro"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "on_eat"
+                },
+                {
+                  "test": "actor_health",
+                  "subject": "self",
+                  "value": 8,
+                  "operator": "<="
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "self",
+                  "operator": "!=",
+                  "value": "blocking"
+                }
+              ]
+            },
+            "event": "diamond_pro_eat_food"
+          }
+        ]
+      },
+      "minecraft:shareables": {
+        "items": [
+          {
+            "item": "minecraft:netherite_helmet",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 0
+          },
+          {
+            "item": "minecraft:diamond_helmet",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 1
+          },
+          {
+            "item": "minecraft:iron_helmet",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 2
+          },
+          {
+            "item": "minecraft:chainmail_helmet",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 3
+          },
+          {
+            "item": "minecraft:copper_helmet",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 4
+          },
+          {
+            "item": "minecraft:golden_helmet",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 5
+          },
+          {
+            "item": "minecraft:leather_helmet",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 6
+          },
+          {
+            "item": "minecraft:turtle_helmet",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 7
+          },
+          {
+            "item": "minecraft:skull:0",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 8
+          },
+          {
+            "item": "minecraft:skull:1",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 8
+          },
+          {
+            "item": "minecraft:carved_pumpkin",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 8
+          },
+          {
+            "item": "minecraft:netherite_chestplate",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 0
+          },
+          {
+            "item": "minecraft:diamond_chestplate",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 1
+          },
+          {
+            "item": "minecraft:iron_chestplate",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 2
+          },
+          {
+            "item": "minecraft:chainmail_chestplate",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 3
+          },
+          {
+            "item": "minecraft:copper_chestplate",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 4
+          },
+          {
+            "item": "minecraft:golden_chestplate",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 5
+          },
+          {
+            "item": "minecraft:leather_chestplate",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 6
+          },
+          {
+            "item": "minecraft:netherite_leggings",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 0
+          },
+          {
+            "item": "minecraft:diamond_leggings",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 1
+          },
+          {
+            "item": "minecraft:iron_leggings",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 2
+          },
+          {
+            "item": "minecraft:chainmail_leggings",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 3
+          },
+          {
+            "item": "minecraft:copper_leggings",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 4
+          },
+          {
+            "item": "minecraft:golden_leggings",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 5
+          },
+          {
+            "item": "minecraft:leather_leggings",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 6
+          },
+          {
+            "item": "minecraft:netherite_boots",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 0
+          },
+          {
+            "item": "minecraft:diamond_boots",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 1
+          },
+          {
+            "item": "minecraft:iron_boots",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 2
+          },
+          {
+            "item": "minecraft:chainmail_boots",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 3
+          },
+          {
+            "item": "minecraft:copper_boots",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 4
+          },
+          {
+            "item": "minecraft:golden_boots",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 5
+          },
+          {
+            "item": "minecraft:leather_boots",
+            "want_amount": 1,
+            "surplus_amount": 1,
+            "priority": 6
+          }
+        ]
+      },
+      "minecraft:behavior.pickup_items": {
+        "priority": 10,
+        "max_dist": 24,
+        "search_height": 3,
+        "goal_radius": 2.2,
+        "speed_multiplier": 1.33,
+        "can_pickup_to_hand_or_equipment": true,
+        "can_pickup_any_item": true
+      },
+      "minecraft:follow_range": {
+        "value": 1024
+      },
+      "minecraft:behavior.equip_item": {
+        "priority": 2
+      },
+      "minecraft:equip_item": {},
+      "minecraft:behavior.hurt_by_target": {
+        "priority": 3,
+        "entity_types": {
+          "filters": {
+            "all_of": [
+              {
+                "test": "is_family",
+                "subject": "other",
+                "operator": "!=",
+                "value": "creeper"
+              },
+              {
+                "test": "is_family",
+                "subject": "other",
+                "operator": "!=",
+                "value": "snowgolem"
+              }
+            ]
+          }
+        }
+      },
+      "minecraft:behavior.look_at_target": {
+        "priority": 12,
+        "look_distance": 16,
+        "probability": 1
+      },
+      "minecraft:behavior.float": {
+        "priority": 2
+      },
+      "minecraft:nameable": {
+        "always_show": true,
+        "allow_name_tag_renaming": false
+      },
+      "minecraft:health": {
+        "value": 20,
+        "max": 20
+      },
+      "minecraft:collision_box": {
+        "width": 0.6,
+        "height": 1.8
+      },
+      "minecraft:can_climb": {},
+      "minecraft:movement.basic": {},
+      "minecraft:navigation.walk": {
+        "is_amphibious": true,
+        "can_open_doors": true,
+        "can_pass_doors": true,
+        "can_walk": true,
+        "can_swim": true,
+        "can_path_over_water": true
+      },
+      "minecraft:annotation.open_door": {},
+      "minecraft:behavior.open_door": {
+        "priority": 4,
+        "close_door_after": true
+      },
+      "minecraft:jump.static": {},
+      "minecraft:attack": {
+        "damage": 1
+      },
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      }
+    },
+    "events": {
+      "minecraft:entity_spawned": {
+        "sequence": [
+          {
+            "randomize": [
+              {
+                "weight": 380,
+                "queue_command": {
+                  "command": [
+                    "function spawn"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 17,
+                "queue_command": {
+                  "command": [
+                    "function spawn"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 3,
+                "queue_command": {
+                  "command": [
+                    "function spawn"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 1,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "normal_movement"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 1,
+                "queue_command": {
+                  "command": [
+                    "tag @s add good"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "good",
+                    "good_no_follow_players"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "queue_command": {
+                  "command": [
+                    "tag @s add bad"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "bad",
+                    "bad_no_follow_players"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "queue_command": {
+                  "command": [
+                    "tag @s add crazy"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "crazy"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx01"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx02"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx03"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx04"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx05"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx06"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx07"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx08"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx09"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx10"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx11"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx12"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx13"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx14"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx15"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx16"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx17"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx18"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx19"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx20"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx21"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx22"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx23"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx24"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx25"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx26"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx27"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx28"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx29"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx30"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx31"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx32"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx33"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx34"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx35"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx36"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx37"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "add": {
+                  "component_groups": [
+                    "tx38"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 50,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 10,
+                "queue_command": {
+                  "command": [
+                    "tag @s add need",
+                    "tag @s add need_log",
+                    "scoreboard players random @s need_count 76 180"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "ask_need",
+                    "log"
+                  ]
+                }
+              },
+              {
+                "weight": 10,
+                "queue_command": {
+                  "command": [
+                    "tag @s add need",
+                    "tag @s add need_beef",
+                    "scoreboard players random @s need_count 64 170"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "ask_need",
+                    "beef"
+                  ]
+                }
+              },
+              {
+                "weight": 10,
+                "queue_command": {
+                  "command": [
+                    "tag @s add need",
+                    "tag @s add need_iron",
+                    "scoreboard players random @s need_count 52 140"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "ask_need",
+                    "iron_need"
+                  ]
+                }
+              },
+              {
+                "weight": 10,
+                "queue_command": {
+                  "command": [
+                    "tag @s add need",
+                    "tag @s add need_diamond",
+                    "scoreboard players random @s need_count 8 30"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "ask_need",
+                    "diamond_need"
+                  ]
+                }
+              },
+              {
+                "weight": 10,
+                "queue_command": {
+                  "command": [
+                    "tag @s add need",
+                    "tag @s add need_apple",
+                    "scoreboard players set @s need_count 1"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "ask_need",
+                    "apple"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 4,
+                "queue_command": {
+                  "command": [
+                    "tag @s add wooden"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "wooden",
+                    "wooden_trade"
+                  ]
+                }
+              },
+              {
+                "weight": 4,
+                "queue_command": {
+                  "command": [
+                    "tag @s add stone"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "stone",
+                    "random_stone",
+                    "stone_trade"
+                  ]
+                }
+              },
+              {
+                "weight": 4,
+                "queue_command": {
+                  "command": [
+                    "tag @s add copper"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "copper",
+                    "random_copper",
+                    "copper_trade"
+                  ]
+                }
+              },
+              {
+                "weight": 3,
+                "queue_command": {
+                  "command": [
+                    "tag @s add iron"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "iron",
+                    "random_iron",
+                    "iron_trade"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "queue_command": {
+                  "command": [
+                    "tag @s add diamond"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "diamond",
+                    "random_diamond",
+                    "diamond_trade"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "queue_command": {
+                  "command": [
+                    "tag @s add diamond_pro"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "diamond_pro",
+                    "random_diamond_pro",
+                    "diamond_trade"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 3,
+                "queue_command": {
+                  "command": [
+                    "tag @s add lv1",
+                    "scoreboard players random @s reaction 40 80",
+                    "scoreboard players set @s select 0"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "Lv1"
+                  ]
+                }
+              },
+              {
+                "weight": 2,
+                "queue_command": {
+                  "command": [
+                    "tag @s add lv2",
+                    "scoreboard players random @s reaction 30 60",
+                    "scoreboard players set @s select 0"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "Lv2"
+                  ]
+                }
+              },
+              {
+                "weight": 2,
+                "queue_command": {
+                  "command": [
+                    "tag @s add lv3",
+                    "scoreboard players random @s reaction 20 40",
+                    "scoreboard players set @s select 0"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "Lv3"
+                  ]
+                }
+              },
+              {
+                "weight": 2,
+                "queue_command": {
+                  "command": [
+                    "tag @s add lv4",
+                    "scoreboard players random @s reaction 15 30",
+                    "scoreboard players set @s select 0"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "Lv4"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "queue_command": {
+                  "command": [
+                    "tag @s add lv5",
+                    "scoreboard players random @s reaction 10 20",
+                    "scoreboard players set @s select 0"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "Lv5"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "queue_command": {
+                  "command": [
+                    "tag @s add lv6",
+                    "scoreboard players random @s reaction 10 15",
+                    "scoreboard players set @s select 0"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "Lv6"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 4,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "walk_stroll"
+                  ]
+                }
+              },
+              {
+                "weight": 6,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": [
+                    "run_stroll"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "rdm_item": {
+        "queue_command": {
+          "command": [
+            "function main"
+          ]
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "eat_food": {
+        "queue_command": {
+          "command": [
+            "function eat"
+          ]
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "stone_eat_food": {
+        "queue_command": {
+          "command": [
+            "function stone_eat"
+          ]
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "copper_eat_food": {
+        "queue_command": {
+          "command": [
+            "function copper_eat"
+          ]
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "iron_eat_food": {
+        "queue_command": {
+          "command": [
+            "function iron_eat"
+          ]
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "diamond_eat_food": {
+        "queue_command": {
+          "command": [
+            "function diamond_eat"
+          ]
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "diamond_pro_eat_food": {
+        "queue_command": {
+          "command": [
+            "function diamond_pro_eat"
+          ]
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "switch_bow": {
+        "queue_command": {
+          "command": [
+            "replaceitem entity @s slot.weapon.mainhand 0 bow"
+          ]
+        },
+        "remove": {
+          "component_groups": [
+            "Lv1"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "use_bow"
+          ]
+        }
+      },
+      "cancel_bow": {
+        "queue_command": {
+          "command": [
+            "replaceitem entity @s slot.weapon.mainhand 0 air",
+            "function cancel_bow"
+          ]
+        },
+        "remove": {
+          "component_groups": [
+            "use_bow"
+          ]
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "lv1_switch": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "use_bow"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv1"
+          ]
+        }
+      },
+      "lv2_on_shield": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "Lv2"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv2_shield"
+          ]
+        }
+      },
+      "lv2_quit_shield": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "Lv2_shield"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv2"
+          ]
+        }
+      },
+      "lv3_on_shield": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "Lv3"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv3_shield"
+          ]
+        }
+      },
+      "lv3_quit_shield": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "Lv3_shield"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv3"
+          ]
+        }
+      },
+      "lv4_on_shield": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "Lv4"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv4_shield"
+          ]
+        }
+      },
+      "lv4_quit_shield": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "Lv4_shield"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv4"
+          ]
+        }
+      },
+      "lv5_on_shield": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "Lv5"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv5_shield"
+          ]
+        }
+      },
+      "lv5_quit_shield": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "Lv5_shield"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv5"
+          ]
+        }
+      },
+      "lv6_on_shield": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "Lv6"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv6_shield"
+          ]
+        }
+      },
+      "lv6_quit_shield": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "Lv6_shield"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv6"
+          ]
+        }
+      },
+      "lv2_switch": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "use_bow"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv2"
+          ]
+        }
+      },
+      "lv3_switch": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "use_bow"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv3"
+          ]
+        }
+      },
+      "block_ani": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "quit_blocking_ani"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "blocking_ani"
+          ]
+        }
+      },
+      "quit_block_ani": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "blocking_ani"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "quit_blocking_ani"
+          ]
+        }
+      },
+      "lv4_switch": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "use_bow"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv4"
+          ]
+        }
+      },
+      "lv5_switch": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "use_bow"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv5"
+          ]
+        }
+      },
+      "lock_movement": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "normal_movement",
+            "0movement"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "0movement"
+          ]
+        }
+      },
+      "unlock_movement": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "normal_movement",
+            "0movement"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "normal_movement"
+          ]
+        }
+      },
+      "lv6_switch": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "use_bow"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "Lv6"
+          ]
+        }
+      },
+      "can_tame": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": [
+            "tame"
+          ]
+        }
+      },
+      "switch_sword": {
+        "queue_command": {
+          "command": [
+            "tag @s add prepare"
+          ]
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "switch_stone_sword": {
+        "queue_command": {
+          "command": [
+            "tag @s add prepare"
+          ]
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "switch_copper_sword": {
+        "queue_command": {
+          "command": [
+            "tag @s add prepare"
+          ]
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "switch_iron_sword": {
+        "queue_command": {
+          "command": [
+            "tag @s add prepare"
+          ]
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "switch_diamond_sword": {
+        "queue_command": {
+          "command": [
+            "tag @s add prepare"
+          ]
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "block": {
+        "queue_command": {
+          "command": [
+            "function block"
+          ]
+        },
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "on_tameh": {
+        "queue_command": {
+          "command": []
+        },
+        "remove": {
+          "component_groups": [
+            "run",
+            "walk"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "run"
+          ]
+        }
+      },
+      "dhh:follow": {},
+      "dhh:no_follow": {},
+      "dhh:good_follow": {
+        "remove": {
+          "component_groups": [
+            "good_no_follow_players"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "follow_players"
+          ]
+        }
+      },
+      "dhh:good_no_follow": {
+        "remove": {
+          "component_groups": [
+            "follow_players"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "good_no_follow_players"
+          ]
+        }
+      },
+      "dhh:bad_follow": {
+        "remove": {
+          "component_groups": [
+            "bad_no_follow_players"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "follow_players"
+          ]
+        }
+      },
+      "dhh:event_go_crafting": {
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": [
+            "go_to_work"
+          ]
+        }
+      },
+      "dhh:event_upgrade_to_wooden": {
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": []
+        }
+      },
+      "dhh:event_upgrade_to_stone": {
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": [
+            "update_stone"
+          ]
+        }
+      },
+      "dhh:event_upgrade_to_copper": {
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": [
+            "update_copper"
+          ]
+        }
+      },
+      "dhh:event_upgrade_to_iron": {
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": [
+            "update_iron"
+          ]
+        }
+      },
+      "dhh:event_upgrade_to_diamond": {
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": [
+            "update_diamond"
+          ]
+        }
+      },
+      "dhh:event_upgrade_to_diamond_pro": {
+        "remove": {
+          "component_groups": []
+        },
+        "add": {
+          "component_groups": [
+            "update_diamond_pro"
+          ]
+        }
+      },
+      "dhh:event_stop_crafting": {
+        "remove": {
+          "component_groups": [
+            "go_to_work"
+          ]
+        }
+      },
+      "dhh:bad_no_follow": {
+        "remove": {
+          "component_groups": [
+            "follow_players"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "bad_no_follow_players"
+          ]
+        }
+      },
+      "dhh:crazy_follow": {
+        "add": {
+          "component_groups": [
+            "follow_players"
+          ]
+        }
+      },
+      "dhh:crazy_no_follow": {
+        "remove": {
+          "component_groups": [
+            "follow_players"
+          ]
+        }
+      },
+      "stone_random": {
+        "sequence": [
+          {
+            "randomize": [
+              {
+                "weight": 2,
+                "queue_command": {
+                  "command": [
+                    "tag @s add bow"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 8,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 2,
+                "queue_command": {
+                  "command": [
+                    "replaceitem entity @s slot.weapon.offhand 0 shield"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 8,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "copper_random": {
+        "sequence": [
+          {
+            "randomize": [
+              {
+                "weight": 5,
+                "queue_command": {
+                  "command": [
+                    "tag @s add bow"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 5,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 5,
+                "queue_command": {
+                  "command": [
+                    "replaceitem entity @s slot.weapon.offhand 0 shield"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 5,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "iron_random": {
+        "sequence": [
+          {
+            "randomize": [
+              {
+                "weight": 8,
+                "queue_command": {
+                  "command": [
+                    "tag @s add bow"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 2,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 80,
+                "queue_command": {
+                  "command": [
+                    "replaceitem entity @s slot.weapon.offhand 0 shield"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 5,
+                "queue_command": {
+                  "command": [
+                    "replaceitem entity @s slot.weapon.offhand 0 totem_of_undying"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 15,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "diamond_random": {
+        "sequence": [
+          {
+            "randomize": [
+              {
+                "weight": 9,
+                "queue_command": {
+                  "command": [
+                    "tag @s add bow"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 1,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 60,
+                "queue_command": {
+                  "command": [
+                    "replaceitem entity @s slot.weapon.offhand 0 shield"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 35,
+                "queue_command": {
+                  "command": [
+                    "replaceitem entity @s slot.weapon.offhand 0 totem_of_undying"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 5,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "diamond_pro_random": {
+        "sequence": [
+          {
+            "randomize": [
+              {
+                "weight": 9,
+                "queue_command": {
+                  "command": [
+                    "tag @s add bow"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 1,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 60,
+                "queue_command": {
+                  "command": [
+                    "replaceitem entity @s slot.weapon.offhand 0 shield"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 35,
+                "queue_command": {
+                  "command": [
+                    "replaceitem entity @s slot.weapon.offhand 0 totem_of_undying"
+                  ]
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              },
+              {
+                "weight": 5,
+                "queue_command": {
+                  "command": []
+                },
+                "remove": {},
+                "add": {
+                  "component_groups": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "has_target": {
+        "queue_command": {
+          "command": [
+            "tag @s add has_target"
+          ]
+        }
+      },
+      "remove_prepare": {
+        "queue_command": {
+          "command": [
+            "tag @s remove prepare"
+          ]
+        }
+      },
+      "captain": {
+        "queue_command": {
+          "command": [
+            "tag @s add captain"
+          ]
+        }
+      },
+      "give_event": {
+        "queue_command": {
+          "command": [
+            "function give"
+          ]
+        }
+      },
+      "ask_neede": {
+        "queue_command": {
+          "command": [
+            "function need"
+          ]
+        }
+      },
+      "stroll_switch": {
+        "sequence": [
+          {
+            "randomize": [
+              {
+                "weight": 1,
+                "remove": {
+                  "component_groups": [
+                    "run_stroll",
+                    "walk_stroll"
+                  ]
+                },
+                "add": {
+                  "component_groups": [
+                    "run_stroll"
+                  ]
+                }
+              },
+              {
+                "weight": 1,
+                "remove": {
+                  "component_groups": [
+                    "run_stroll",
+                    "walk_stroll"
+                  ]
+                },
+                "add": {
+                  "component_groups": [
+                    "walk_stroll"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "no_has_target": {
+        "queue_command": {
+          "command": [
+            "tag @s remove has_target",
+            "tag @s remove prepare"
+          ]
+        }
+      }
+    }
+  }
+}

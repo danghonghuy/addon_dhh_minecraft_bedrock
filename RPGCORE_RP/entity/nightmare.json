@@ -1,0 +1,51 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "dhh:nightmare",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"textures": {
+				"default": "textures/entity/nightmare/red",
+				"baby": "textures/entity/nightmare/baby",
+				"blue": "textures/entity/nightmare/blue",
+				"green": "textures/entity/nightmare/green",
+				"purple": "textures/entity/nightmare/purple",
+				"pink": "textures/entity/nightmare/pink",
+				"yellow": "textures/entity/nightmare/yellow"
+			},
+			"geometry": {
+				"default": "geometry.monstrous_nightmare",
+				"baby": "geometry.baby_nightmare"
+			},
+			"animations": {
+				"main_controller": "controller.animation.nightmare.main",
+				"idle_controller": "controller.animation.nightmare.idle",
+				"walk": "animation.nightmare.walk",
+				"idle": "animation.nightmare.idle",
+				"idle_special": "animation.nightmare.idle_special",
+				"fly": "animation.nightmare.fly",
+				"sit": "animation.nightmare.sit",
+				"look_at_target": "animation.common.look_at_target",
+				"rotate": "animation.dragon.rotate"
+			},
+			"scripts": {
+				"animate": [
+					"main_controller",
+					"look_at_target",
+					{
+						"rotate": "!query.is_on_ground"
+					}
+				]
+			},
+			"render_controllers": [
+				"controller.render.nightmare"
+			],
+			"spawn_egg": {
+				"base_color": "#9F3D3D",
+				"overlay_color": "#120D0D"
+			}
+		}
+	}
+}

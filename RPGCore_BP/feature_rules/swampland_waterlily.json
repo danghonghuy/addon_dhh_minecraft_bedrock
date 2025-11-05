@@ -1,0 +1,52 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:feature_rules": {
+        "description": {
+            "identifier": "sert:swampland_waterlily",
+            "places_feature": "sert:waterlily_generator"
+        },
+        "conditions": {
+            "placement_pass": "surface_pass",
+            "minecraft:biome_filter": [
+                {
+                    "any_of": [
+                        {
+                            "test": "has_biome_tag",
+                            "operator": "==",
+                            "value": "swamp"
+                        },
+                        {
+                            "test": "has_biome_tag",
+                            "operator": "==",
+                            "value": "swamp_mangrove_mod"
+                        },
+                        {
+                            "test": "has_biome_tag",
+                            "operator": "==",
+                            "value": "mangrove_swamp"
+                        }
+                    ]
+                }
+            ]
+        },
+        "distribution": {
+            "iterations": 5,
+            "x": {
+                "extent": [
+                    0,
+                    16
+                ],
+                "distribution": "uniform"
+            },
+            "y": 62,
+            "z": {
+                "extent": [
+                    0,
+                    16
+                ],
+                "distribution": "uniform"
+            },
+            "scatter_chance": 20
+        }
+    }
+}

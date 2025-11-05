@@ -1,0 +1,23 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:structure_template_feature": {
+        "description": {
+            "identifier": "sert:structures/mill"
+        },
+        "structure_name": "mystructure:mill",
+        "adjustment_radius": 3,
+        "facing_direction": "random",
+        "constraints": {
+            "grounded": {},
+            "unburied": {},
+            "block_intersection": {
+                "block_allowlist": [
+                    "minecraft:air",
+                    "minecraft:tall_grass",
+                    "minecraft:short_grass",
+                    "minecraft:bush"
+                ]
+            }
+        }
+    }
+}

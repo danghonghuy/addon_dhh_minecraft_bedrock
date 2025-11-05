@@ -1,0 +1,30 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:fallen_birch_tree"
+        },
+        "features": [
+            [
+                "sert:fallen_birch_tree_1",
+                1
+            ],
+            [
+                "sert:fallen_birch_tree_2",
+                3
+            ],
+            [
+                "sert:fallen_birch_tree_3",
+                4
+            ],
+            [
+                "sert:fallen_birch_tree_4",
+                4
+            ],
+            [
+                "sert:fallen_birch_tree_5",
+                4
+            ]
+        ]
+    }
+}

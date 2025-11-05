@@ -1,0 +1,161 @@
+{
+    "format_version": "1.10.0",
+    "animation_controllers": {
+        "controller.animation.ward": {
+            "initial_state": "idle",
+            "states": {
+                "idle": {
+                    "animations": [ "idle", "look_at_target" ],
+                    "transitions": [
+                        { "sitting": "query.property('pa:is_commanded_to_sit')" },
+                        { "attacking": "query.has_target && query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "walking": "query.modified_move_speed > 0.1 && query.modified_move_speed < 0.86 && query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "running": "query.modified_move_speed >= 0.86 && query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "jump": "query.is_jumping && !query.property('pa:is_commanded_to_sit')" },
+                        { "fly": "!query.is_on_ground && query.modified_move_speed < 0.1 && !query.property('pa:is_commanded_to_sit')" },
+                        { "fly_move": "!query.is_on_ground && query.modified_move_speed >= 0.1 && !query.property('pa:is_commanded_to_sit')" },
+                        { "ranged_attacking": "query.facing_target_to_range_attack && !query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "sonic_charging": "query.is_charging && !query.property('pa:is_commanded_to_sit')" },
+                        { "inspecting_thoughtfully": "query.is_using_item && query.is_item_equipped('main_hand') && !query.property('pa:is_commanded_to_sit')" },
+                        { "bartering_inspecting": "query.is_admiring && !query.property('pa:is_commanded_to_sit')" }
+                    ],
+                    "blend_transition": 0.2
+                },
+                "walking": {
+                    "animations": [ "walk", "look_at_target" ],
+                    "transitions": [
+                        { "sitting": "query.property('pa:is_commanded_to_sit')" },
+                        { "attacking": "query.has_target && query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "ranged_attacking": "query.facing_target_to_range_attack && !query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "sonic_charging": "query.is_charging && !query.property('pa:is_commanded_to_sit')" },
+                        { "inspecting_thoughtfully": "query.is_using_item && query.is_item_equipped('main_hand') && !query.property('pa:is_commanded_to_sit')" },
+                        { "bartering_inspecting": "query.is_admiring && !query.property('pa:is_commanded_to_sit')" },
+                        { "idle": "query.modified_move_speed < 0.1 && !query.property('pa:is_commanded_to_sit')" },
+                        { "running": "query.modified_move_speed >= 0.86 && query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "jump": "query.is_jumping && !query.property('pa:is_commanded_to_sit')" },
+                        { "fly": "!query.is_on_ground && query.modified_move_speed < 0.1 && !query.property('pa:is_commanded_to_sit')" },
+                        { "fly_move": "!query.is_on_ground && query.modified_move_speed >= 0.1 && !query.property('pa:is_commanded_to_sit')" }
+                    ],
+                    "blend_transition": 0.2
+                },
+                "running": {
+                    "animations": [ "run", "look_at_target" ],
+                    "transitions": [
+                        { "sitting": "query.property('pa:is_commanded_to_sit')" },
+                        { "attacking": "query.has_target && query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "ranged_attacking": "query.facing_target_to_range_attack && !query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "sonic_charging": "query.is_charging && !query.property('pa:is_commanded_to_sit')" },
+                        { "inspecting_thoughtfully": "query.is_using_item && query.is_item_equipped('main_hand') && !query.property('pa:is_commanded_to_sit')" },
+                        { "bartering_inspecting": "query.is_admiring && !query.property('pa:is_commanded_to_sit')" },
+                        { "idle": "query.modified_move_speed < 0.1 && query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "walking": "query.modified_move_speed < 0.86 && query.modified_move_speed >= 0.1 && query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "jump": "query.is_jumping && !query.property('pa:is_commanded_to_sit')" },
+                        { "fly": "!query.is_on_ground && query.modified_move_speed < 0.1 && !query.property('pa:is_commanded_to_sit')" },
+                        { "fly_move": "!query.is_on_ground && query.modified_move_speed >= 0.1 && !query.property('pa:is_commanded_to_sit')" }
+                    ],
+                    "blend_transition": 0.2
+                },
+                "jump": {
+                    "animations": [ "jump" ],
+                    "transitions": [
+                        { "sitting": "query.property('pa:is_commanded_to_sit')" },
+                        { "ranged_attacking": "query.facing_target_to_range_attack && !query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "sonic_charging": "query.is_charging && !query.property('pa:is_commanded_to_sit')" },
+                        { "inspecting_thoughtfully": "query.is_using_item && query.is_item_equipped('main_hand') && !query.property('pa:is_commanded_to_sit')" },
+                        { "idle": "!query.is_jumping && query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "fly": "!query.is_jumping && !query.is_on_ground && !query.property('pa:is_commanded_to_sit')" }
+                    ],
+                    "blend_transition": 0.2
+                },
+                "fly": {
+                    "animations": [ "fly", "look_at_target" ],
+                    "blend_transition": 0.2,
+                    "transitions": [
+                        { "sitting": "query.property('pa:is_commanded_to_sit')" },
+                        { "attacking": "query.has_target && !query.property('pa:is_commanded_to_sit')" },
+                        { "ranged_attacking": "query.facing_target_to_range_attack && !query.property('pa:is_commanded_to_sit')" },
+                        { "sonic_charging": "query.is_charging && !query.property('pa:is_commanded_to_sit')" },
+                        { "inspecting_thoughtfully": "query.is_using_item && query.is_item_equipped('main_hand') && !query.property('pa:is_commanded_to_sit')" },
+                        { "bartering_inspecting": "query.is_admiring && !query.property('pa:is_commanded_to_sit')" },
+                        { "idle": "query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "fly_move": "!query.is_on_ground && query.modified_move_speed >= 0.1 && !query.property('pa:is_commanded_to_sit')" }
+                    ]
+                },
+                "fly_move": {
+                    "animations": [ "fly_move", "look_at_target" ],
+                    "blend_transition": 0.2,
+                    "transitions": [
+                        { "sitting": "query.property('pa:is_commanded_to_sit')" },
+                        { "attacking": "query.has_target && !query.property('pa:is_commanded_to_sit')" },
+                        { "ranged_attacking": "query.facing_target_to_range_attack && !query.property('pa:is_commanded_to_sit')" },
+                        { "sonic_charging": "query.is_charging && !query.property('pa:is_commanded_to_sit')" },
+                        { "inspecting_thoughtfully": "query.is_using_item && query.is_item_equipped('main_hand') && !query.property('pa:is_commanded_to_sit')" },
+                        { "bartering_inspecting": "query.is_admiring && !query.property('pa:is_commanded_to_sit')" },
+                        { "idle": "query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "fly": "!query.is_on_ground && query.modified_move_speed < 0.1 && !query.property('pa:is_commanded_to_sit')" }
+                    ]
+                },
+                "sitting": {
+                    "animations": [ "sit", "look_at_target" ],
+                    "transitions": [
+                        { "idle": "!query.property('pa:is_commanded_to_sit')" }
+                    ],
+                    "blend_transition": 0.2
+                },
+                "attacking": {
+                    "animations": [ "attack_stylish" ],
+                    "transitions": [
+                        { "idle": "(query.all_animations_finished || !query.has_target) && !query.property('pa:is_commanded_to_sit') && query.is_on_ground" },
+                        { "fly": "(query.all_animations_finished || !query.has_target) && !query.property('pa:is_commanded_to_sit') && !query.is_on_ground && query.modified_move_speed < 0.1" },
+                        { "fly_move": "(query.all_animations_finished || !query.has_target) && !query.property('pa:is_commanded_to_sit') && !query.is_on_ground && query.modified_move_speed >= 0.1" }
+                    ],
+                    "blend_transition": 0.1
+                },
+                "ranged_attacking": {
+                    "animations": [ "attack_stylish" ],
+                    "transitions": [
+                        { "fly": "(query.all_animations_finished || !query.has_target) && !query.property('pa:is_commanded_to_sit') && !query.is_on_ground && query.modified_move_speed < 0.1" },
+                        { "fly_move": "(query.all_animations_finished || !query.has_target) && !query.property('pa:is_commanded_to_sit') && !query.is_on_ground && query.modified_move_speed >= 0.1" },
+                        { "idle": "(query.all_animations_finished || !query.has_target) && !query.property('pa:is_commanded_to_sit') && query.is_on_ground" }
+                    ],
+                    "blend_transition": 0.1
+                },
+                "sonic_charging": {
+                    "animations": [ "sonic_charge_pose" ],
+                    "transitions": [
+                        { "sonic_attacking": "query.is_sonic_boom && !query.property('pa:is_commanded_to_sit')" },
+                        { "idle": "(!query.has_target || !query.is_charging) && !query.property('pa:is_commanded_to_sit')" }
+                    ],
+                    "blend_transition": 0.1
+                },
+                "sonic_attacking": {
+                    "animations": [ "sonic_attack_actual_pose" ],
+                    "transitions": [
+                        { "idle": "(query.all_animations_finished || !query.is_sonic_boom) && !query.property('pa:is_commanded_to_sit')" }
+                    ],
+                    "blend_transition": 0.1
+                },
+                "bartering_inspecting": {
+                    "animations": [ "bartering_inspect" ],
+                    "transitions": [
+                        { "sitting": "query.property('pa:is_commanded_to_sit')" },
+                        { "attacking": "query.has_target && !query.property('pa:is_commanded_to_sit') && query.is_on_ground" },
+                        { "ranged_attacking": "query.facing_target_to_range_attack && !query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "idle": "!query.is_admiring && !query.property('pa:is_commanded_to_sit')" }
+                    ],
+                    "blend_transition": 0.2
+                },
+                "inspecting_thoughtfully": {
+                    "animations": [ "inspect_item_thoughtful" ],
+                    "transitions": [
+                        { "sitting": "query.property('pa:is_commanded_to_sit')" },
+                        { "attacking": "query.has_target && !query.property('pa:is_commanded_to_sit') && query.is_on_ground" },
+                        { "ranged_attacking": "query.facing_target_to_range_attack && !query.is_on_ground && !query.property('pa:is_commanded_to_sit')" },
+                        { "idle": "(!query.is_using_item || query.all_animations_finished) && !query.property('pa:is_commanded_to_sit')" }
+                    ],
+                    "blend_transition": 0.2
+                }
+            }
+        }
+    }
+}

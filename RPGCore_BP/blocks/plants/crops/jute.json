@@ -1,0 +1,193 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:jute_plant",
+            "states": {
+                "sert:growth": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                ]
+            }
+        },
+        "components": {
+            "minecraft:loot": "loot_tables/plants/jute_plant_seeds.json",
+            "minecraft:placement_filter": {
+                "conditions": [
+                    {
+                        "allowed_faces": [
+                            "up"
+                        ],
+                        "block_filter": [
+                            "minecraft:farmland"
+                        ]
+                    }
+                ]
+            },
+            "minecraft:liquid_detection": {
+                "detection_rules": [
+                    {
+                        "liquid_type": "water",
+                        "on_liquid_touches": "broken"
+                    }
+                ]
+            },
+            "minecraft:collision_box": false,
+            "minecraft:selection_box": {
+                "origin": [
+                    -8,
+                    0,
+                    -8
+                ],
+                "size": [
+                    16,
+                    3,
+                    16
+                ]
+            },
+            "minecraft:light_dampening": 0,
+            "minecraft:geometry": "geometry.plant",
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "jute_age_1"
+                }
+            },
+            "minecraft:transformation": {
+                "scale": [
+                    1,
+                    1.5,
+                    1
+                ],
+                "translation": [
+                    0,
+                    0.06,
+                    0
+                ]
+            },
+            "sert:growing_plant": {},
+            "tag:isair": {}
+        },
+        "permutations": [
+            {
+                "condition": "query.block_state('sert:growth') == 1",
+                "components": {
+                    "minecraft:selection_box": {
+                        "origin": [
+                            -7,
+                            0,
+                            -7
+                        ],
+                        "size": [
+                            14,
+                            5,
+                            14
+                        ]
+                    },
+                    "minecraft:material_instances": {
+                        "*": {
+                            "render_method": "alpha_test",
+                            "texture": "jute_age_1"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('sert:growth') == 2",
+                "components": {
+                    "minecraft:selection_box": {
+                        "origin": [
+                            -7,
+                            0,
+                            -7
+                        ],
+                        "size": [
+                            14,
+                            9,
+                            14
+                        ]
+                    },
+                    "minecraft:material_instances": {
+                        "*": {
+                            "render_method": "alpha_test",
+                            "texture": "jute_age_2"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('sert:growth') == 3",
+                "components": {
+                    "minecraft:selection_box": {
+                        "origin": [
+                            -7,
+                            0,
+                            -7
+                        ],
+                        "size": [
+                            14,
+                            10,
+                            14
+                        ]
+                    },
+                    "minecraft:material_instances": {
+                        "*": {
+                            "render_method": "alpha_test",
+                            "texture": "jute_age_3"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('sert:growth') == 4",
+                "components": {
+                    "minecraft:selection_box": {
+                        "origin": [
+                            -7,
+                            0,
+                            -7
+                        ],
+                        "size": [
+                            14,
+                            15,
+                            14
+                        ]
+                    },
+                    "minecraft:material_instances": {
+                        "*": {
+                            "render_method": "alpha_test",
+                            "texture": "jute_age_4"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('sert:growth') == 5",
+                "components": {
+                    "minecraft:loot": "loot_tables/plants/jute_plant_full.json",
+                    "minecraft:selection_box": {
+                        "origin": [
+                            -7,
+                            0,
+                            -7
+                        ],
+                        "size": [
+                            14,
+                            16,
+                            14
+                        ]
+                    },
+                    "minecraft:material_instances": {
+                        "*": {
+                            "render_method": "alpha_test",
+                            "texture": "jute_age_5"
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

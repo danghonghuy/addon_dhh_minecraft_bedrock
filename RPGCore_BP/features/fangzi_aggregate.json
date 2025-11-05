@@ -1,0 +1,12 @@
+{
+    "format_version": "1.19.50",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "dhh:fangzi_aggregate"
+        },
+        "features": [
+            [ "dhh:fangzi1", 3 ],
+            [ "dhh:fangzi2", 4 ]
+        ]
+    }
+}

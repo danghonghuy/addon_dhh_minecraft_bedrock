@@ -1,0 +1,30 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:birch_tree_mutated"
+        },
+        "features": [
+            [
+                "sert:birch_forest",
+                33
+            ],
+            [
+                "sert:birch_tree_mutated_1",
+                1
+            ],
+            [
+                "sert:birch_tree_mutated_2",
+                2
+            ],
+            [
+                "sert:birch_tree_mutated_3",
+                4
+            ],
+            [
+                "sert:birch_tree_mutated_4",
+                4
+            ]
+        ]
+    }
+}

@@ -1,0 +1,287 @@
+{
+    "entity_sounds": {
+        "entities": {
+            "dhh:gronckle": {
+                "events": {
+                    "hurt": {
+                        "sound": "mob.polarbear.hurt",
+                        "volume": 0.70
+                    },
+                    "death": "mob.polarbear.death",
+                    "step": {
+                        "pitch": 1.0,
+                        "sound": "mob.ravager.step",
+                        "volume": 0.70
+                    }
+                },
+                "pitch": [
+                    0.80,
+                    1.20
+                ],
+                "volume": 1.0
+            },
+            "dhh:nadder": {
+                "events": {
+                    "hurt": {
+                        "sound": "mob.parrot.hurt",
+                        "volume": 0.70
+                    },
+                    "death": "mob.parrot.death",
+                    "step": {
+                        "pitch": 1.0,
+                        "sound": "mob.parrot.step",
+                        "volume": 0.70
+                    }
+                },
+                "pitch": [
+                    0.80,
+                    1.20
+                ],
+                "volume": 1.0
+            },
+            "dhh:nightmare": {
+                "events": {
+                    "ambient": "mob.nightmare.idle",
+                    "hurt": {
+                        "sound": "mob.nightmare.roar",
+                        "volume": 0.70
+                    },
+                    "death": "mob.polarbear.death",
+                    "step": {
+                        "pitch": 1.0,
+                        "sound": "mob.ravager.step",
+                        "volume": 0.70
+                    }
+                },
+                "pitch": [
+                    0.80,
+                    1.20
+                ],
+                "volume": 1.0
+            },
+            "dhh:night_fury": {
+                "events": {
+                    "shoot": "mob.night_fury.blast",
+                    "ambient": "mob.night_fury.idle",
+                    "hurt": {
+                        "sound": "mob.polarbear.hurt",
+                        "volume": 0.70
+                    },
+                    "death": "mob.polarbear.death",
+                    "step": {
+                        "pitch": 1.0,
+                        "sound": "mob.ravager.step",
+                        "volume": 0.70
+                    }
+                },
+                "pitch": [
+                    0.80,
+                    1.20
+                ],
+                "volume": 1.0
+            },
+            "dhh:light_fury": {
+                "events": {
+                    "shoot": "mob.night_fury.blast",
+                    "ambient": "mob.night_fury.idle",
+                    "hurt": {
+                        "sound": "mob.polarbear.hurt",
+                        "volume": 0.70
+                    },
+                    "death": "mob.polarbear.death",
+                    "step": {
+                        "pitch": 1.0,
+                        "sound": "mob.ravager.step",
+                        "volume": 0.70
+                    }
+                },
+                "pitch": [
+                    0.80,
+                    1.20
+                ],
+                "volume": 1.0
+            },
+            "dhh:night_light": {
+                "events": {
+                    "shoot": "mob.night_fury.blast",
+                    "ambient": "mob.night_fury.idle",
+                    "hurt": {
+                        "sound": "mob.polarbear.hurt",
+                        "volume": 0.70
+                    },
+                    "death": "mob.polarbear.death",
+                    "step": {
+                        "pitch": 1.0,
+                        "sound": "mob.ravager.step",
+                        "volume": 0.70
+                    }
+                },
+                "pitch": [
+                    0.80,
+                    1.20
+                ],
+                "volume": 1.0
+            },
+            "dhh:zippleback": {
+                "events": {
+                    "hurt": {
+                        "sound": "mob.polarbear.hurt",
+                        "volume": 0.70
+                    },
+                    "death": "mob.polarbear.death",
+                    "step": {
+                        "pitch": 1.0,
+                        "sound": "mob.ravager.step",
+                        "volume": 0.70
+                    }
+                },
+                "pitch": [
+                    0.80,
+                    1.20
+                ],
+                "volume": 1.0
+            },
+            "dhh:flamewhipper": {
+                "events": {
+                    "ambient": "mob.flamewhipper.ambient",
+                    "hurt": {
+                        "sound": "mob.bat.hurt",
+                        "volume": 0.70
+                    },
+                    "death": "mob.bat.death"
+                },
+                "pitch": [
+                    0.80,
+                    1.20
+                ],
+                "volume": 1.0
+            },
+            "dhh:skrill": {
+                "events": {
+                    "hurt": {
+                        "sound": "mob.polarbear.hurt",
+                        "volume": 0.70
+                    },
+                    "death": "mob.polarbear.death",
+                    "shoot": {
+                        "sound": "mob.skrill.blast",
+                        "volume": 1
+                    }
+                },
+                "pitch": [
+                    0.80,
+                    1.20
+                ],
+                "volume": 1.0
+            },
+            "dhh:snow_wraith": {
+                "events": {
+                    "hurt": {
+                        "sound": "mob.polarbear.hurt",
+                        "volume": 0.70
+                    },
+                    "death": "mob.polarbear.death"
+                },
+                "pitch": [
+                    0.80,
+                    1.20
+                ],
+                "volume": 1.0
+            },
+            "dhh:hobblegrunt": {
+                "events": {
+                    "hurt": {
+                        "sound": "mob.polarbear.hurt",
+                        "volume": 0.70
+                    },
+                    "death": "mob.polarbear.death"
+                },
+                "pitch": [
+                    0.80,
+                    1.20
+                ],
+                "volume": 1.0
+            },
+            "dhh:rumblehorn": {
+                "events": {
+                    "hurt": {
+                        "sound": "mob.polarbear.hurt",
+                        "volume": 0.70
+                    },
+                    "death": "mob.polarbear.death"
+                },
+                "pitch": [
+                    0.80,
+                    1.20
+                ],
+                "volume": 1.0
+            },
+            "dhh:newb": {
+                "volume": 1.0,
+                "pitch": [
+                    0.8,
+                    1.2
+                ],
+                "events": {
+                    "death": "mob.tufei.die",
+                    "hurt": "mob.tufei.hurt"
+                }
+            },
+            "zbw:laoban": {
+                "volume": 1.0,
+                "pitch": [
+                    0.8,
+                    1.2
+                ],
+                "events": {
+                    "death": "mob.tufei.die",
+                    "hurt": "mob.tufei.hurt"
+                }
+            },
+            "zbw:hunter": {
+                "volume": 1.0,
+                "pitch": [
+                    0.8,
+                    1.2
+                ],
+                "events": {
+                    "death": "mob.tufei.die",
+                    "hurt": "mob.tufei.hurt"
+                }
+            },
+            "zbw:jiuba": {
+                "volume": 1.0,
+                "pitch": [
+                    0.8,
+                    1.2
+                ],
+                "events": {
+                    "death": "mob.tufei.die",
+                    "hurt": "mob.tufei.hurt"
+                }
+            },
+            "zbw:solider": {
+                "volume": 1.0,
+                "pitch": [
+                    0.8,
+                    1.2
+                ],
+                "events": {
+                    "death": "mob.tufei.die",
+                    "hurt": "mob.tufei.hurt"
+                }
+            },
+            "pa:jingling": {
+                "volume": 1.0,
+                "pitch": [
+                    0.8,
+                    1.2
+                ],
+                "events": {
+                    "death": "mob.woman.die",
+                    "hurt": "mob.woman.hurt"
+                }
+            }
+        }
+    }
+}

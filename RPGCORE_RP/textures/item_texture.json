@@ -1,0 +1,81 @@
+{
+  "resource_pack_name": "vanilla",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "pa_janedoe": {
+      "textures": "textures/items/pamobile/pa_janedoe"
+    },
+    "jessy": {
+      "textures": "textures/items/pamobile/jessy"
+    },
+    "ty": {
+      "textures": "textures/items/pamobile/ty"
+    },
+    "obito": {
+      "textures": "textures/items/pamobile/obito"
+    },
+    "ey": {
+      "textures": "textures/items/pamobile/ey"
+    },
+    "ward": {
+      "textures": "textures/items/pamobile/ward"
+    },
+    "dhh_book_of_dragons": {
+			"textures": "textures/items/book_of_dragons/book_of_dragons_item"
+		},
+		"dhh_watchtower_key": {
+			"textures": "textures/items/watchtower_key"
+		},
+		"dhh_settings": {
+			"textures": "textures/items/settings"
+		},
+		"dhh_dragon_saddle": {
+			"textures": "textures/items/dragon_saddle"
+		},
+		"dhh_saddle_bag": {
+			"textures": "textures/items/saddle_bag"
+		},
+		"dhh_dragon_blade": {
+			"textures": "textures/items/dragon_blade"
+		},
+		"dhh_lit_dragon_blade": {
+			"textures": "textures/items/lit_dragon_blade"
+		},
+		"dhh_nightmare_gel": {
+			"textures": "textures/items/nightmare_gel"
+		},
+		"dhh_tame_pottery_sherd": {
+			"textures": "textures/items/tame_sherd"
+		},
+		"dhh_dragon_pottery_sherd": {
+			"textures": "textures/items/dragon_sherd"
+		},
+		"dhh_bud_pottery_sherd": {
+			"textures": "textures/items/bud_sherd"
+		},
+		"dhh_helm_pottery_sherd": {
+			"textures": "textures/items/helm_sherd"
+		},
+		"dhh_dragon_shoot_command": {
+			"textures": "textures/items/dragon_shoot_command"
+		},
+		"dhh_dragon_horn": {
+			"textures": "textures/items/dragon_horn"
+		},
+		"dhh_dragon_eye": {
+			"textures": "textures/items/dragon_eye"
+		},
+		"dragon_nip_item": {
+			"textures": "textures/blocks/dragon_nip"
+		},
+    "ward_spawn_egg": {
+      "textures": "textures/items/pamobile/ward_spawn_egg"
+    },
+    "dhh:magic_staff_icon": {
+      "textures": "textures/items/magic_staff"
+    },
+     "dhh:menu_book_icon": { "textures": "textures/items/menu_book" },
+     "dhh:all_seeing_eye_icon": { "textures": "textures/items/all_seeing_eye" },
+    "dhh:cursed_blade_icon": { "textures": "textures/items/cursed_blade" }
+  }
+}

@@ -1,0 +1,50 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:roofed_forest_surface"
+        },
+        "features": [
+            [
+                "sert:strawberry_bush",
+                1
+            ],
+            [
+                "sert:blueberry_bush",
+                1
+            ],
+            [
+                "sert:flower_clovers",
+                1
+            ],
+            [
+                "sert:grass",
+                1100
+            ],
+            [
+                "sert:dark_oak_tree",
+                630
+            ],
+            [
+                "sert:dark_oak_stump",
+                5
+            ],
+            [
+                "sert:tinder_fungus_generator",
+                25
+            ],
+            [
+                "sert:rock",
+                2
+            ],
+            [
+                "sert:red_mushroom",
+                10
+            ],
+            [
+                "sert:brown_mushroom",
+                10
+            ]
+        ]
+    }
+}

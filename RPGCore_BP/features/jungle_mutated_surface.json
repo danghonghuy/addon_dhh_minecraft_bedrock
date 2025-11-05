@@ -1,0 +1,42 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:jungle_mutated_surface"
+        },
+        "features": [
+            [
+                "sert:jungle_tree",
+                58
+            ],
+            [
+                "sert:jungle_tree_mutated",
+                24
+            ],
+            [
+                "sert:jungle_stump",
+                2
+            ],
+            [
+                "sert:jungle_stump_mutated",
+                1
+            ],
+            [
+                "sert:rock",
+                1
+            ],
+            [
+                "sert:tropical_flower",
+                1
+            ],
+            [
+                "sert:jungle_bush",
+                2
+            ],
+            [
+                "sert:flower_clovers",
+                1
+            ]
+        ]
+    }
+}

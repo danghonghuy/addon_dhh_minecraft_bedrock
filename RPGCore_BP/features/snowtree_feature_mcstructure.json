@@ -1,0 +1,12 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:weighted_random_feature": {
+    "description": {
+      "identifier": "hungkaio:snowtree_feature_mcstructure"
+    },
+    "features": [
+      [ "minecraft:caytuyet2_feature_mcstructure", 100 ],
+      [ "minecraft:caytuyet1_feature_mcstructure", 100 ]
+    ]
+  }
+}

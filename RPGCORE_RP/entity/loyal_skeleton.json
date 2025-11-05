@@ -1,0 +1,29 @@
+{
+  "format_version": "1.8.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "dhh:loyal_skeleton",
+      "materials": { "default": "skeleton" },
+      "textures": { "default": "textures/entity/skeleton/skeleton" },
+      "geometry": { "default": "geometry.skeleton" },
+          
+      "enable_attachables": true,
+     "animations": {
+        "idle": "animation.loyal_skeleton.idle",
+        "walk": "animation.loyal_skeleton.walk",
+        "attack": "animation.loyal_skeleton.attack",
+        "bow": "animation.loyal_skeleton.bow"
+      },
+      "animation_controllers": [
+        { "default": "controller.animation.loyal_skeleton" }
+      ],
+      "render_controllers": [
+        "controller.render.loyal_skeleton"
+      ],
+      "spawn_egg": {
+        "base_color": "#FFFFFF",
+        "overlay_color": "#000000"
+      }
+    }
+  }
+}

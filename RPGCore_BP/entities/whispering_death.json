@@ -1,0 +1,966 @@
+{
+	"format_version": "1.20.50",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "dhh:whispering_death",
+			"is_summonable": true,
+			"is_spawnable": true,
+			"animations": {
+				"fly": "controller.animation.reset_levitation",
+				"reset_speed": "controller.animation.reset_speed"
+			},
+			"scripts": {
+				"animate": [
+					{
+						"fly": "!query.is_baby"
+					},
+					{
+						"reset_speed": "!query.is_baby"
+					}
+				]
+			},
+			"properties": {
+				"dhh:sitting": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				},
+				"dhh:emerging": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				},
+				"dhh:trained": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				},
+				"dhh:flying": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				},
+				"dhh:diving": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				}
+			}
+		},
+		"component_groups": {
+			"dhh:flying": {
+				"minecraft:physics": {
+					"has_gravity": true
+				}
+			},
+			"dhh:chested": {
+				"minecraft:strength": {
+					"value": 5
+				},
+				"minecraft:is_chested": {}
+			},
+			"dhh:unchested": {
+				"minecraft:strength": {
+					"value": 0
+				},
+				"minecraft:interact": {
+					"interactions": [
+						{
+							"play_sounds": "armor.equip_generic",
+							"on_interact": {
+								"filters": {
+									"all_of": [
+										{
+											"test": "has_equipment",
+											"subject": "other",
+											"domain": "hand",
+											"value": "minecraft:chest"
+										},
+										{
+											"test": "is_owner",
+											"subject": "other",
+											"value": true
+										}
+									]
+								},
+								"event": "dhh:chested",
+								"target": "self"
+							},
+							"use_item": true,
+							"interact_text": "action.interact.attachchest"
+						}
+					]
+				}
+			},
+			"emerging": {
+				"minecraft:behavior.emerge": {
+					"duration": 4,
+					"on_done": {
+						"event": "minecraft:emerged",
+						"target": "self"
+					}
+				}
+			},
+			"dhh:wandering_ground": {
+				"minecraft:navigation.walk": {
+					"can_walk": true,
+					"can_float": true,
+					"avoid_water": true,
+					"avoid_damage_blocks": true
+				},
+				"minecraft:movement": {
+					"value": 0.4
+				},
+				"minecraft:movement.basic": {}
+			},
+			"dhh:baby": {
+				"minecraft:scale": {
+					"value": 1.5
+				},
+				"minecraft:ageable": {
+					"duration": 1200,
+					"grow_up": {
+						"event": "minecraft:ageable_grow_up",
+						"target": "self"
+					}
+				},
+				"minecraft:is_baby": {},
+				"minecraft:scale_by_age": {
+					"start_scale": 0.5,
+					"end_scale": 1.1
+				},
+				"minecraft:tameable": {
+					"probability": 0.1,
+					"tame_event": {
+						"event": "dhh:trained",
+						"target": "self"
+					},
+					"tame_items": [
+						"stone",
+						"deepslate"
+					]
+				},
+				"minecraft:type_family": {
+					"family": [
+						"dhh_dragon",
+						"baby_dragon",
+						"boulder_class",
+						"whispering_death",
+						"mob"
+					]
+				},
+				"minecraft:collision_box": {
+					"width": 1.3,
+					"height": 1
+				}
+			},
+			"dhh:adult": {
+				"minecraft:experience_reward": {
+					"on_death": "query.last_hit_by_player?math.random(5,14):0"
+				},
+				"minecraft:on_target_acquired": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				},
+				"minecraft:collision_box": {
+					"height": 4,
+					"width": 3
+				}
+			},
+			"dhh:hatched": {
+				"minecraft:persistent": {}
+			},
+			"minecraft:angry": {
+				"minecraft:angry": {
+					"duration": 25,
+					"calm_event": {
+						"event": "dhh:on_calm",
+						"target": "self"
+					}
+				},
+				"minecraft:on_target_acquired": {}
+			},
+			"dhh:baby_green_whispering_death": {
+				"minecraft:variant": {
+					"value": 0
+				}
+			},
+			"dhh:blue_whispering_death": {
+				"minecraft:variant": {
+					"value": 1
+				}
+			},
+			"dhh:green_whispering_death": {
+				"minecraft:variant": {
+					"value": 2
+				}
+			},
+			"dhh:purple_whispering_death": {
+				"minecraft:variant": {
+					"value": 3
+				}
+			},
+			"dhh:baby_blue_whispering_death": {
+				"minecraft:variant": {
+					"value": 4
+				}
+			},
+			"dhh:baby_purple_whispering_death": {
+				"minecraft:variant": {
+					"value": 5
+				}
+			},
+			"dhh:saddled": {
+				"minecraft:is_saddled": {},
+				"minecraft:input_ground_controlled": {},
+				"minecraft:horse.jump_strength": {
+					"value": 0
+				},
+				"minecraft:can_power_jump": {},
+				"minecraft:behavior.player_ride_tamed": {}
+			},
+			"dhh:unsaddled": {},
+			"dhh:wild": {
+				"minecraft:type_family": {
+					"family": [
+						"dhh_dragon",
+						"boulder_class",
+						"whispering_death",
+						"mob"
+					]
+				},
+				"minecraft:on_hurt_by_player": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				},
+				"minecraft:on_hurt": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				},
+				"minecraft:on_target_escape": {
+					"event": "dhh:on_calm",
+					"target": "self"
+				},
+				"minecraft:on_target_acquired": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				},
+				"minecraft:attack": {
+					"damage": 3
+				},
+				"minecraft:behavior.nearest_attackable_target": {
+					"priority": 7,
+					"reselect_targets": true,
+					"scan_interval": 20,
+					"within_radius": 48,
+					"must_see_forget_duration": 0.5,
+					"target_search_height": 25,
+					"entity_types": [
+						{
+							"filters": {
+								"test": "is_family",
+								"subject": "other",
+								"value": "player"
+							},
+							"max_dist": 48
+						},
+						{
+							"filters": {
+								"test": "is_family",
+								"subject": "other",
+								"value": "wandering_trader"
+							},
+							"max_dist": 48
+						},
+						{
+							"filters": {
+								"test": "is_family",
+								"subject": "other",
+								"value": "dragon_hunter"
+							},
+							"max_dist": 48
+						}
+					]
+				}
+			},
+			"dhh:trained_adult": {
+				"minecraft:interact": {
+					"interactions": {
+						"on_interact": {
+							"event": "dhh:sit",
+							"filters": {
+								"test": "is_sneaking",
+								"operator": "==",
+								"subject": "player",
+								"value": true
+							},
+							"target": "self"
+						}
+					}
+				},
+				"minecraft:behavior.breed": {
+					"priority": 3,
+					"speed_multiplier": 1
+				},
+				"minecraft:breedable": {
+					"require_tame": true,
+					"causes_pregnancy": true,
+					"breeds_with": [
+						{
+							"mate_type": "dhh:whispering_death",
+							"breed_event": {
+								"event": "on_pregnant",
+								"target": "self"
+							}
+						}
+					],
+					"breed_items": [
+						"stone",
+						"deepslate"
+					]
+				},
+				"minecraft:inventory": {
+					"inventory_size": 2,
+					"container_type": "horse"
+				},
+				"minecraft:experience_reward": {
+					"on_death": "query.last_hit_by_player?math.random(5,14):0"
+				},
+				"minecraft:collision_box": {
+					"height": 4,
+					"width": 3
+				},
+				"minecraft:equippable": {
+					"slots": [
+						{
+							"slot": 0,
+							"item": "dhh:dragon_saddle",
+							"accepted_items": [
+								"dhh:dragon_saddle"
+							],
+							"on_equip": {
+								"event": "dhh:saddled"
+							},
+							"on_unequip": {
+								"event": "dhh:unsaddled"
+							}
+						}
+					]
+				},
+				"minecraft:healable": {
+					"items": [
+						{
+							"item": "stone",
+							"heal_amount": 5
+						},
+						{
+							"item": "cobblestone",
+							"heal_amount": 3
+						},
+						{
+							"item": "andesite",
+							"heal_amount": 3
+						},
+						{
+							"item": "diorite",
+							"heal_amount": 3
+						},
+						{
+							"item": "granite",
+							"heal_amount": 3
+						},
+						{
+							"item": "deepslate",
+							"heal_amount": 6
+						},
+						{
+							"item": "cobbled_deepslate",
+							"heal_amount": 4
+						},
+						{
+							"item": "tuff",
+							"heal_amount": 4
+						}
+					]
+				},
+				"minecraft:variable_max_auto_step": {
+					"base_value": 1,
+					"controlled_value": 1,
+					"jump_prevented_value": 1
+				},
+				"minecraft:rideable": {
+					"seat_count": 1,
+					"crouching_skip_interact": true,
+					"family_types": [
+						"player"
+					],
+					"interact_text": "action.interact.ride.horse",
+					"seats": {
+						"position": [
+							0,
+							2.9,
+							0.6
+						]
+					}
+				}
+			},
+			"dhh:trained_baby": {
+				"minecraft:ageable": {
+					"duration": 600,
+					"feed_items": [
+						{
+							"item": "stone",
+							"growth": 0.1
+						},
+						{
+							"item": "deepslate",
+							"growth": 0.2
+						}
+					],
+					"grow_up": {
+						"event": "minecraft:ageable_grow_up",
+						"target": "self"
+					}
+				}
+			},
+			"dhh:trained": {
+				"minecraft:type_family": {
+					"family": [
+						"dhh_dragon",
+						"boulder_class",
+						"whispering_death",
+						"mob"
+					]
+				},
+				"minecraft:navigation.walk": {
+					"can_walk": true,
+					"can_float": true,
+					"avoid_water": true,
+					"avoid_damage_blocks": true
+				},
+				"minecraft:movement": {
+					"value": 0.2
+				},
+				"minecraft:movement.basic": {},
+				"minecraft:persistent": {},
+				"minecraft:healable": {
+					"items": [
+						{
+							"item": "stone",
+							"heal_amount": 5
+						},
+						{
+							"item": "cobblestone",
+							"heal_amount": 3
+						},
+						{
+							"item": "andesite",
+							"heal_amount": 3
+						},
+						{
+							"item": "diorite",
+							"heal_amount": 3
+						},
+						{
+							"item": "granite",
+							"heal_amount": 3
+						},
+						{
+							"item": "deepslate",
+							"heal_amount": 6
+						},
+						{
+							"item": "cobbled_deepslate",
+							"heal_amount": 4
+						}
+					]
+				},
+				"minecraft:behavior.owner_hurt_target": {
+					"priority": 2
+				},
+				"minecraft:behavior.owner_hurt_by_target": {
+					"priority": 3
+				},
+				"minecraft:behavior.follow_owner": {
+					"priority": 2,
+					"speed_multiplier": 2,
+					"start_distance": 10,
+					"can_teleport": false,
+					"stop_distance": 2
+				},
+				"minecraft:is_tamed": {}
+			}
+		},
+		"components": {
+			 "minecraft:leashable": {},
+			"minecraft:physics": {},
+			"minecraft:behavior.hurt_by_target": {
+				"priority": 1,
+				"entity_types": {
+					"filters": {
+						"test": "is_family",
+						"subject": "other",
+						"operator": "!=",
+						"value": "whispering_death"
+					},
+					"max_dist": 64
+				}
+			},
+			"minecraft:behavior.ranged_attack": {
+				"priority": 8,
+				"ranged_fov": 90,
+				"attack_interval_min": 1,
+				"attack_interval_max": 3,
+				"speed_multiplier": 1,
+				"target_in_sight_time": 0.1,
+				"attack_radius": 45
+			},
+			"minecraft:shooter": {
+				"def": "dhh:whispering_death_fireball"
+			},
+			"minecraft:health": {
+				"value": 40,
+				"max": 40
+			},
+			"minecraft:despawn": {
+				"despawn_from_distance": {}
+			},
+			"minecraft:damage_sensor": {
+				"triggers": [
+					{
+						"cause": "fall",
+						"deals_damage": false
+					},
+					{
+						"cause": "entity_explosion",
+						"deals_damage": false
+					}
+				]
+			},
+			"minecraft:fire_immune": true,
+			"minecraft:breathable": {
+				"total_supply": 15,
+				"suffocate_time": 0
+			},
+			"minecraft:behavior.float": {
+				"priority": 0,
+				"sink_with_passengers": false
+			},
+			"minecraft:type_family": {
+				"family": [
+					"dhh_dragon",
+					"boulder_class",
+					"whispering_death",
+					"mob"
+				]
+			},
+			"minecraft:conditional_bandwidth_optimization": {},
+			"minecraft:jump.static": {},
+			"minecraft:nameable": {},
+			"minecraft:follow_range": {
+				"value": 64
+			},
+			"minecraft:behavior.random_fly": {
+				"priority": 10,
+				"avoid_damage_blocks": true,
+				"can_land_on_trees": false,
+				"speed_multiplier": 1,
+				"y_dist": 7,
+				"xz_dist": 40
+			},
+			"minecraft:behavior.random_look_around": {
+				"priority": 12
+			},
+			"minecraft:behavior.look_at_player": {
+				"priority": 11,
+				"look_distance": 6,
+				"probability": 0.02
+			},
+			"minecraft:can_fly": {},
+			"minecraft:pushable": {
+				"is_pushable": true,
+				"is_pushable_by_piston": true
+			}
+		},
+		"events": {
+			"minecraft:spawn_": {
+				"add": {
+					"component_groups": [
+						"emerging"
+					]
+				}
+			},
+			"minecraft:emerged": {
+				"set_property": {
+					"dhh:emerging": false
+				},
+				"remove": {
+					"component_groups": [
+						"emerging"
+					]
+				}
+			},
+			"dhh:sit": {
+				"queue_command": {
+					"command": "scriptevent dhh:dragon sit"
+				}
+			},
+			"on_pregnant": {
+				"queue_command": {
+					"command": "setblock ~~~ dhh:whispering_death_egg"
+				}
+			},
+			"dhh:hatched": {
+				"queue_command": {
+					"command": "playsound block.turtle_egg.crack @a[r=15] ~~~ 1 1 1"
+				},
+				"set_property": {
+					"dhh:emerging": false
+				},
+				"trigger": "dhh:baby_select_color",
+				"add": {
+					"component_groups": [
+						"dhh:hatched",
+						"dhh:wandering_ground",
+						"dhh:baby"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:adult",
+						"dhh:unsaddled",
+						"dhh:wild",
+						"dhh:unchested",
+						"emerging"
+					]
+				}
+			},
+			"dhh:become_angry": {
+				"add": {
+					"component_groups": [
+						"minecraft:angry"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:wild"
+					]
+				}
+			},
+			"dhh:on_calm": {
+				"add": {
+					"component_groups": [
+						"dhh:wild"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"minecraft:angry",
+						"dhh:wandering_ground"
+					]
+				}
+			},
+			"dhh:trained": {
+				"queue_command": {
+					"command": "scriptevent dhh:dragon trained"
+				},
+				"add": {
+					"component_groups": [
+						"dhh:unsaddled",
+						"dhh:unchested",
+						"dhh:trained",
+						"dhh:trained_baby"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:wandering_ground"
+					]
+				}
+			},
+			"minecraft:entity_spawned": {
+				"randomize": [
+					{
+						"weight": 4,
+						"set_property": {
+							"dhh:emerging": true
+						},
+						"add": {
+							"component_groups": [
+								"dhh:wild",
+								"dhh:unsaddled",
+								"dhh:unchested",
+								"dhh:wandering_ground",
+								"dhh:adult",
+								"emerging"
+							]
+						},
+						"trigger": "dhh:adult_select_color"
+					},
+					{
+						"weight": 1,
+						"set_property": {
+							"dhh:emerging": false
+						},
+						"add": {
+							"component_groups": [
+								"dhh:wandering_ground",
+								"dhh:baby"
+							]
+						},
+						"trigger": "dhh:baby_select_color"
+					}
+				]
+			},
+			"dhh:baby_to_adult": {
+				"sequence": [
+					{
+						"filters": {
+							"test": "is_variant",
+							"operator": "==",
+							"value": 0
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby_green_whispering_death"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:green_whispering_death"
+							]
+						}
+					},
+					{
+						"filters": {
+							"test": "is_variant",
+							"operator": "==",
+							"value": 4
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby_blue_whispering_death"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:blue_whispering_death"
+							]
+						}
+					},
+					{
+						"filters": {
+							"test": "is_variant",
+							"operator": "==",
+							"value": 5
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby_purple_whispering_death"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:purple_whispering_death"
+							]
+						}
+					}
+				]
+			},
+			"dhh:check_trained": {
+				"filters": {
+					"test": "has_component",
+					"operator": "==",
+					"value": "minecraft:is_tamed"
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:wild",
+						"dhh:baby",
+						"dhh:trained_baby"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"dhh:unsaddled",
+						"dhh:unchested",
+						"dhh:trained_adult",
+						"dhh:adult"
+					]
+				},
+				"trigger": "dhh:adult_select_color"
+			},
+			"dhh:adult_select_color": {
+				"randomize": [
+					{
+						"add": {
+							"component_groups": [
+								"dhh:green_whispering_death"
+							]
+						},
+						"weight": 4
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:blue_whispering_death"
+							]
+						},
+						"weight": 1
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:purple_whispering_death"
+							]
+						},
+						"weight": 1
+					}
+				]
+			},
+			"dhh:baby_select_color": {
+				"randomize": [
+					{
+						"add": {
+							"component_groups": [
+								"dhh:baby_green_whispering_death"
+							]
+						},
+						"weight": 4
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:baby_blue_whispering_death"
+							]
+						},
+						"weight": 1
+					},
+					{
+						"add": {
+							"component_groups": [
+								"dhh:baby_purple_whispering_death"
+							]
+						},
+						"weight": 1
+					}
+				]
+			},
+			"minecraft:ageable_grow_up": {
+				"sequence": [
+					{
+						"filters": {
+							"test": "has_component",
+							"operator": "!=",
+							"value": "minecraft:is_tamed"
+						},
+						"add": {
+							"component_groups": [
+								"dhh:adult",
+								"dhh:unsaddled",
+								"dhh:wild"
+							]
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby"
+							]
+						},
+						"trigger": "dhh:baby_to_adult"
+					},
+					{
+						"filters": {
+							"test": "has_component",
+							"operator": "==",
+							"value": "minecraft:is_tamed"
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby",
+								"dhh:wild",
+								"dhh:trained_baby"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:adult",
+								"dhh:unsaddled",
+								"dhh:unchested",
+								"dhh:trained_adult"
+							]
+						},
+						"trigger": "dhh:baby_to_adult"
+					}
+				]
+			},
+			"dhh:chested": {
+				"add": {
+					"component_groups": [
+						"dhh:chested"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:unchested"
+					]
+				}
+			},
+			"dhh:unchested": {
+				"remove": {
+					"component_groups": [
+						"dhh:chested"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"dhh:unchested"
+					]
+				}
+			},
+			"dhh:saddled": {
+				"add": {
+					"component_groups": [
+						"dhh:saddled"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:unsaddled"
+					]
+				}
+			},
+			"dhh:unsaddled": {
+				"remove": {
+					"component_groups": [
+						"dhh:saddled"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"dhh:unsaddled"
+					]
+				}
+			},
+			"dhh:start_flying": {
+				"add": {
+					"component_groups": [
+						"dhh:flying"
+					]
+				},
+				"set_property": {
+					"dhh:flying": true
+				}
+			},
+			"dhh:stop_flying": {
+				"remove": {
+					"component_groups": [
+						"dhh:flying"
+					]
+				},
+				"set_property": {
+					"dhh:flying": false
+				}
+			}
+		}
+	}
+}

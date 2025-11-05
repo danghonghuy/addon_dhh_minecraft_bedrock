@@ -1,0 +1,8 @@
+[
+    {
+        "atlas_tile": "magic_grass_night",
+        "flipbook_texture": "textures/blocks/magic_grass_night",
+        "blend_frames": true,
+        "ticks_per_frame": 50
+    }
+]

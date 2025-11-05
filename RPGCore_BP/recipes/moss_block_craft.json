@@ -1,0 +1,24 @@
+{
+  "format_version": "1.18.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "custom:craft_moss_block_from_dirt"
+    },
+    
+    "tags": ["crafting_table"],
+    
+    "ingredients": [
+      {
+        "item": "minecraft:dirt"
+      },
+      {
+        "item": "minecraft:wheat_seeds"
+      }
+    ],
+    
+    "result": {
+      "item": "minecraft:moss_block",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,957 @@
+{
+	"format_version": "1.21.10",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "dhh:light_fury",
+			"is_summonable": true,
+			"is_spawnable": true,
+			"animations": {
+				"fly": "controller.animation.reset_levitation",
+				"reset_speed": "controller.animation.reset_speed"
+			},
+			"scripts": {
+				"animate": [
+					"fly",
+					"reset_speed"
+				]
+			},
+			"properties": {
+				"dhh:sitting": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				},
+				"dhh:trained": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				},
+				"dhh:flying": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				},
+				"dhh:diving": {
+					"type": "bool",
+					"client_sync": true,
+					"default": false
+				}
+			}
+		},
+		"component_groups": {
+			"dhh:flying": {
+				"minecraft:physics": {
+					"has_gravity": true
+				}
+			},
+			"dhh:wandering_air": {
+				"minecraft:environment_sensor": {
+					"triggers": {
+						"event": "dhh:start_wandering_ground",
+						"target": "self",
+						"filters": {
+							"test": "is_daytime",
+							"operator": "==",
+							"value": true
+						}
+					}
+				},
+				"minecraft:behavior.circle_around_anchor": {
+					"priority": 3,
+					"radius_change": 1,
+					"radius_adjustment_chance": 0.004,
+					"height_adjustment_chance": 0.002857,
+					"goal_radius": 1,
+					"angle_change": 15,
+					"radius_range": [
+						5,
+						15
+					],
+					"height_offset_range": [
+						-4,
+						5
+					],
+					"height_above_target_range": [
+						20,
+						21
+					]
+				},
+				"minecraft:navigation.fly": {
+					"can_walk": true,
+					"avoid_water": true,
+					"avoid_damage_blocks": true
+				},
+				"minecraft:movement.glide": {
+					"start_speed": 1,
+					"speed_when_turning": 1.5
+				}
+			},
+			"dhh:wandering_ground": {
+				"minecraft:environment_sensor": {
+					"triggers": {
+						"event": "dhh:start_wandering_air",
+						"target": "self",
+						"filters": {
+							"test": "is_daytime",
+							"operator": "==",
+							"value": false
+						}
+					}
+				},
+				"minecraft:navigation.walk": {
+					"can_walk": true,
+					"can_float": true,
+					"avoid_water": true,
+					"avoid_damage_blocks": true
+				},
+				"minecraft:movement": {
+					"value": 0.2
+				},
+				"minecraft:movement.basic": {}
+			},
+			"dhh:chested": {
+				"minecraft:strength": {
+					"value": 4
+				},
+				"minecraft:is_chested": {}
+			},
+			"dhh:unchested": {
+				"minecraft:strength": {
+					"value": 0
+				},
+				"minecraft:interact": {
+					"interactions": [
+						{
+							"play_sounds": "armor.equip_generic",
+							"on_interact": {
+								"filters": {
+									"all_of": [
+										{
+											"test": "has_equipment",
+											"subject": "other",
+											"domain": "hand",
+											"value": "minecraft:chest"
+										},
+										{
+											"test": "is_owner",
+											"subject": "other",
+											"value": true
+										}
+									]
+								},
+								"event": "dhh:chested",
+								"target": "self"
+							},
+							"use_item": true,
+							"interact_text": "action.interact.attachchest"
+						}
+					]
+				}
+			},
+			"dhh:caged": {
+				"minecraft:type_family": {
+					"family": [
+						"caged"
+					]
+				}
+			},
+			"dhh:hatched": {
+				"minecraft:persistent": {}
+			},
+			"dhh:baby": {
+				"minecraft:behavior.follow_parent": {
+					"priority": 6,
+					"speed_multiplier": 1.3
+				},
+				"minecraft:ageable": {
+					"duration": 1200,
+					"grow_up": {
+						"event": "minecraft:ageable_grow_up",
+						"target": "self"
+					}
+				},
+				"minecraft:is_baby": {},
+				"minecraft:scale_by_age": {
+					"start_scale": 1,
+					"end_scale": 1.5
+				},
+				"minecraft:tameable": {
+					"probability": 0.1,
+					"tame_event": {
+						"event": "dhh:trained_baby",
+						"target": "self"
+					},
+					"tame_items": [
+						"cod",
+						"salmon",
+						 "beef",
+        "porkchop",
+        "chicken",
+        "mutton",
+        "rabbit"
+					]
+				},
+				"minecraft:type_family": {
+					"family": [
+						"dhh_dragon",
+						"baby_dragon",
+						"strike_class",
+						"light_fury",
+						"fury",
+						"mob"
+					]
+				},
+				"minecraft:collision_box": {
+					"width": 1.3,
+					"height": 1
+				}
+			},
+			"dhh:adult": {
+				"minecraft:collision_box": {
+					"width": 2,
+					"height": 1.9
+				},
+				"minecraft:scale": {
+					"value": 1.3
+				},
+				"minecraft:experience_reward": {
+					"on_death": "query.last_hit_by_player?math.random(2,8):0"
+				},
+				"minecraft:on_target_acquired": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				}
+			},
+			"minecraft:angry": {
+				"minecraft:angry": {
+					"duration": 60,
+					"calm_event": {
+						"event": "dhh:on_calm",
+						"target": "self"
+					}
+				},
+				"minecraft:on_target_acquired": {}
+			},
+			"dhh:saddled": {
+				"minecraft:is_saddled": {},
+				"minecraft:input_ground_controlled": {},
+				"minecraft:horse.jump_strength": {
+					"value": 0
+				},
+				"minecraft:can_power_jump": {},
+				"minecraft:behavior.player_ride_tamed": {}
+			},
+			"dhh:unsaddled": {},
+			"dhh:wild": {
+				"minecraft:on_hurt_by_player": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				},
+				"minecraft:on_hurt": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				},
+				"minecraft:on_target_acquired": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				},
+				"minecraft:behavior.tempt": {
+					"within_radius": 20,
+					"priority": 9,
+					"items": [
+						"cod",
+						"salmon"
+					]
+				},
+				"minecraft:tameable": {
+					"probability": 0.1,
+					"tame_event": {
+						"event": "dhh:trained_adult",
+						"target": "self"
+					},
+					"tame_items": [
+						"cod",
+						"salmon",
+						 "beef",
+        "porkchop",
+        "chicken",
+        "mutton",
+        "rabbit"
+					]
+				},
+				"minecraft:behavior.nearest_attackable_target": {
+					"priority": 7,
+					"reselect_targets": true,
+					"scan_interval": 20,
+					"within_radius": 48,
+					"must_see_forget_duration": 0.5,
+					"target_search_height": 25,
+					"entity_types": [
+						{
+							"filters": {
+								"all_of": [
+									{
+										"test": "is_family",
+										"subject": "other",
+										"value": "dragon_hunter"
+									}
+								]
+							},
+							"max_dist": 48
+						},
+						{
+							"max_dist": 48,
+							"filters": {
+								"any_of": [
+									{
+										"test": "has_equipment",
+										"subject": "other",
+										"domain": "hand",
+										"operator": "==",
+										"value": "netherite_sword"
+									},
+									{
+										"test": "has_equipment",
+										"subject": "other",
+										"domain": "hand",
+										"operator": "==",
+										"value": "diamond_sword"
+									},
+									{
+										"test": "has_equipment",
+										"subject": "other",
+										"domain": "hand",
+										"operator": "==",
+										"value": "golden_sword"
+									},
+									{
+										"test": "has_equipment",
+										"subject": "other",
+										"domain": "hand",
+										"operator": "==",
+										"value": "iron_sword"
+									},
+									{
+										"test": "has_equipment",
+										"subject": "other",
+										"domain": "hand",
+										"operator": "==",
+										"value": "stone_sword"
+									},
+									{
+										"test": "has_equipment",
+										"subject": "other",
+										"domain": "hand",
+										"operator": "==",
+										"value": "wooden_sword"
+									}
+								]
+							}
+						}
+					]
+				}
+			},
+			"dhh:trained": {
+				"minecraft:navigation.walk": {
+					"can_walk": true,
+					"can_float": true,
+					"avoid_water": true,
+					"avoid_damage_blocks": true
+				},
+				"minecraft:movement": {
+					"value": 0.2
+				},
+				"minecraft:movement.basic": {},
+				"minecraft:persistent": {},
+				"minecraft:healable": {
+					"items": [
+						{
+							"item": "cod",
+							"heal_amount": 3
+						},
+						{
+							"item": "salmon",
+							"heal_amount": 3
+						}
+					]
+				},
+				"minecraft:behavior.stay_while_sitting": {
+					"priority": 1
+				},
+				"minecraft:sittable": {},
+				"minecraft:behavior.owner_hurt_target": {
+					"priority": 2
+				},
+				"minecraft:behavior.owner_hurt_by_target": {
+					"priority": 3
+				},
+				"minecraft:behavior.follow_owner": {
+					"priority": 2,
+					"speed_multiplier": 2,
+					"start_distance": 10,
+					"can_teleport": false,
+					"stop_distance": 2
+				},
+				"minecraft:is_tamed": {},
+				"minecraft:on_target_acquired": {
+					"event": "dhh:become_angry",
+					"target": "self"
+				}
+			},
+			"dhh:trained_baby": {
+				"minecraft:ageable": {
+					"duration": 600,
+					"feed_items": [
+						{
+							"item": "cod",
+							"growth": 0.2
+						},
+						{
+							"item": "salmon",
+							"growth": 0.2
+						}
+					],
+					"grow_up": {
+						"event": "minecraft:ageable_grow_up",
+						"target": "self"
+					}
+				}
+			},
+			"dhh:trained_adult": {
+				"minecraft:behavior.breed": {
+					"priority": 2,
+					"speed_multiplier": 1
+				},
+				"minecraft:breedable": {
+					"require_tame": true,
+					"causes_pregnancy": true,
+					"breeds_with": [
+						{
+							"mate_type": "dhh:light_fury",
+							"breed_event": {
+								"event": "on_pregnant",
+								"target": "self"
+							}
+						},
+						{
+							"mate_type": "dhh:night_fury",
+							"breed_event": {
+								"event": "on_pregnant_hybrid",
+								"target": "self"
+							}
+						}
+					],
+					"breed_items": [
+						"cod",
+						"salmon"
+					]
+				},
+				"minecraft:inventory": {
+					"inventory_size": 1,
+					"restrict_to_owner": false,
+					"container_type": "horse"
+				},
+				"minecraft:persistent": {},
+				"minecraft:healable": {
+					"items": [
+						{
+							"item": "cod",
+							"heal_amount": 3
+						},
+						{
+							"item": "salmon",
+							"heal_amount": 3
+						}
+					]
+				},
+				"minecraft:equippable": {
+					"slots": [
+						{
+							"slot": 0,
+							"item": "dhh:dragon_saddle",
+							"accepted_items": [
+								"dhh:dragon_saddle"
+							],
+							"on_equip": {
+								"event": "dhh:saddled"
+							},
+							"on_unequip": {
+								"event": "dhh:unsaddled"
+							}
+						}
+					]
+				},
+				"minecraft:variable_max_auto_step": {
+					"base_value": 1,
+					"controlled_value": 1,
+					"jump_prevented_value": 1
+				},
+				"minecraft:rideable": {
+					"seat_count": 1,
+					"crouching_skip_interact": true,
+					"family_types": [
+						"player"
+					],
+					"interact_text": "action.interact.ride.horse",
+					"seats": {
+						"position": [
+							0,
+							1.25,
+							0.2
+						]
+					}
+				},
+				"minecraft:interact": {
+					"interactions": {
+						"on_interact": {
+							"event": "dhh:sit",
+							"filters": {
+								"test": "is_sneaking",
+								"operator": "==",
+								"subject": "player",
+								"value": true
+							},
+							"target": "self"
+						}
+					}
+				},
+				"minecraft:behavior.owner_hurt_target": {
+					"priority": 2
+				},
+				"minecraft:behavior.owner_hurt_by_target": {
+					"entity_types": [
+						{
+							"filters": {
+								"test": "has_tag",
+								"subject": "self",
+								"value": "caged"
+							}
+						},
+						{
+							"filters": {
+								"test": "has_tag",
+								"subject": "self",
+								"value": "flightless"
+							}
+						}
+					],
+					"priority": 3
+				},
+				"minecraft:is_tamed": {}
+			}
+		},
+		"components": {
+			  "minecraft:leashable": {},
+			"minecraft:physics": {},
+			"minecraft:behavior.ranged_attack": {
+				"priority": 2,
+				"ranged_fov": 90,
+				"attack_interval_min": 6,
+				"attack_interval_max": 10,
+				"attack_radius": 16
+			},
+			"minecraft:shooter": {
+				"def": "dhh:plasma_blast"
+			},
+			"minecraft:persistent": {},
+			"minecraft:damage_sensor": {
+				"triggers": [
+					{
+						"cause": "fall",
+						"deals_damage": false
+					},
+					{
+						"cause": "entity_explosion",
+						"deals_damage": false
+					}
+				]
+			},
+			"minecraft:behavior.hurt_by_target": {
+				"priority": 1,
+				"entity_types": [
+					{
+						"filters": {
+							"test": "has_tag",
+							"subject": "self",
+							"value": "caged"
+						},
+						"max_dist": 16
+					},
+					{
+						"filters": {
+							"test": "is_family",
+							"subject": "other",
+							"operator": "!=",
+							"value": "fury"
+						},
+						"max_dist": 16
+					}
+				]
+			},
+			"minecraft:on_target_escape": {
+				"event": "dhh:on_calm",
+				"target": "self"
+			},
+			"minecraft:fire_immune": true,
+			"minecraft:health": {
+				"value": 100,
+				"max": 100
+			},
+			"minecraft:breathable": {
+				"total_supply": 15,
+				"suffocate_time": 0
+			},
+			"minecraft:movement": {
+				"value": 0.2
+			},
+			"minecraft:behavior.float": {
+				"priority": 0,
+				"sink_with_passengers": false
+			},
+			"minecraft:type_family": {
+				"family": [
+					"dhh_dragon",
+					"strike_class",
+					"cageable",
+					"fury",
+					"light_fury",
+					"mob"
+				]
+			},
+			"minecraft:conditional_bandwidth_optimization": {},
+			"minecraft:jump.static": {},
+			"minecraft:nameable": {},
+			"minecraft:behavior.random_stroll": {
+				"priority": 14,
+				"speed_multiplier": 1
+			},
+			"minecraft:behavior.random_look_around": {
+				"priority": 15
+			},
+			"minecraft:behavior.look_at_player": {
+				"priority": 13,
+				"look_distance": 6,
+				"probability": 0.02
+			},
+			"minecraft:flying_speed": {
+				"value": 1.5
+			},
+			"minecraft:can_fly": {},
+			"minecraft:pushable": {
+				"is_pushable": true,
+				"is_pushable_by_piston": true
+			}
+		},
+		"events": {
+			"dhh:start_wandering_air": {
+				"add": {
+					"component_groups": [
+						"dhh:wandering_air"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:wandering_ground"
+					]
+				}
+			},
+			"dhh:start_wandering_ground": {
+				"add": {
+					"component_groups": [
+						"dhh:wandering_ground"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:wandering_air"
+					]
+				}
+			},
+			"dhh:sit": {
+				"queue_command": {
+					"command": [
+						"scriptevent dhh:dragon sit"
+					]
+				}
+			},
+			"on_pregnant": {
+				"queue_command": {
+					"command": "setblock ~~~ dhh:light_fury_egg"
+				}
+			},
+			"on_pregnant_hybrid": {
+				"queue_command": {
+					"command": "setblock ~~~ dhh:night_light_egg"
+				}
+			},
+			"dhh:become_angry": {
+				"add": {
+					"component_groups": [
+						"minecraft:angry"
+					]
+				}
+			},
+			"dhh:on_calm": {
+				"remove": {
+					"component_groups": [
+						"minecraft:angry"
+					]
+				}
+			},
+			"minecraft:entity_spawned": {
+				"add": {
+					"component_groups": [
+						"dhh:wild",
+						"dhh:unsaddled",
+						"dhh:unchested",
+						"dhh:wandering_air",
+						"dhh:adult"
+					]
+				}
+			},
+			"dhh:chested": {
+				"add": {
+					"component_groups": [
+						"dhh:chested"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:unchested"
+					]
+				}
+			},
+			"dhh:unchested": {
+				"remove": {
+					"component_groups": [
+						"dhh:chested"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"dhh:unchested"
+					]
+				}
+			},
+			"dhh:saddled": {
+				"add": {
+					"component_groups": [
+						"dhh:saddled"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:unsaddled"
+					]
+				}
+			},
+			"dhh:unsaddled": {
+				"remove": {
+					"component_groups": [
+						"dhh:saddled"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"dhh:unsaddled"
+					]
+				}
+			},
+			"dhh:hatched": {
+				"queue_command": {
+					"command": "playsound block.turtle_egg.crack @a[r=15] ~~~ 1 1 1"
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:unsaddled",
+						"dhh:unchested",
+						"dhh:wild",
+						"dhh:adult"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"dhh:hatched",
+						"dhh:wandering_ground",
+						"dhh:baby"
+					]
+				}
+			},
+			"minecraft:ageable_grow_up": {
+				"sequence": [
+					{
+						"filters": {
+							"test": "has_component",
+							"operator": "!=",
+							"value": "minecraft:is_tamed"
+						},
+						"add": {
+							"component_groups": [
+								"dhh:adult",
+								"dhh:unsaddled",
+								"dhh:unchested",
+								"dhh:wild"
+							]
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby"
+							]
+						}
+					},
+					{
+						"filters": {
+							"test": "has_component",
+							"operator": "==",
+							"value": "minecraft:is_tamed"
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:baby",
+								"dhh:wild",
+								"dhh:trained_baby"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:adult",
+								"dhh:unsaddled",
+								"dhh:unchested",
+								"dhh:trained_adult"
+							]
+						}
+					}
+				]
+			},
+			"dhh:trained_baby": {
+				"queue_command": {
+					"command": "scriptevent dhh:dragon trained"
+				},
+				"add": {
+					"component_groups": [
+						"dhh:trained",
+						"dhh:trained_baby"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:wandering_ground"
+					]
+				}
+			},
+			"dhh:trained_adult": {
+				"queue_command": {
+					"command": [
+						"scriptevent dhh:dragon trained"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"dhh:trained",
+						"dhh:trained_adult"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:wandering_air",
+						"dhh:wandering_ground"
+					]
+				},
+				"set_property": {
+					"dhh:flying": false
+				}
+			},
+			"dhh:uncaged": {
+				"remove": {
+					"component_groups": [
+						"dhh:caged"
+					]
+				},
+				"trigger": "minecraft:ageable_grow_up",
+				"sequence": [
+					{
+						"add": {
+							"component_groups": [
+								"dhh:unsaddled",
+								"dhh:unchested",
+								"dhh:adult",
+								"dhh:trained",
+								"dhh:trained_adult"
+							]
+						},
+						"queue_command": {
+							"command": [
+								"scriptevent dhh:dragon trained"
+							],
+							"target": "self"
+						}
+					}
+				]
+			},
+			"dhh:caged_adult": {
+				"queue_command": {
+					"command": [
+						"/tag @s add caged"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"dhh:caged"
+					]
+				},
+				"trigger": "minecraft:ageable_grow_up",
+				"sequence": [
+					{
+						"add": {
+							"component_groups": [
+								"dhh:unsaddled",
+								"dhh:unchested",
+								"dhh:adult",
+								"dhh:trained",
+								"dhh:trained_adult"
+							]
+						}
+					}
+				]
+			},
+			"dhh:start_flying": {
+				"sequence": [
+					{
+						"filters": {
+							"test": "has_component",
+							"operator": "!=",
+							"value": "minecraft:is_tamed"
+						},
+						"add": {
+							"component_groups": [
+								"dhh:flying"
+							]
+						},
+						"set_property": {
+							"dhh:flying": true
+						}
+					}
+				]
+			},
+			"dhh:stop_flying": {
+				"sequence": [
+					{
+						"filters": {
+							"test": "has_component",
+							"operator": "!=",
+							"value": "minecraft:is_tamed"
+						},
+						"remove": {
+							"component_groups": [
+								"dhh:flying"
+							]
+						},
+						"set_property": {
+							"dhh:flying": false
+						}
+					}
+				]
+			}
+		}
+	}
+}

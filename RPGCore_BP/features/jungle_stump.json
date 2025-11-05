@@ -1,0 +1,18 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:jungle_stump"
+        },
+        "features": [
+            [
+                "sert:jungle_stump_1",
+                5
+            ],
+            [
+                "sert:jungle_stump_2",
+                5
+            ]
+        ]
+    }
+}

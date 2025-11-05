@@ -1,0 +1,14 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:weighted_random_feature": {
+    "description": {
+      "identifier": "hungkaio:snowr_feature_mcstructure"
+    },
+    "features": [
+      [ "minecraft:snowr1_feature_mcstructure", 100 ],
+      [ "minecraft:snowr2_feature_mcstructure", 100 ],
+      [ "minecraft:snowr3_feature_mcstructure", 100 ],
+      [ "minecraft:snowr4_feature_mcstructure", 100 ]
+    ]
+  }
+}

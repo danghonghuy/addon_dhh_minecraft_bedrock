@@ -1,0 +1,24 @@
+{
+    "format_version": "1.21.50",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:forest_dungeon_boss_spawner"
+        },
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3
+            },
+            "minecraft:tick": {
+                "interval_range": [
+                    3,
+                    3
+                ],
+                "looping": true
+            },
+            "minecraft:custom_components": [
+                "sert:mob_spawner_v2"
+            ],
+            "tag:sys": {}
+        }
+    }
+}

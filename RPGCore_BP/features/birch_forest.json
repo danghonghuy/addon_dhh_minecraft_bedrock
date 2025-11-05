@@ -1,0 +1,42 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:birch_forest"
+        },
+        "features": [
+            [
+                "sert:birch_tree",
+                87
+            ],
+            [
+                "sert:fallen_birch_tree",
+                3
+            ],
+            [
+                "sert:grass_with_moss",
+                800
+            ],
+            [
+                "sert:tinder_fungus_generator",
+                15
+            ],
+            [
+                "sert:rock",
+                10
+            ],
+            [
+                "sert:strawberry_bush",
+                1
+            ],
+            [
+                "sert:flower_lotar",
+                1
+            ],
+            [
+                "sert:flower_clovers",
+                1
+            ]
+        ]
+    }
+}

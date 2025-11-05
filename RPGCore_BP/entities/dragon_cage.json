@@ -1,0 +1,348 @@
+{
+	"format_version": "1.20.50",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "dhh:dragon_cage",
+			"is_spawnable": false,
+			"is_summonable": true,
+			"is_experimental": false,
+			"properties": {
+				"dhh:open": {
+					"client_sync": true,
+					"default": false,
+					"type": "bool"
+				},
+				"dhh:open_animation_finished": {
+					"client_sync": true,
+					"default": false,
+					"type": "bool"
+				},
+				"dhh:cage_type": {
+					"client_sync": true,
+					"type": "enum",
+					"default": "thin",
+					"values": [
+						"thin",
+						"square"
+					]
+				}
+			}
+		},
+		"component_groups": {
+			"dhh:despawn": {
+				"minecraft:instant_despawn": {}
+			},
+			"dhh:gronckle_adult": {
+				"minecraft:scale": {
+					"value": 1.2
+				}
+			},
+			"dhh:nadder_adult": {
+				"minecraft:scale": {
+					"value": 1.4
+				}
+			},
+			"dhh:sand_wraith_adult": {
+				"minecraft:scale": {
+					"value": 1.4
+				}
+			},
+			"dhh:skrill_adult": {
+				"minecraft:scale": {
+					"value": 1.4
+				}
+			},
+			"dhh:light_fury_adult": {
+				"minecraft:scale": {
+					"value": 1.4
+				}
+			},
+			"dhh:open": {
+				"minecraft:timer": {
+					"looping": true,
+					"time": [
+						120,
+						240
+					],
+					"time_down_event": {
+						"event": "dhh:despawn",
+						"target": "self"
+					}
+				}
+			},
+			"dhh:square_cage": {
+				"minecraft:collision_box": {
+					"height": 3.5,
+					"width": 5.4
+				}
+			},
+			"dhh:thin_cage": {
+				"minecraft:collision_box": {
+					"height": 3.5,
+					"width": 4.7
+				}
+			},
+			"dhh:closed": {}
+		},
+		"components": {
+			"minecraft:fire_immune": true,
+			"minecraft:rideable": {
+				"seat_count": 1,
+				"family_types": [
+					"cageable"
+				],
+				"seats": {
+					"position": [
+						0,
+						0.2,
+						0
+					]
+				}
+			},
+			"minecraft:pushable": {
+				"is_pushable": false,
+				"is_pushable_by_piston": false
+			},
+			"minecraft:physics": {
+				"has_gravity": true,
+				"has_collision": true,
+				"push_towards_closest_space": false
+			},
+			"minecraft:damage_sensor": {
+				"triggers": {
+					"cause": "all",
+					"deals_damage": false
+				}
+			},
+			"minecraft:knockback_resistance": {
+				"max": 1,
+				"value": 1
+			},
+			"minecraft:is_stackable": {},
+			"minecraft:push_through": {
+				"value": 1
+			},
+			"minecraft:timer": {
+				"looping": false,
+				"time": [
+					1,
+					1
+				],
+				"time_down_event": {
+					"event": "dhh:tag_dragon",
+					"target": "self"
+				}
+			}
+		},
+		"events": {
+			"dhh:tag_dragon": {
+				"queue_command": {
+					"command": [
+						"tag @e[family=cageable,c=1,r=5] add caged"
+					]
+				}
+			},
+			"dhh:despawn": {
+				"add": {
+					"component_groups": [
+						"dhh:despawn"
+					]
+				}
+			},
+			"dhh:cage_gronckle_adult": {
+				"add": {
+					"component_groups": [
+						"dhh:gronckle_adult",
+						"dhh:thin_cage"
+					]
+				},
+				"queue_command": {
+					"command": [
+						"ride @e[type=dhh:dragon_cage,c=1] summon_rider dhh:gronckle dhh:caged_adult"
+					],
+					"target": "self"
+				}
+			},
+			"dhh:cage_nadder_adult": {
+				"add": {
+					"component_groups": [
+						"dhh:nadder_adult",
+						"dhh:square_cage"
+					]
+				},
+				"queue_command": {
+					"command": [
+						"ride @e[type=dhh:dragon_cage,c=1] summon_rider dhh:nadder dhh:caged_adult"
+					],
+					"target": "self"
+				},
+				"set_property": {
+					"dhh:cage_type": "square"
+				}
+			},
+			"dhh:cage_sand_wraith_adult": {
+				"add": {
+					"component_groups": [
+						"dhh:sand_wraith_adult",
+						"dhh:square_cage"
+					]
+				},
+				"queue_command": {
+					"command": [
+						"ride @e[type=dhh:dragon_cage,c=1] summon_rider dhh:sand_wraith dhh:caged_adult"
+					],
+					"target": "self"
+				},
+				"set_property": {
+					"dhh:cage_type": "square"
+				}
+			},
+			"dhh:cage_skrill_adult": {
+				"add": {
+					"component_groups": [
+						"dhh:skrill_adult",
+						"dhh:square_cage"
+					]
+				},
+				"queue_command": {
+					"command": [
+						"ride @e[type=dhh:dragon_cage,c=1] summon_rider dhh:skrill dhh:caged_adult"
+					],
+					"target": "self"
+				},
+				"set_property": {
+					"dhh:cage_type": "square"
+				}
+			},
+			"dhh:cage_light_fury_adult": {
+				"add": {
+					"component_groups": [
+						"dhh:light_fury_adult",
+						"dhh:square_cage"
+					]
+				},
+				"queue_command": {
+					"command": [
+						"ride @e[type=dhh:dragon_cage,c=1] summon_rider dhh:light_fury dhh:caged_adult"
+					],
+					"target": "self"
+				},
+				"set_property": {
+					"dhh:cage_type": "square"
+				}
+			},
+			"dhh:default": {
+				"randomize": [
+					{
+						"trigger": "dhh:cage_gronckle_adult",
+						"weight": 6
+					},
+					{
+						"trigger": "dhh:cage_nadder_adult",
+						"weight": 6
+					},
+					{
+						"trigger": "dhh:cage_sand_wraith_adult",
+						"weight": 3
+					},
+					{
+						"trigger": "dhh:cage_skrill_adult",
+						"weight": 1
+					},
+					{
+						"trigger": "dhh:cage_light_fury_adult",
+						"weight": 1
+					}
+				],
+				"add": {
+					"component_groups": [
+						"dhh:closed"
+					]
+				},
+				"trigger": "dhh:close_cage",
+				"set_property": {
+					"dhh:open": false
+				}
+			},
+			"dhh:ship": {
+				"randomize": [
+					{
+						"trigger": "dhh:cage_gronckle_adult",
+						"weight": 3
+					},
+					{
+						"trigger": "dhh:cage_nadder_adult",
+						"weight": 3
+					},
+					{
+						"trigger": "dhh:cage_sand_wraith_adult",
+						"weight": 6
+					},
+					{
+						"trigger": "dhh:cage_skrill_adult",
+						"weight": 4
+					},
+					{
+						"trigger": "dhh:cage_light_fury_adult",
+						"weight": 2
+					}
+				],
+				"add": {
+					"component_groups": [
+						"dhh:closed"
+					]
+				},
+				"trigger": "dhh:close_cage",
+				"set_property": {
+					"dhh:open": false
+				}
+			},
+			"dhh:open_cage": {
+				"sequence": [
+					{
+						"remove": {
+							"component_groups": [
+								"dhh:closed"
+							]
+						},
+						"add": {
+							"component_groups": [
+								"dhh:open"
+							]
+						},
+						"set_property": {
+							"dhh:open": true
+						}
+					}
+				]
+			},
+			"minecraft:entity_spawned": {
+				"queue_command": {
+					"command": [
+						"tag @e[family=cageable,c=1] add caged"
+					]
+				}
+			},
+			"dhh:close_cage": {
+				"queue_command": {
+					"command": [
+						"tag @e[family=cageable,c=1] add caged"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"dhh:open"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"dhh:closed"
+					]
+				},
+				"set_property": {
+					"dhh:open": false
+				}
+			}
+		}
+	}
+}

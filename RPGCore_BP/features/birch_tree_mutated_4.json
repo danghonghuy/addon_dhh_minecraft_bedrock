@@ -1,0 +1,21 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:structure_template_feature": {
+        "description": {
+            "identifier": "sert:birch_tree_mutated_4"
+        },
+        "structure_name": "mystructure:birch_tree_mutated_4",
+        "adjustment_radius": 4,
+        "facing_direction": "random",
+        "constraints": {
+            "grounded": {},
+            "unburied": {},
+            "block_intersection": {
+                "block_allowlist": [
+                    "minecraft:grass_block",
+                    "minecraft:air"
+                ]
+            }
+        }
+    }
+}

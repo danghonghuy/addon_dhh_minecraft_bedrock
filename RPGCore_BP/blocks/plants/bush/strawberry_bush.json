@@ -1,0 +1,115 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:strawberry_bush",
+            "states": {
+                "sert:growth": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7
+                ]
+            }
+        },
+        "components": {
+            "minecraft:loot": "loot_tables/empty.json",
+            "minecraft:placement_filter": {
+                "conditions": [
+                    {
+                        "allowed_faces": [
+                            "up"
+                        ],
+                        "block_filter": [
+                            "minecraft:grass_block",
+                            "minecraft:podzol",
+                            "minecraft:dirt",
+                            "minecraft:mycelium",
+                            "minecraft:coarse_dirt",
+                            {
+                                "tags": "q.any_tag(['dirt'])"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "minecraft:liquid_detection": {
+                "detection_rules": [
+                    {
+                        "liquid_type": "water",
+                        "on_liquid_touches": "broken"
+                    }
+                ]
+            },
+            "minecraft:collision_box": false,
+            "minecraft:selection_box": {
+                "origin": [
+                    -6,
+                    0,
+                    -6
+                ],
+                "size": [
+                    12,
+                    9,
+                    12
+                ]
+            },
+            "minecraft:light_dampening": 0,
+            "minecraft:geometry": "geometry.bush",
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "strawberry_age_1"
+                }
+            },
+            "sert:berry_bush": {
+                "berry_type": "sert:strawberry",
+                "amount": [
+                    4,
+                    6
+                ]
+            },
+            "sert:growing_plant": {},
+            "tag:isair": {}
+        },
+        "permutations": [
+            {
+                "condition": "query.block_state('sert:growth') == 5",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "render_method": "alpha_test",
+                            "texture": "strawberry_age_2"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('sert:growth') == 6",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "render_method": "alpha_test",
+                            "texture": "strawberry_age_3"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('sert:growth') == 7",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "render_method": "alpha_test",
+                            "texture": "strawberry_age_4"
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

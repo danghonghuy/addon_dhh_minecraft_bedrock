@@ -1,0 +1,14 @@
+{
+  "format_version": "1.19.0", // Đã cập nhật phiên bản
+  "minecraft:structure_template_feature": {
+    "description": {
+      "identifier": "minecraft:watchtower_birch_feature_mcstructure" // Đã thêm namespacing vào identifier
+    },
+    "structure_name": "mystructure:Watchtower_Birch",
+    "adjustment_radius": 4,
+    "facing_direction": "random",
+    "constraints": {
+      "grounded": {}
+    }
+  }
+}

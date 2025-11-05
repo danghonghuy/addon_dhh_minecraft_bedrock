@@ -1,0 +1,97 @@
+{
+  "format_version": "1.8.0",
+  "minecraft:spawn_rules": {
+    "description": {
+      "identifier": "dhh:newb",
+      "population_control": "monster"
+    },
+    "conditions": [
+      {
+      "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_underground": {},
+        "minecraft:brightness_filter": {
+          "min": 0,
+          "max": 7,
+          "adjust_for_weather": false
+        },
+        "minecraft:distance_filter": {
+          "min": 24,
+          "max": 48
+        },
+        "minecraft:weight": {
+          "default": 20
+        },
+        "minecraft:herd": {
+          "min_size": 1,
+          "max_size": 3,
+          "initial_event": "captain",
+          "initial_event_count": 1
+        },
+        "minecraft:biome_filter": {
+          "all_of": [
+            {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "overworld"
+            },
+            {
+              "test": "has_biome_tag",
+              "operator": "!=",
+              "value": "ocean"
+            }
+          ]
+        }
+      },
+      {
+        "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_underground": {},
+        "minecraft:brightness_filter": {
+          "min": 0,
+          "max": 15,
+          "adjust_for_weather": false
+        },
+        "minecraft:distance_filter": {
+          "min": 24,
+          "max": 48
+        },
+        "minecraft:weight": {
+          "default": 30
+        },
+        "minecraft:herd": {
+          "min_size": 1,
+          "max_size": 3,
+          "initial_event": "captain",
+          "initial_event_count": 1
+        },
+        "minecraft:biome_filter": {
+          "test": "has_biome_tag", "operator": "==", "value": "nether"
+        }
+      },
+      {
+        "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_underground": {},
+        "minecraft:brightness_filter": {
+          "min": 0,
+          "max": 15,
+          "adjust_for_weather": false
+        },
+        "minecraft:distance_filter": {
+          "min": 24,
+          "max": 48
+        },
+        "minecraft:weight": {
+          "default": 1
+        },
+        "minecraft:herd": {
+          "min_size": 1,
+          "max_size": 3,
+          "initial_event": "captain",
+          "initial_event_count": 1
+        },
+        "minecraft:biome_filter": {
+          "test": "has_biome_tag", "operator": "==", "value": "the_end"
+        }
+      }
+    ]
+  }
+}

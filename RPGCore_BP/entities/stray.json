@@ -1,0 +1,275 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "minecraft:stray",
+      "spawn_category": "monster",
+      "is_spawnable": true,
+      "is_summonable": true
+    },
+    "component_groups": {
+      "stray:stray_baby": {
+        "minecraft:is_baby": {},
+        "minecraft:scale": { "value": 0.5 },
+        "minecraft:movement": { "value": 0.35 }
+      },
+      "stray:stray_adult": {
+        "minecraft:movement": { "value": 0.25 }
+      },
+      "stray:stray_giant": {
+        "minecraft:scale": { "value": 1.5 },
+        "minecraft:health": { "value": 40, "max": 40 },
+        "minecraft:movement": { "value": 0.325 }
+      },
+      "minecraft:melee_mode": {
+        "minecraft:behavior.melee_box_attack": {
+          "priority": 4,
+          "track_target": true,
+          "speed_multiplier": 1.25
+        },
+        "minecraft:attack": {
+          "damage": 5
+        },
+        "minecraft:environment_sensor": {
+          "triggers": {
+            "filters": {
+              "all_of": [
+                { "test": "in_water", "subject": "self", "operator": "==", "value": false },
+                { "test": "has_ranged_weapon", "subject": "self", "operator": "==", "value": true }
+              ]
+            },
+            "event": "minecraft:ranged_mode"
+          }
+        }
+      },
+      "minecraft:ranged_mode": {
+        "minecraft:behavior.ranged_attack": {
+          "priority": 0,
+          "attack_interval_min": 1.0,
+          "attack_interval_max": 3.0,
+          "attack_radius": 15.0
+        },
+        "minecraft:shooter": {
+          "def": "minecraft:arrow"
+        },
+        "minecraft:environment_sensor": {
+          "triggers": [
+            { "filters": { "test": "is_underwater", "subject": "self", "operator": "==", "value": true }, "event": "minecraft:melee_mode" },
+            { "filters": { "test": "has_ranged_weapon", "subject": "self", "operator": "==", "value": false }, "event": "minecraft:melee_mode" }
+          ]
+        }
+      },
+      "stray:can_have_melee_equipment": {
+        "minecraft:equipment": {
+          "table": "loot_tables/entities/zombie_equipment.json"
+        }
+      },
+      "stray:transforming_state": {
+        "minecraft:is_shaking": {},
+        "minecraft:timer": {
+          "looping": false,
+          "time": 30,
+          "time_down_event": {
+            "event": "stray:trigger_conversion"
+          }
+        }
+      },
+      "stray:convert_to_wither": {
+        "minecraft:transformation": {
+          "into": "minecraft:wither_skeleton",
+          "transformation_sound": "convert_to_stray",
+          "preserve_equipment": true,
+          "drop_inventory": true,
+          "delay": {
+            "value": 2
+          }
+        }
+      }
+    },
+    "components": {
+       "minecraft:leashable": {},
+      "minecraft:is_hidden_when_invisible": {},
+      "minecraft:experience_reward": {
+        "on_death": "query.last_hit_by_player ? 5 + (query.equipment_count * Math.Random(1,3)) : 0"
+      },
+      "minecraft:collision_box": {
+        "width": 0.6,
+        "height": 1.9
+      },
+      "minecraft:type_family": {
+        "family": [
+          "stray",
+          "skeleton",
+          "undead",
+          "monster",
+          "mob"
+        ]
+      },
+      "minecraft:breathable": {
+        "total_supply": 15,
+        "suffocate_time": 0,
+        "breathes_water": true
+      },
+      "minecraft:health": {
+        "value": 30,
+        "max": 30
+      },
+      "minecraft:hurt_on_condition": {
+        "damage_conditions": [
+          {
+            "filters": {
+              "test": "in_lava",
+              "subject": "self",
+              "operator": "==",
+              "value": true
+            },
+            "cause": "lava",
+            "damage_per_tick": 4
+          }
+        ]
+      },
+      "minecraft:loot": {
+        "table": "loot_tables/entities/stray.json"
+      },
+      "minecraft:movement": {
+        "value": 0.25
+      },
+      "minecraft:navigation.generic": {
+        "is_amphibious": true,
+        "can_swim": true,
+        "avoid_sun": false,
+        "avoid_water": false
+      },
+      "minecraft:underwater_movement": {
+        "value": 0.08
+      },
+      "minecraft:movement.basic": {},
+      "minecraft:jump.static": {},
+      "minecraft:can_climb": {},
+      "minecraft:nameable": {},
+      "minecraft:equipment": {
+        "table": "loot_tables/entities/skeleton_gear.json"
+      },
+      "minecraft:environment_sensor": {
+        "triggers": {
+          "filters": {
+            "test": "is_underwater",
+            "subject": "self",
+            "operator": "==",
+            "value": true
+          },
+          "event": "stray:start_transforming"
+        }
+      },
+      "minecraft:despawn": {
+        "despawn_from_distance": {}
+      },
+      "minecraft:shareables": {
+        "singular_pickup": true,
+        "items": [
+          { "item": "minecraft:netherite_sword", "want_amount": 1, "surplus_amount": 1, "priority": 0 },
+          { "item": "minecraft:diamond_sword", "want_amount": 1, "surplus_amount": 1, "priority": 1 },
+          { "item": "minecraft:iron_sword", "want_amount": 1, "surplus_amount": 1, "priority": 2 },
+          { "item": "minecraft:stone_sword", "want_amount": 1, "surplus_amount": 1, "priority": 3 },
+          { "item": "minecraft:golden_sword", "want_amount": 1, "surplus_amount": 1, "priority": 4 },
+          { "item": "minecraft:wooden_sword", "want_amount": 1, "surplus_amount": 1, "priority": 5 },
+          { "item": "minecraft:bow", "want_amount": 1, "surplus_amount": 1, "priority": 6 }
+        ]
+      },
+      "minecraft:behavior.hurt_by_target": {
+        "priority": 1
+      },
+      "minecraft:behavior.nearest_attackable_target": {
+        "priority": 2,
+        "must_see": true,
+        "reselect_targets": true,
+        "entity_types": [
+          { "filters": { "test": "is_family", "subject": "other", "value": "player" }, "max_dist": 16 },
+          { "filters": { "test": "is_family", "subject": "other", "value": "irongolem" }, "max_dist": 16 },
+          { "filters": { "all_of": [ { "test": "is_family", "subject": "other", "value": "baby_turtle" }, { "test": "in_water", "subject": "other", "operator": "!=", "value": true } ] }, "max_dist": 16 }
+        ]
+      },
+      "minecraft:behavior.avoid_mob_type": {
+        "priority": 4,
+        "entity_types": [
+          { "filters": { "test": "is_family", "subject": "other", "value": "wolf" }, "max_dist": 6, "walk_speed_multiplier": 1.2, "sprint_speed_multiplier": 1.2 }
+        ]
+      },
+        "minecraft:inventory": {
+    "inventory_size": 36,
+    "container_type": "inventory"
+  },
+      "minecraft:behavior.pickup_items": {
+        "priority": 5,
+        "max_dist": 3,
+        "goal_radius": 2,
+        "speed_multiplier": 1.0,
+        "pickup_based_on_chance": true,
+        "can_pickup_any_item": true
+      },
+      "minecraft:behavior.random_stroll": {
+        "priority": 6,
+        "speed_multiplier": 1
+      },
+      "minecraft:behavior.look_at_player": {
+        "priority": 7,
+        "look_distance": 8
+      },
+      "minecraft:behavior.random_look_around": {
+        "priority": 8
+      },
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:conditional_bandwidth_optimization": {}
+    },
+    "events": {
+      "minecraft:entity_spawned": {
+        "sequence": [
+          {
+            "randomize": [
+              { "weight":80, "add": { "component_groups": [ "stray:stray_adult" ] } },
+              { "weight": 10, "add": { "component_groups": [ "stray:stray_baby" ] } },
+              { "weight": 10, "add": { "component_groups": [ "stray:stray_giant" ] } }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 70,
+                "add": { "component_groups": [ "minecraft:ranged_mode" ] }
+              },
+              {
+                "weight": 30,
+                "sequence": [
+                  { "remove": { "component_groups": [ "minecraft:ranged_mode" ] } },
+                  { "add": { "component_groups": [ "minecraft:melee_mode", "stray:can_have_melee_equipment" ] } }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "minecraft:melee_mode": {
+        "remove": { "component_groups": [ "minecraft:ranged_mode" ] },
+        "add": { "component_groups": [ "minecraft:melee_mode" ] }
+      },
+      "minecraft:ranged_mode": {
+        "remove": { "component_groups": [ "minecraft:melee_mode" ] },
+        "add": { "component_groups": [ "minecraft:ranged_mode" ] }
+      },
+      "stray:start_transforming": {
+        "add": { "component_groups": [ "stray:transforming_state" ] }
+      },
+      "stray:stop_transforming": {
+        "remove": { "component_groups": [ "stray:transforming_state" ] }
+      },
+      "stray:trigger_conversion": {
+        "remove": { "component_groups": [ "stray:transforming_state" ] },
+        "add": { "component_groups": [ "stray:convert_to_wither" ] }
+      }
+    }
+  }
+}

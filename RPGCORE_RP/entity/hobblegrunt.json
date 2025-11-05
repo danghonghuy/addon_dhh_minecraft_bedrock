@@ -1,0 +1,41 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "dhh:hobblegrunt",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"textures": {
+				"default": "textures/entity/hobblegrunt/purple"
+			},
+			"geometry": {
+				"default": "geometry.hobblegrunt"
+			},
+			"animations": {
+				"main_controller": "controller.animation.hobblegrunt.main",
+				"walk": "animation.hobblegrunt.walk",
+				"idle": "animation.hobblegrunt.idle",
+				"fly": "animation.hobblegrunt.fly",
+				"sit": "animation.hobblegrunt.sit",
+				"fire_ball": "animation.hobblegrunt.breath",
+				"look_at_target": "animation.common.look_at_target",
+				"rotate": "animation.dragon.rotate"
+			},
+			"scripts": {
+				"animate": [
+					"main_controller",
+					"look_at_target",
+					"rotate"
+				]
+			},
+			"render_controllers": [
+				"controller.render.hobblegrunt"
+			],
+			"spawn_egg": {
+				"base_color": "#D54ABC",
+				"overlay_color": "#C341BA"
+			}
+		}
+	}
+}

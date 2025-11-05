@@ -1,0 +1,73 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "hg:catacombtemple_pool"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "ruin/CatacombTemple/Catacomb1",
+                    "processors": "hg:stone_brick_replacement",
+                    "projection":"rigid"
+                },
+                "weight": 1
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "ruin/CatacombTemple/Catacomb2",
+                    "processors": "hg:stone_brick_replacement",
+                    "projection":"rigid"
+                },
+                "weight": 1
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "ruin/CatacombTemple/Catacomb3",
+                    "processors": "hg:stone_brick_replacement",
+                    "projection":"rigid"
+                },
+                "weight": 1
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "ruin/CatacombTemple/Catacomb4",
+                    "processors": "hg:stone_brick_replacement",
+                    "projection":"rigid"
+                },
+                "weight": 1
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "ruin/CatacombTemple/CatacombTemple",
+                    "processors": "hg:stone_brick_replacement",
+                    "projection":"rigid"
+                },
+                "weight": 1
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "ruin/CatacombTemple/Catacomb_5",
+                    "processors": "hg:stone_brick_replacement",
+                    "projection":"rigid"
+                },
+                "weight": 1
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "ruin/CatacombTemple/Catacomb_6",
+                    "processors": "hg:stone_brick_replacement",
+                    "projection":"rigid"
+                },
+                "weight": 1
+            }
+        ]
+    }
+}

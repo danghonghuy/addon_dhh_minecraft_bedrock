@@ -1,0 +1,17 @@
+{
+	"format_version": "1.21.10",
+	"minecraft:item": {
+		"description": {
+			"identifier": "dhh:dragon_shoot_command",
+			"menu_category": {
+				"category": "equipment"
+			}
+		},
+		"components": {
+			"minecraft:icon": "dhh_dragon_shoot_command",
+			"minecraft:custom_components": [
+				"dhh:dragon_shoot_command"
+			]
+		}
+	}
+}

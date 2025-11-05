@@ -1,0 +1,6 @@
+execute as @s[tag=!need] run tellraw @a[r=32] {"rawtext":[{"text":"<"},{"selector":"@s"},{"text":"> Thanks, but I don't need anything right now."}]}
+execute as @s[tag=need,tag=need_log] run tellraw @a[r=32] {"rawtext":[{"text":"<"},{"selector":"@s"},{"text":"> I need "},{"score":{"name":"@s","objective":"need_count"}},{"text":" oak logs to build my house, can you help me gather them?"}]}
+execute as @s[tag=need,tag=need_beef] run tellraw @a[r=32] {"rawtext":[{"text":"<"},{"selector":"@s"},{"text":"> I need "},{"score":{"name":"@s","objective":"need_count"}},{"text":" steaks, I'm running out of food."}]}
+execute as @s[tag=need,tag=need_iron] run tellraw @a[r=32] {"rawtext":[{"text":"<"},{"selector":"@s"},{"text":"> I need "},{"score":{"name":"@s","objective":"need_count"}},{"text":" iron ingots for a redstone project."}]}
+execute as @s[tag=need,tag=need_diamond] run tellraw @a[r=32] {"rawtext":[{"text":"<"},{"selector":"@s"},{"text":"> Can I get "},{"score":{"name":"@s","objective":"need_count"}},{"text":" diamonds?"}]}
+execute as @s[tag=need,tag=need_apple] run tellraw @a[r=32] {"rawtext":[{"text":"<"},{"selector":"@s"},{"text":"> I just need one enchanted golden apple."}]}

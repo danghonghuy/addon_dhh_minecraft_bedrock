@@ -1,0 +1,27 @@
+{
+	"format_version": "1.12",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "dhh:dragon_blade"
+		},
+		"tags": [
+			"crafting_table"
+		],
+		"key": {
+			"G": {
+				"item": "dhh:nightmare_gel"
+			},
+			"I": {
+				"item": "iron_ingot"
+			}
+		},
+		"pattern": [
+			"I  ",
+			" G ",
+			"  I"
+		],
+		"result": {
+			"item": "dhh:dragon_blade"
+		}
+	}
+}

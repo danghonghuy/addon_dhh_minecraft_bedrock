@@ -1,0 +1,18 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:oak_with_birch_tree"
+        },
+        "features": [
+            [
+                "sert:oak_tree",
+                3
+            ],
+            [
+                "sert:birch_tree",
+                3
+            ]
+        ]
+    }
+}

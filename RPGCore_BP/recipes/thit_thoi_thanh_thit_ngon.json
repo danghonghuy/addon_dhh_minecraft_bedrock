@@ -1,0 +1,14 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "custom:rotten_flesh_to_cooked_porkchop"
+    },
+
+    "tags": ["furnace", "smoker", "campfire"],
+
+    "input": "minecraft:rotten_flesh",
+
+    "output": "minecraft:cooked_porkchop"
+  }
+}

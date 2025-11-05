@@ -1,0 +1,31 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:structure_template_feature": {
+        "description": {
+            "identifier": "sert:structures/dirt_dungeon"
+        },
+        "structure_name": "mystructure:dirt_dungeon_generator",
+        "adjustment_radius": 4,
+        "facing_direction": "random",
+        "constraints": {
+            "grounded": {},
+            "unburied": {},
+            "block_intersection": {
+                "block_allowlist": [
+                    "minecraft:air",
+                    "minecraft:grass_block",
+                    "minecraft:dirt",
+                    "minecraft:jungle_leaves",
+                    "minecraft:bamboo",
+                    "minecraft:vine",
+                    "minecraft:jungle_wood",
+                    "minecraft:jungle_log",
+                    "minecraft:tall_grass",
+                    "minecraft:grass",
+                    "minecraft:fern",
+                    "minecraft:large_fern"
+                ]
+            }
+        }
+    }
+}

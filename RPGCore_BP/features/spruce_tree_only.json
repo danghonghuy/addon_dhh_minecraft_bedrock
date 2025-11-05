@@ -1,0 +1,14 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:spruce_tree_only"
+        },
+        "features": [
+            [
+                "sert:spruce_tree",
+                5
+            ]
+        ]
+    }
+}

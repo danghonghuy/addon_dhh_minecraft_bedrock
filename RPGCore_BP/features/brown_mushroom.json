@@ -1,0 +1,30 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:brown_mushroom"
+        },
+        "features": [
+            [
+                "sert:brown_mushroom_1",
+                2
+            ],
+            [
+                "sert:brown_mushroom_2",
+                2
+            ],
+            [
+                "sert:brown_mushroom_3",
+                2
+            ],
+            [
+                "sert:brown_mushroom_4",
+                3
+            ],
+            [
+                "sert:brown_mushroom_5",
+                3
+            ]
+        ]
+    }
+}

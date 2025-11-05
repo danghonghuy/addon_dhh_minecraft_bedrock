@@ -1,0 +1,37 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:client_biome": {
+        "description": {
+            "identifier": "sert:willow_forest"
+        },
+        "components": {
+            "minecraft:fog_appearance": {
+                "fog_identifier": "sert:fog_willow_forest"
+            },
+            "minecraft:water_appearance": {
+                "surface_color": "#28c4f4"
+            },
+            "minecraft:foliage_appearance": {
+                "color": "#6ac73f"
+            },
+            "minecraft:grass_appearance": {
+                "color": "#8dda6b"
+            },
+            "minecraft:dry_foliage_color": {
+                "color": "#875833"
+            },
+            "minecraft:atmosphere_identifier": {
+                "atmosphere_identifier": "minecraft:default_atmospherics"
+            },
+            "minecraft:color_grading_identifier": {
+                "color_grading_identifier": "minecraft:default_color_grading"
+            },
+            "minecraft:lighting_identifier": {
+                "lighting_identifier": "minecraft:default_lighting"
+            },
+            "minecraft:water_identifier": {
+                "water_identifier": "minecraft:default_water"
+            }
+        }
+    }
+}

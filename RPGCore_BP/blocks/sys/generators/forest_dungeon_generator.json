@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:forest_dungeon_generator"
+        },
+        "components": {
+            "minecraft:tick": {
+                "interval_range": [
+                    1,
+                    15
+                ],
+                "looping": true
+            },
+            "sert:generator": {
+                "id": "forest_dungeon"
+            },
+            "tag:sys": {}
+        }
+    }
+}

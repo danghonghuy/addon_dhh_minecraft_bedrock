@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.50",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:mill_dynamic"
+        },
+        "components": {
+            "minecraft:tick": {
+                "interval_range": [
+                    1,
+                    1
+                ],
+                "looping": true
+            },
+            "minecraft:custom_components": [
+                "sert:mill_dynamic"
+            ],
+            "tag:sys": {}
+        }
+    }
+}

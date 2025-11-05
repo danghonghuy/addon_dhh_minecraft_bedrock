@@ -1,0 +1,19 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "hg:cts_pool"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "ruin/CatacombTemple/CatacombTempleStatue",
+                    "processors": "mc:processor_list",
+                    "projection":"rigid"
+                },
+                "weight": 1
+            }
+        ]
+    }
+}

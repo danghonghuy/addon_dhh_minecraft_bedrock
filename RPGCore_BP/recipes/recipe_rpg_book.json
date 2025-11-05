@@ -1,0 +1,32 @@
+{
+  "format_version": "1.18.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "dhh:recipe_dhh_book"
+    },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      {
+        "item": "minecraft:paper",
+        "count": 3
+      },
+      {
+        "item": "minecraft:leather",
+        "count": 1
+      }
+    ],
+    "result": {
+      "item": "dhh:menu_book",
+      "count": 1,
+      "components": {
+        "minecraft:item_name": "§l§eMenu dhh",
+        "minecraft:lore": {
+          "value": [
+            "§7Cầm và nhấn chuột phải/chạm màn hình",
+            "§7để mở menu."
+          ]
+        }
+      }
+    }
+  }
+}

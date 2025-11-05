@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:structure_set": {
+        "description": {
+            "identifier": "hg:alchemistsdungeon"
+        },
+        "placement": {
+            "type": "minecraft:random_spread",
+            "salt": 58350180,
+            "separation": 23,
+            "spacing": 47,
+            "spread_type": "linear"
+        },
+        "structures": [
+            {
+                "structure": "hg:alchemistsdungeon",
+                "weight": 1
+            }
+        ]
+    }
+}

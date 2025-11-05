@@ -1,0 +1,23 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:forest_bell_generator"
+        },
+        "components": {
+            "minecraft:tick": {
+                "interval_range": [
+                    5,
+                    15
+                ],
+                "looping": true
+            },
+            "sert:generator": {
+                "id": "wild_plants",
+                "data": "('types': ['sert:forest_bell'], 'radius': [2, 4], 'count': [1, 3])",
+                "replaceWithSideBlock": true
+            },
+            "tag:sys": {}
+        }
+    }
+}

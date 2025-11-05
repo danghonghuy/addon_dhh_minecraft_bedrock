@@ -1,0 +1,323 @@
+{
+    "num_mip_levels": 4,
+    "padding": 8,
+    "resource_pack_name": "dhh_plus_plus",
+    "texture_data": {
+        "false": {
+            "textures": "textures/false"
+        },
+        "reed": {
+            "textures": "textures/blocks/reed"
+        },
+        "magic_grass_night": {
+            "textures": "textures/blocks/magic_grass_night"
+        },
+        "magic_grass_day": {
+            "textures": "textures/blocks/magic_grass_day"
+        },
+        "tinder_fungus_1": {
+            "textures": "textures/blocks/tinder_fungus_1"
+        },
+        "tinder_fungus_2": {
+            "textures": "textures/blocks/tinder_fungus_2"
+        },
+        "tropical_flower": {
+            "textures": "textures/blocks/tropical_flower"
+        },
+        "desert_rose": {
+            "textures": "textures/blocks/desert_rose"
+        },
+        "fire_of_berselisk": {
+            "textures": "textures/blocks/fire_of_berselisk"
+        },
+        "magic_flower": {
+            "textures": "textures/blocks/magic_flower"
+        },
+        "honey_clover": {
+            "textures": "textures/blocks/honey_clover"
+        },
+        "clovers": {
+            "textures": "textures/blocks/clovers"
+        },
+        "forest_bell": {
+            "textures": "textures/blocks/forest_bell"
+        },
+        "shells": {
+            "textures": "textures/blocks/shells"
+        },
+        "magic_mushroom_resin": {
+            "textures": "textures/blocks/magic_mushroom_resin"
+        },
+        "small_waterlily": {
+            "textures": "textures/blocks/small_waterlily"
+        },
+        "white_lotus_waterlily": {
+            "textures": "textures/blocks/white_lotus_waterlily"
+        },
+        "pink_lotus_waterlily": {
+            "textures": "textures/blocks/pink_lotus_waterlily"
+        },
+        "magic_orb_stand": {
+            "textures": "textures/blocks/magic_orb_stand"
+        },
+        "jigsaw_in": {
+            "textures": "textures/blocks/jigsaw_in"
+        },
+        "jigsaw_out": {
+            "textures": "textures/blocks/jigsaw_out"
+        },
+        "spawner": {
+            "textures": "textures/blocks/stone"
+        },
+        "mana_crystal": {
+            "textures": "textures/blocks/mana_crystal"
+        },
+        "mana_stone": {
+            "textures": "textures/blocks/mana_stone"
+        },
+        "mana_crystal_stone": {
+            "textures": "textures/blocks/mana_crystal_stone"
+        },
+        "mana_container_stand": {
+            "textures": "textures/blocks/mana_container_stand"
+        },
+        "magic_analyzer": {
+            "textures": "textures/blocks/magic_analyzer"
+        },
+        "magic_switch": {
+            "textures": "textures/blocks/magic_switch"
+        },
+        "linuim": {
+            "textures": "textures/blocks/linuim"
+        },
+        "lotar": {
+            "textures": "textures/blocks/lotar"
+        },
+        "jart": {
+            "textures": "textures/blocks/jart"
+        },
+        "leaves_bush": {
+            "textures": "textures/blocks/leaves_bush"
+        },
+        "blueberry_bush_0": {
+            "textures": "textures/blocks/blueberry_bush_0"
+        },
+        "blueberry_bush_1": {
+            "textures": "textures/blocks/blueberry_bush_1"
+        },
+        "blueberry_bush_2": {
+            "textures": "textures/blocks/blueberry_bush_2"
+        },
+        "blueberry_bush_3": {
+            "textures": "textures/blocks/blueberry_bush_3"
+        },
+        "magic_log_top": {
+            "textures": "textures/blocks/magic_log_top"
+        },
+        "magic_log_side": {
+            "textures": "textures/blocks/magic_log_side"
+        },
+        "magic_planks": {
+            "textures": "textures/blocks/magic_planks"
+        },
+        "magic_leaves": {
+            "textures": "textures/blocks/magic_leaves"
+        },
+        "stripped_magic_log_top": {
+            "textures": "textures/blocks/stripped_magic_log_top"
+        },
+        "stripped_magic_log_side": {
+            "textures": "textures/blocks/stripped_magic_log_side"
+        },
+        "magic_sapling": {
+            "textures": "textures/blocks/magic_sapling"
+        },
+        "magic_mushroom_hat": {
+            "textures": "textures/blocks/magic_mushroom_hat"
+        },
+        "magic_mushroom_base": {
+            "textures": "textures/blocks/magic_mushroom_base"
+        },
+        "magic_mushroom": {
+            "textures": "textures/blocks/magic_mushroom"
+        },
+        "waystone": {
+            "textures": "textures/blocks/waystone"
+        },
+        "crystal_stand": {
+            "textures": "textures/blocks/crystal_stand"
+        },
+        "magic_crafting_table": {
+            "textures": "textures/blocks/magic_crafting_table"
+        },
+        "magic_conventor": {
+            "textures": "textures/blocks/magic_conventor"
+        },
+        "mana_focuser": {
+            "textures": "textures/blocks/mana_focuser"
+        },
+        "mana_stone_bricks": {
+            "textures": "textures/blocks/mana_stone_bricks"
+        },
+        "xp_generator": {
+            "textures": "textures/blocks/xp_generator"
+        },
+        "rope_ladder": {
+            "textures": "textures/entity/rope_ladder"
+        },
+        "strawberry_age_1": {
+            "textures": "textures/blocks/strawberry_stage_0"
+        },
+        "strawberry_age_2": {
+            "textures": "textures/blocks/strawberry_stage_1"
+        },
+        "strawberry_age_3": {
+            "textures": "textures/blocks/strawberry_stage_2"
+        },
+        "strawberry_age_4": {
+            "textures": "textures/blocks/strawberry_stage_3"
+        },
+        "jute_age_1": {
+            "textures": "textures/blocks/jute_stage_0"
+        },
+        "jute_age_2": {
+            "textures": "textures/blocks/jute_stage_1"
+        },
+        "jute_age_3": {
+            "textures": "textures/blocks/jute_stage_2"
+        },
+        "jute_age_4": {
+            "textures": "textures/blocks/jute_stage_3"
+        },
+        "jute_age_5": {
+            "textures": "textures/blocks/jute_stage_4"
+        },
+        "cucumber_age_1": {
+            "textures": "textures/blocks/cucumber_stage_0"
+        },
+        "cucumber_age_2": {
+            "textures": "textures/blocks/cucumber_stage_1"
+        },
+        "cucumber_age_3": {
+            "textures": "textures/blocks/cucumber_stage_2"
+        },
+        "cucumber_age_4": {
+            "textures": "textures/blocks/cucumber_stage_3"
+        },
+        "cucumber_age_5": {
+            "textures": "textures/blocks/cucumber_stage_4"
+        },
+        "cucumber_age_6": {
+            "textures": "textures/blocks/cucumber_stage_5"
+        },
+        "cucumber_age_7": {
+            "textures": "textures/blocks/cucumber_stage_6"
+        },
+        "tomato_age_1": {
+            "textures": "textures/blocks/tomato_stage_0"
+        },
+        "tomato_age_2": {
+            "textures": "textures/blocks/tomato_stage_1"
+        },
+        "tomato_age_3": {
+            "textures": "textures/blocks/tomato_stage_2"
+        },
+        "tomato_age_4": {
+            "textures": "textures/blocks/tomato_stage_3"
+        },
+        "tomato_age_5": {
+            "textures": "textures/blocks/tomato_stage_4"
+        },
+        "tomato_age_6": {
+            "textures": "textures/blocks/tomato_stage_5"
+        },
+        "tomato_age_7": {
+            "textures": "textures/blocks/tomato_stage_6"
+        },
+        "wheat_age_1": {
+            "textures": "textures/blocks/wheat_stage_0"
+        },
+        "wheat_age_2": {
+            "textures": "textures/blocks/wheat_stage_1"
+        },
+        "wheat_age_3": {
+            "textures": "textures/blocks/wheat_stage_2"
+        },
+        "wheat_age_4": {
+            "textures": "textures/blocks/wheat_stage_3"
+        },
+        "wheat_age_5": {
+            "textures": "textures/blocks/wheat_stage_4"
+        },
+        "wheat_age_6": {
+            "textures": "textures/blocks/sert_wheat_age_6"
+        },
+        "wheat_age_7": {
+            "textures": "textures/blocks/wheat_stage_6"
+        },
+        "wheat_age_8": {
+            "textures": "textures/blocks/wheat_stage_7"
+        },
+        	"dhh_whispering_death_egg": {
+			"textures": "textures/blocks/egg/whispering_death_egg"
+		},
+		"dhh_gronckle_egg": {
+			"textures": "textures/blocks/egg/gronckle_egg"
+		},
+		"dhh_sand_wraith_egg": {
+			"textures": "textures/blocks/egg/sand_wraith_egg"
+		},
+		"dhh_flame_whipper_egg": {
+			"textures": "textures/blocks/egg/flame_whipper_egg"
+		},
+		"dhh_zippleback_egg": {
+			"textures": "textures/blocks/egg/zippleback_egg"
+		},
+		"dhh_nightmare_egg": {
+			"textures": "textures/blocks/egg/nightmare_egg"
+		},
+		"dhh_nadder_egg": {
+			"textures": "textures/blocks/egg/nadder_egg"
+		},
+		"dhh_thunderdrum_egg": {
+			"textures": "textures/blocks/egg/thunderdrum_egg"
+		},
+		"dhh_timberjack_egg": {
+			"textures": "textures/blocks/egg/timberjack_egg"
+		},
+		"dhh_night_fury_egg": {
+			"textures": "textures/blocks/egg/night_fury_egg"
+		},
+		"dhh_light_fury_egg": {
+			"textures": "textures/blocks/egg/light_fury_egg"
+		},
+		"dhh_night_light_egg": {
+			"textures": "textures/blocks/egg/night_light_egg"
+		},
+		"dhh_flamewhipper_egg": {
+			"textures": "textures/blocks/egg/flame_whipper_egg"
+		},
+		"dhh_skrill_egg": {
+			"textures": "textures/blocks/egg/skrill_egg"
+		},
+		"dhh_snow_wraith_egg": {
+			"textures": "textures/blocks/egg/snow_wraith_egg"
+		},
+		"dhh_hobblegrunt_egg": {
+			"textures": "textures/blocks/egg/hobblegrunt_egg"
+		},
+		"dhh_rumblehorn_egg": {
+			"textures": "textures/blocks/egg/rumblehorn_egg"
+		},
+		"invisible": {
+			"textures": "textures/blocks/invisible"
+		},
+		"dhh_dragon_eye": {
+			"textures": "textures/blocks/dragon_eye"
+		},
+		"dragon_nip": {
+			"textures": "textures/blocks/dragon_nip"
+		}
+    },
+    "texture_name": "atlas.terrain"
+}

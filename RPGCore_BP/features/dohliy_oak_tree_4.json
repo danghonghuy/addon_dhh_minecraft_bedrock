@@ -1,0 +1,22 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:structure_template_feature": {
+        "description": {
+            "identifier": "sert:dohliy_oak_tree_4"
+        },
+        "structure_name": "mystructure:dohliy_oak_tree_4",
+        "adjustment_radius": 0,
+        "facing_direction": "random",
+        "constraints": {
+            "grounded": {},
+            "unburied": {},
+            "block_intersection": {
+                "block_allowlist": [
+                    "minecraft:grass_block",
+                    "minecraft:dirt",
+                    "minecraft:air"
+                ]
+            }
+        }
+    }
+}

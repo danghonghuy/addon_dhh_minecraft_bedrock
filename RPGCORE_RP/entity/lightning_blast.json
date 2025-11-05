@@ -1,0 +1,28 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "dhh:lightning_blast",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"textures": {
+				"default": "textures/entity/skrill/lightning_blast"
+			},
+			"geometry": {
+				"default": "geometry.zippleback_explosion"
+			},
+			"render_controllers": [
+				"controller.render.lightning_blast"
+			],
+			"animations": {
+				"flying": "animation.lightning_blast.fly"
+			},
+			"scripts": {
+				"animate": [
+					"flying"
+				]
+			}
+		}
+	}
+}

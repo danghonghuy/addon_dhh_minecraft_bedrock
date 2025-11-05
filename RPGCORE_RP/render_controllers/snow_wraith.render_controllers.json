@@ -1,0 +1,32 @@
+{
+	"format_version": "1.8.0",
+	"render_controllers": {
+		"controller.render.snow_wraith": {
+			"part_visibility": [
+				{
+					"saddleBag": "query.is_chested"
+				},
+				{
+					"equipement": "query.is_saddled"
+				}
+			],
+			"geometry": "geometry.default",
+			"materials": [
+				{
+					"*": "material.default"
+				}
+			],
+			"arrays": {
+				"textures": {
+					"Array.texture": [
+						"Texture.default",
+						"Texture.saddled"
+					]
+				}
+			},
+			"textures": [
+				"array.texture[query.is_saddled]"
+			]
+		}
+	}
+}

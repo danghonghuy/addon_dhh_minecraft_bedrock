@@ -1,0 +1,17 @@
+{
+  "format_version": "1.20.30",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "dhh:recipe_magic_staff" },
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "D",
+      "S"
+    ],
+    "key": {
+      "D": { "item": "minecraft:dirt" },
+      "S": { "item": "minecraft:stick" }
+    },
+    "unlock": [ { "item": "minecraft:stick" } ],
+    "result": { "item": "dhh:magic_staff", "count": 1 }
+  }
+}

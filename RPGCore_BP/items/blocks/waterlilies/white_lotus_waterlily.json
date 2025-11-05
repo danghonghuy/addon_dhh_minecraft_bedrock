@@ -1,0 +1,19 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:item": {
+        "description": {
+            "identifier": "sert:white_lotus_waterlily",
+            "menu_category": {
+                "category": "nature"
+            }
+        },
+        "components": {
+            "minecraft:liquid_clipped": true,
+            "minecraft:icon": "white_lotus_waterlily",
+            "minecraft:block_placer": {
+                "block": "sert:white_lotus_waterlily",
+                "replace_block_item": true
+            }
+        }
+    }
+}

@@ -1,0 +1,104 @@
+{
+	"pools": [
+		{
+			"rolls": {
+				"max": 4,
+				"min": 2
+			},
+			"entries": [
+				{
+					"type": "item",
+					"name": "arrow",
+					"functions": [
+						{
+							"function": "set_count",
+							"count": {
+								"min": 2,
+								"max": 18
+							}
+						}
+					],
+					"weight": 10
+				},
+				{
+					"type": "item",
+					"name": "bow",
+					"functions": [
+						{
+							"function": "enchant_with_levels",
+							"levels": {
+								"max": 30,
+								"min": 10
+							},
+							"treasure": true
+						}
+					],
+					"weight": 5
+				},
+				{
+					"type": "item",
+					"name": "crossbow",
+					"functions": [
+						{
+							"function": "enchant_with_levels",
+							"levels": {
+								"max": 30,
+								"min": 10
+							},
+							"treasure": true
+						}
+					],
+					"weight": 5
+				},
+				{
+					"type": "item",
+					"name": "minecraft:diamond",
+					"functions": [
+						{
+							"function": "set_count",
+							"count": {
+								"min": 1,
+								"max": 5
+							}
+						}
+					],
+					"weight": 1
+				},
+				{
+					"type": "item",
+					"name": "minecraft:emerald",
+					"functions": [
+						{
+							"function": "set_count",
+							"count": {
+								"min": 6,
+								"max": 16
+							}
+						}
+					],
+					"weight": 3
+				},
+				{
+					"type": "item",
+					"name": "dhh:dragon_saddle",
+					"weight": 3
+				},
+				{
+					"type": "item",
+					"name": "dhh:watchtower_key",
+					"weight": 1
+				},
+				{
+					"type": "item",
+					"name": "dhh:bud_pottery_sherd",
+					"weight": 3
+				},
+				{
+					"type": "item",
+					"name": "dhh:helm_pottery_sherd",
+					"weight": 3
+				}
+			]
+		}
+	]
+}

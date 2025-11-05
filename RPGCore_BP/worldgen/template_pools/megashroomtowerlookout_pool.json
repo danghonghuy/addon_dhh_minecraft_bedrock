@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.20",
+  "minecraft:template_pool": {
+    "description": {
+      "identifier": "hg:megashroomtowerlookout_pool"
+    },
+    "elements": [
+      {
+        "element": {
+          "element_type": "minecraft:single_pool_element",
+          "location": "ruin/MegashroomTowerLookout",
+          "processors": "mc:processor_list"
+        },
+        "weight": 1
+      }
+    ]
+  }
+}

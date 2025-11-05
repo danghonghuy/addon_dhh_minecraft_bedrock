@@ -1,0 +1,29 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.cursed_blade.third_person_hold": {
+			"loop": true,
+			"bones": {
+				"root_item": {
+					"rotation": {
+						"0.0": {
+							"post": [389.51794, 72.2976, 872.22062],
+							"lerp_mode": "catmullrom"
+						}
+					},
+					"position": [-0.05382, 22.06724, -2.21971]
+				}
+			}
+		},
+		"animation.cursed_blade.first_person_hold": {
+			"loop": true,
+			"bones": {
+				"root_item": {
+					"rotation": [833.3489, 45.08066, -602.8875],
+					"position": [10.2537, 31.4627, 7.99019],
+					"scale": 1
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,23 @@
+{
+  "format_version": "1.8.0",
+  "render_controllers": {
+    "controller.render.creeper_armor": {
+      "geometry": "Geometry.charged",
+      "part_visibility": [
+        { "*": "query.is_powered" }
+      ],
+      "materials": [ { "*": "Material.charged" } ],
+      "textures": [ "Texture.charged" ],
+      "overlay_color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+      },
+          "scale": [ 1.0, 1.0 ]
+      },
+      "light_color_multiplier": 0.5,
+      "ignore_lighting" : true
+    }
+  }
+

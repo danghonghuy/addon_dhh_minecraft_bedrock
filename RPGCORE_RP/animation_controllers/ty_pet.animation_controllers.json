@@ -1,0 +1,65 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.ty_pet.main": {
+      "initial_state": "idle",
+      "states": {
+        "idle": {
+          "animations": [ "idle" ],
+          "transitions": [
+            { "attacking": "query.has_target && !query.is_sitting" },
+            { "sit": "query.is_sitting" },
+            { "run": "query.modified_move_speed >= 0.25 && query.is_on_ground" },
+            { "walk": "query.modified_move_speed > 0.1 && query.is_on_ground" },
+            { "jump": "query.is_jumping" }
+          ],
+          "blend_transition": 0.2
+        },
+        "walk": {
+          "animations": [ "walk" ],
+          "transitions": [
+            { "attacking": "query.has_target && !query.is_sitting" },
+            { "sit": "query.is_sitting" },
+            { "idle": "query.modified_move_speed < 0.1" },
+            { "run": "query.modified_move_speed >= 0.25 && query.is_on_ground" },
+            { "jump": "query.is_jumping" }
+          ],
+          "blend_transition": 0.2
+        },
+        "run": {
+          "animations": [ "run" ],
+          "transitions": [
+            { "attacking": "query.has_target && !query.is_sitting" },
+            { "sit": "query.is_sitting" },
+            { "idle": "query.modified_move_speed < 0.1" },
+            { "walk": "query.modified_move_speed < 0.25 && query.is_on_ground" },
+            { "jump": "query.is_jumping" }
+          ],
+          "blend_transition": 0.2
+        },
+        "jump": {
+          "animations": [ "jump" ],
+          "transitions": [
+            { "sit": "query.is_sitting" },
+            { "idle": "query.is_on_ground" }
+          ],
+          "blend_transition": 0.2
+        },
+        "sit": {
+          "animations": [ "sit" ],
+          "transitions": [
+            { "idle": "!query.is_sitting" }
+          ],
+          "blend_transition": 0.2
+        },
+        "attacking": {
+          "animations": [ "attack" ],
+          "transitions": [
+            { "idle": "query.all_animations_finished" }
+          ],
+          "blend_transition": 0.1
+        }
+      }
+    }
+  }
+}

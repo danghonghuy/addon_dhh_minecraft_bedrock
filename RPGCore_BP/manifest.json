@@ -1,0 +1,60 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "§bdhh Core System",
+        "description": "meomeo6",
+        "uuid": "2a1a892b-8b9a-4e2b-9e4a-1a892b8b9a4e",
+        "version": [
+            1,
+            0,
+           18
+        ],
+        "min_engine_version": [
+            1,
+            19,
+            50
+        ]
+    },
+    "modules": [
+             {
+            "type": "data",
+            "description": "Recipes and other data",
+            "uuid": "ae8399b1-4345-4fb4-97b7-964b0fbc8fca", 
+            "version": [ 
+                1, 
+                0, 
+                18
+            ]
+        },
+        {
+            "type": "script",
+            "language": "javascript",
+            "uuid": "3b2c9a1d-9c8b-5f1c-8e3b-2c9a1d9c8b5f",
+            "version": [
+                1,
+                0,
+                18
+            ],
+            "entry": "scripts/main.js"
+        }
+    ],
+  "dependencies": [
+        {
+            "module_name": "@minecraft/server",
+            "version": "2.4.0-beta"
+        },
+        {
+            "module_name": "@minecraft/server-ui",
+            "version": "2.1.0-beta"
+        },
+          
+         {
+           
+            "uuid": "99ab8a61-fcf9-4a29-92a6-8dfacf06c8d6", 
+            "version": [ 1, 0, 18]
+        }
+    ],
+     "capabilities": [ 
+        "script_eval"
+    ]
+}

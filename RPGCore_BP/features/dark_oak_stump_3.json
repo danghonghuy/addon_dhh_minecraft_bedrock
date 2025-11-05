@@ -1,0 +1,22 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:structure_template_feature": {
+        "description": {
+            "identifier": "sert:dark_oak_stump_3"
+        },
+        "structure_name": "mystructure:dark_oak_stump_3",
+        "adjustment_radius": 4,
+        "facing_direction": "random",
+        "constraints": {
+            "grounded": {},
+            "unburied": {},
+            "block_intersection": {
+                "block_allowlist": [
+                    "minecraft:grass_block",
+                    "minecraft:air",
+                    "minecraft:dark_oak_leaves"
+                ]
+            }
+        }
+    }
+}

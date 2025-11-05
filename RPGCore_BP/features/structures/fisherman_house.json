@@ -1,0 +1,29 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:structure_template_feature": {
+        "description": {
+            "identifier": "sert:structures/fisherman_house"
+        },
+        "structure_name": "mystructure:fisherman_house_generator",
+        "adjustment_radius": 3,
+        "facing_direction": "random",
+        "constraints": {
+            "grounded": {},
+            "unburied": {},
+            "block_intersection": {
+                "block_allowlist": [
+                    "minecraft:air",
+                    "minecraft:oak_leaves",
+                    "minecraft:birch_leaves",
+                    "minecraft:spruce_leaves",
+                    "minecraft:oak_wood",
+                    "minecraft:birch_wood",
+                    "minecraft:tall_grass",
+                    "minecraft:grass",
+                    "sert:linuim",
+                    "sert:lotar"
+                ]
+            }
+        }
+    }
+}

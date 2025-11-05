@@ -1,0 +1,66 @@
+{
+    "format_version": "1.20.60",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:mana_crystal_block",
+            "menu_category": {
+                "category": "nature",
+                "group": "itemGroup.name.ore"
+            }
+        },
+        "components": {
+            "minecraft:loot": "loot_tables/blocks/mana_crystal_block.json",
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 3
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3
+            },
+            "minecraft:placement_filter": {
+                "conditions": [
+                    {
+                        "allowed_faces": [
+                            "up"
+                        ],
+                        "block_filter": [
+                            "sert:mana_crystal_stone"
+                        ]
+                    }
+                ]
+            },
+            "minecraft:collision_box": {
+                "origin": [
+                    -6,
+                    0,
+                    -6
+                ],
+                "size": [
+                    12,
+                    14,
+                    12
+                ]
+            },
+            "minecraft:selection_box": {
+                "origin": [
+                    -6,
+                    0,
+                    -6
+                ],
+                "size": [
+                    12,
+                    14,
+                    12
+                ]
+            },
+            "minecraft:light_emission": 13,
+            "minecraft:geometry": "geometry.mana.crystal",
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "mana_crystal"
+                }
+            },
+            "tag:minecraft:is_pickaxe_item_destructible": {}
+        }
+    }
+}

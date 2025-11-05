@@ -1,0 +1,92 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:magic_grass",
+            "menu_category": {
+                "category": "nature",
+                "group": "minecraft:itemGroup.name.flower"
+            },
+            "states": {
+                "sert:day_time": [
+                    true,
+                    false
+                ]
+            }
+        },
+        "components": {
+            "minecraft:placement_filter": {
+                "conditions": [
+                    {
+                        "allowed_faces": [
+                            "up"
+                        ],
+                        "block_filter": [
+                            "minecraft:grass_block",
+                            "minecraft:podzol",
+                            "minecraft:dirt",
+                            "minecraft:mycelium",
+                            "minecraft:coarse_dirt",
+                            {
+                                "tags": "q.any_tag('dirt')"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "minecraft:liquid_detection": {
+                "detection_rules": [
+                    {
+                        "liquid_type": "water",
+                        "on_liquid_touches": "broken"
+                    }
+                ]
+            },
+            "minecraft:collision_box": false,
+            "minecraft:selection_box": {
+                "origin": [
+                    -5,
+                    0,
+                    -5
+                ],
+                "size": [
+                    10,
+                    13,
+                    10
+                ]
+            },
+            "minecraft:light_emission": 2,
+            "minecraft:geometry": "geometry.bush",
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "magic_grass_day"
+                }
+            },
+            "minecraft:tick": {
+                "interval_range": [
+                    100,
+                    600
+                ],
+                "looping": true
+            },
+            "sert:update_day_time_state": {},
+            "tag:isair": {}
+        },
+        "permutations": [
+            {
+                "condition": "!q.block_state('sert:day_time')",
+                "components": {
+                    "minecraft:light_emission": 8,
+                    "minecraft:geometry": "geometry.bush",
+                    "minecraft:material_instances": {
+                        "*": {
+                            "render_method": "alpha_test",
+                            "texture": "magic_grass_night"
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

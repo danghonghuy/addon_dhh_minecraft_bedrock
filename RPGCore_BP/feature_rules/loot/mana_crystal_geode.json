@@ -1,0 +1,42 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:feature_rules": {
+        "description": {
+            "identifier": "sert:mana_crystal_geode",
+            "places_feature": "sert:loot/mana_crystal_geode"
+        },
+        "conditions": {
+            "placement_pass": "first_pass",
+            "minecraft:biome_filter": {
+                "test": "has_biome_tag",
+                "operator": "==",
+                "value": "overworld"
+            }
+        },
+        "distribution": {
+            "iterations": 5,
+            "x": {
+                "extent": [
+                    0,
+                    16
+                ],
+                "distribution": "uniform"
+            },
+            "y": {
+                "extent": [
+                    10,
+                    50
+                ],
+                "distribution": "uniform"
+            },
+            "z": {
+                "extent": [
+                    0,
+                    16
+                ],
+                "distribution": "uniform"
+            },
+            "scatter_chance": 1.9
+        }
+    }
+}

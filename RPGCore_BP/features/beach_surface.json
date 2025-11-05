@@ -1,0 +1,18 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:beach_surface"
+        },
+        "features": [
+            [
+                "sert:shells_generator",
+                25
+            ],
+            [
+                "sert:palm_tree",
+                175
+            ]
+        ]
+    }
+}

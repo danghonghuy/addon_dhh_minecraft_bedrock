@@ -1,0 +1,47 @@
+{
+  "format_version": "1.8.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "dhh:warden_girl_pet",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/pamobile/ward"
+      },
+      "geometry": {
+        "default": "geometry.ward"
+      },
+      "animations": {
+        "idle": "animation.ward.idle",
+        "walk": "animation.ward.walk",
+        "jump": "animation.ward.jump",
+        "fly": "animation.ward.fly",
+        "fly_move": "animation.ward.fly_move",
+        "run": "animation.ward.run",
+        "sit": "animation.ward.sit",
+        "attack_stylish": "animation.warden_girl.attack_dual_warden_slam",
+        "spawn_graceful": "animation.warden_girl.spawn_ascend_graceful",
+        "death_anguished": "animation.warden_girl.death_anguished_princess",
+        "look_at_target": "animation.warden_girl.look_at_target",
+        "spawn_controller_ref": "controller.animation.warden_girl.spawn",
+        "death_controller_ref": "controller.animation.warden_girl.death",
+         "inspect_item_thoughtful": "animation.warden_girl.inspect_object_thoughtful",
+          "sonic_charge_pose": "animation.warden_girl.sonic_charge_pose"
+      },
+      "animation_controllers": [
+        { "main_control": "controller.animation.ward" },
+        { "spawn_controller_ref": "controller.animation.warden_girl.spawn" },
+        { "death_controller_ref": "controller.animation.warden_girl.death" },
+         { "item_interaction_control": "controller.animation.warden_girl.item_inspect" }
+      ],
+      "render_controllers": [
+        "controller.render.default"
+      ],
+      "spawn_egg": {
+        "texture": "ward_spawn_egg",
+        "texture_index": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:structure_set": {
+        "description": {
+            "identifier": "hg:megashroomtower"
+        },
+        "placement": {
+            "type": "minecraft:random_spread",
+            "salt": 38145923,
+            "separation": 5,
+            "spacing": 14,
+            "spread_type": "linear"
+        },
+        "structures": [
+            {
+                "structure": "hg:megashroomtower",
+                "weight": 1
+            }
+        ]
+    }
+}

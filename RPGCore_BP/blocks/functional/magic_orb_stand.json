@@ -1,0 +1,70 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:magic_orb_stand",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+        "components": {
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 10
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 2
+            },
+            "minecraft:collision_box": {
+                "origin": [
+                    -6,
+                    0,
+                    -6
+                ],
+                "size": [
+                    12,
+                    3,
+                    12
+                ]
+            },
+            "minecraft:selection_box": {
+                "origin": [
+                    -6,
+                    0,
+                    -6
+                ],
+                "size": [
+                    12,
+                    3,
+                    12
+                ]
+            },
+            "minecraft:light_emission": 7,
+            "minecraft:geometry": "geometry.magic.orb.stand",
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "magic_orb_stand"
+                }
+            },
+            "minecraft:tick": {
+                "interval_range": [
+                    3,
+                    7
+                ],
+                "looping": true
+            },
+            "sert:bind_entities": [
+                {
+                    "type": "sert:magic_orb_entity",
+                    "offset": [
+                        0,
+                        0.8,
+                        0
+                    ]
+                }
+            ],
+            "sert:magic_orb_stand": {},
+            "tag:minecraft:is_pickaxe_item_destructible": {}
+        }
+    }
+}

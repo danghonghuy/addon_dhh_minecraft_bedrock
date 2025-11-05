@@ -1,0 +1,23 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:structure_template_feature": {
+        "description": {
+            "identifier": "sert:tinder_fungus_generator"
+        },
+        "structure_name": "mystructure:tinder_fungus_generator",
+        "adjustment_radius": 4,
+        "facing_direction": "random",
+        "constraints": {
+            "block_intersection": {
+                "block_allowlist": [
+                    "minecraft:birch_log",
+                    "minecraft:birch_wood",
+                    "minecraft:oak_log",
+                    "minecraft:oak_wood",
+                    "minecraft:dark_oak_log",
+                    "minecraft:dark_oak_wood"
+                ]
+            }
+        }
+    }
+}

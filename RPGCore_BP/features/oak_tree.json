@@ -1,0 +1,38 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "sert:oak_tree"
+        },
+        "features": [
+            [
+                "sert:oak_tree_1",
+                3
+            ],
+            [
+                "sert:oak_tree_2",
+                3
+            ],
+            [
+                "sert:oak_tree_3",
+                1
+            ],
+            [
+                "sert:oak_tree_4",
+                3
+            ],
+            [
+                "sert:oak_tree_5",
+                3
+            ],
+            [
+                "sert:oak_tree_6",
+                3
+            ],
+            [
+                "sert:oak_tree_7",
+                2
+            ]
+        ]
+    }
+}

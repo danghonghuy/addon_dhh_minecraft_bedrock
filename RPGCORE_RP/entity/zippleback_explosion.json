@@ -1,0 +1,28 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "dhh:zippleback_explosion",
+			"materials": {
+				"default": "entity_emissive_alpha"
+			},
+			"textures": {
+				"default": "textures/entity/zippleback/explosion"
+			},
+			"geometry": {
+				"default": "geometry.zippleback_explosion"
+			},
+			"render_controllers": [
+				"controller.render.lava_blast"
+			],
+			"animations": {
+				"flying": "animation.zippleback_explosion.fly"
+			},
+			"scripts": {
+				"animate": [
+					"flying"
+				]
+			}
+		}
+	}
+}

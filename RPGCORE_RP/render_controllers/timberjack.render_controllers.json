@@ -1,0 +1,41 @@
+{
+	"format_version": "1.8.0",
+	"render_controllers": {
+		"controller.render.timberjack": {
+			"part_visibility": [
+				{
+					"equipement": "query.is_saddled"
+				},
+				{
+					"equipement2": "query.is_saddled"
+				},
+				{
+					"saddleBags": "query.is_chested"
+				}
+			],
+			"geometry": "array.geo[query.is_baby]",
+			"materials": [
+				{
+					"*": "material.default"
+				}
+			],
+			"textures": [
+				"array.base[query.is_baby]"
+			],
+			"arrays": {
+				"geometries": {
+					"Array.geo": [
+						"Geometry.default",
+						"Geometry.baby"
+					]
+				},
+				"textures": {
+					"Array.base": [
+						"Texture.default",
+						"Texture.baby"
+					]
+				}
+			}
+		}
+	}
+}

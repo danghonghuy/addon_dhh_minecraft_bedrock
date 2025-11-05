@@ -1,0 +1,2799 @@
+import { world, system, ItemStack, GameMode } from "@minecraft/server";
+import { ActionFormData, MessageFormData, ModalFormData } from "@minecraft/server-ui";
+import { showStructureFinderMenu } from "./structure_finder.js";
+import { showUpgradeSelectionMenu } from "./upgrade_system.js";
+import { initializeBossSystem } from "./boss_system.js";
+import { showSpiritSightActionMenu } from "./skills/spirit_sight.js";
+import {
+  startWerewolfLobby,
+  handleItemUse as handleWerewolfItemUse,
+  handlePlayerLeave as handleWerewolfPlayerLeave,
+  handleEntityHurt as handleWerewolfEntityHurt,
+  handlePlayerInteractWithBlock as handleWerewolfBlockInteract,
+  handleChatSend as handleWerewolfChatSend,
+  activeWerewolfGames,
+} from "./werewolf_game.js";
+import { initializeSharedInventorySystem } from "./shared_inventory.js";
+import { initializeCursedBladeLogic } from "./weapons/cursed_blade.js";
+import {
+  initializeLandClaimSystem,
+  showLandClaimMainMenu,
+} from "./land_claim_system.js";
+import { initializeDamageHandler } from "./damage_indicator.js";
+import { initializeActionBarManager } from "./actionbar_manager.js";
+import { CONFIG } from "./config.js";
+import {
+  showGuildMainMenu,
+  getPlayerGuildName,
+  getAllGuildsData,
+  getGuildPerkValue,
+  grantXpToGuild,
+  updateGuildQuestProgress,
+  updateGuildTradeQuestProgress,
+} from "./guild_system.js";
+import { processAllSeeingEye } from "./almanac/eye_engine.js";
+import {
+  showTradeInviteMenu,
+  activeTrades,
+  handleTradeConfirmation,
+} from "./trade_system.js";
+import { showGachaMainMenu, checkAndRotateBanner } from "./gacha_system.js";
+import { showMusicMenu } from "./music_system.js";
+import {
+  checkBlockBreakTriggers,
+  checkPlayerPlaceBlockTriggers,
+  checkItemUseTriggers,
+  checkEntityDieTriggers,
+  checkPlayerInteractTriggers,
+  checkEntityHurtTriggers,
+  checkEntitySpawnTriggers,
+  runLightweightPeriodicChecks,
+  triggerSarcasticTip,
+} from "./sarcastic_oracle/oracle_engine.js";
+import {
+  showChallengeMainMenu,
+  activeChallenges,
+  endChallenge,
+  endWaveAndProceed,
+  handleChallengeMobDeath,
+} from "./survival_challenge.js";
+import {
+  showQuestMenu,
+  updateQuestOnKill,
+  checkQuestExpiration,
+  checkCollectQuestProgress,
+  checkExploreQuestProgress,
+  updateQuestOnBreed,
+  updateQuestOnTrade,
+} from "./quest_system.js";
+import { SKILL_ACTIONS, LEARNABLE_SKILLS } from "./skills/skill_handler.js";
+import {
+  showDungeonChallengeIntro,
+  finishDungeon,
+  activeDungeons,
+} from "./dungeon_system.js";
+import { ALL_CLASSES, CLASS_TRANSLATIONS } from "./classes/index.js";
+import { ALL_SKILLS, COMMON_SKILLS } from "./skills/skill_definitions.js";
+
+const TEMP_ADMIN_PASSWORD = "meomeo";
+async function showPasswordPrompt(player, onCorrectPassword) {
+  const form = new ModalFormData();
+  form.title("§c§lYÊU CẦU QUYỀN TRUY CẬP");
+  form.textField(
+    "§fTính năng này tạm thời bị khóa. Vui lòng nhập mật khẩu của Admin để tiếp tục.",
+    "Nhập mật khẩu..."
+  );
+
+  const { canceled, formValues } = await form.show(player);
+
+  if (canceled) {
+    return;
+  }
+
+  const enteredPassword = formValues[0];
+
+  if (enteredPassword === TEMP_ADMIN_PASSWORD) {
+    onCorrectPassword(player);
+  } else {
+    player.sendMessage("§cSai mật khẩu! Không thể truy cập tính năng này.");
+    player.playSound("note.bass");
+  }
+}
+export const SKILL_TRANSLATIONS = {
+  regeneration: "Tự Hồi Phục",
+  ironSkin: "Da Sắt",
+  radar: "Rada Thăm Dò",
+  stealth: "Tàng Hình",
+  heal: "Chữa Lành",
+  dash: "Lướt Đi",
+  targeted_lightning: "Lôi Vực",
+  summon_wolf: "Triệu Hồi Linh Thú",
+  shadow_swap: "Thiên Mệnh Thời Không",
+  sprint: "Bứt Tốc",
+  shadowbind: "Dây Trói Bóng Tối",
+  golem_punch: "Cú Đấm Golem",
+  winters_dominion: "Lãnh Địa Mùa Đông",
+  ally_swap: "Hoán Vị Đồng Minh",
+  time_lock: "Giam Cầm Thời Gian",
+  earthen_grave: "Mộ Phần Trói Buộc",
+  hellfire_pit: "Vực Lửa Địa Ngục",
+  reality_warp: "Vùng Hỗn Loạn",
+  spirit_sight: "Thị Kiến Tâm Linh",
+  chaos_trap: "Bẫy Hỗn Mang",
+  immortal_edict: "Thánh Lệnh Bất Diệt",
+  explosion: "Bộc Liệt Ma Pháp",
+  blade_storm: "Bão Kiếm",
+  primal_beast: "Hóa Thân Thần Thú",
+  celestial_step: "Bước Chân Thiên Giới",
+  void_step: "Vô Hạ Hạn",
+};
+const BONUS_PER_LEVEL = 2.5;
+function getUpgradeLevel(item) {
+  if (!item) return 0;
+  const lore = item.getLore();
+  for (const line of lore) {
+    const match = line.match(/§7Cấp độ cường hóa: §e\+([0-9]+)/);
+    if (match) return parseInt(match[1]);
+  }
+  return 0;
+}
+const lastPlayerToFeed = new Map();
+const DEBUG_MODE = true;
+const INFINITE_DURATION = 20000000;
+const dhh_DATA_KEY = "dhh:player_data";
+const Vector = {
+  magnitude(vector) {
+    return Math.sqrt(
+      vector.x * vector.x + vector.y * vector.y + vector.z * vector.z
+    );
+  },
+  subtract(vector1, vector2) {
+    return {
+      x: vector1.x - vector2.x,
+      y: vector1.y - vector2.y,
+      z: vector1.z - vector2.z,
+    };
+  },
+};
+export function logError(context, player, error) {
+  const playerName = player ? `Player: ${player.name}` : "No Player Context";
+  console.error(
+    `§c[dhh Error in ${context}] ${playerName} | Message: ${error} \nStack: ${error.stack}`
+  );
+}
+
+function logDebug(message) {
+  if (DEBUG_MODE) console.log(`§e[dhh Debug] ${message}`);
+}
+
+function loadAndCachePlayerData(player) {
+  const worldDataString = world.getDynamicProperty(dhh_DATA_KEY);
+  const allPlayersData = worldDataString ? JSON.parse(worldDataString) : {};
+  let playerData = allPlayersData[player.nameTag];
+
+  if (!playerData) {
+    logDebug(`No persistent data for ${player.nameTag}. Creating new profile.`);
+    playerData = {
+      level: 1,
+      xp: 0,
+      skillPoints: 0,
+      vitality: 0,
+      strength: 0,
+      agility: 0,
+      intelligence: 0,
+      class: "none",
+      skills: {
+        regeneration: 0,
+        ironSkin: 0,
+        sprint: 0,
+        stealth: 0,
+        heal: 0,
+        dash: 0,
+        targeted_lightning: 0,
+        summon_wolf: 0,
+        shadow_swap: 0,
+        radar: 0,
+        shadowbind: 0,
+        golem_punch: 0,
+        winters_dominion: 0,
+        ally_swap: 0,
+        time_lock: 0,
+        earthen_grave: 0,
+        hellfire_pit: 0,
+        reality_warp: 0,
+        immortal_edict: 0,
+        explosion: 0,
+        blade_storm: 0,
+        primal_beast: 0,
+        celestial_step: 0,
+      },
+      baseHealth: 0,
+      baseMana: 0,
+      baseDamage: 0,
+      baseSpeed: 0,
+      nguyen_thach: 0,
+      pity_5star: 0,
+      pity_4star: 0,
+      is_guaranteed: false,
+    };
+  } else {
+    logDebug(`Loaded persistent data for ${player.nameTag}.`);
+  }
+
+  player.setDynamicProperty("dhh:level", playerData.level ?? 1);
+  const justDied = player.getDynamicProperty("dhh:just_died") ?? false;
+  if (justDied) {
+    player.setDynamicProperty("dhh:xp", 0);
+    player.setDynamicProperty("dhh:just_died", false);
+  } else {
+    player.setDynamicProperty("dhh:xp", playerData.xp ?? 0);
+  }
+  player.setDynamicProperty("dhh:skill_points", playerData.skillPoints ?? 0);
+  player.setDynamicProperty("dhh:vitality", playerData.vitality ?? 0);
+  player.setDynamicProperty("dhh:strength", playerData.strength ?? 0);
+  player.setDynamicProperty("dhh:agility", playerData.agility ?? 0);
+  player.setDynamicProperty("dhh:intelligence", playerData.intelligence ?? 0);
+  player.setDynamicProperty("dhh:class", playerData.class ?? "none");
+
+  const skills = playerData.skills || {};
+  player.setDynamicProperty("dhh:skill_regen", skills.regeneration ?? 0);
+  player.setDynamicProperty("dhh:skill_iron", skills.ironSkin ?? 0);
+  player.setDynamicProperty("dhh:skill_sprint", skills.sprint ?? 0);
+  player.setDynamicProperty("dhh:skill_stealth", skills.stealth ?? 0);
+  player.setDynamicProperty("dhh:skill_heal", skills.heal ?? 0);
+  player.setDynamicProperty("dhh:skill_dash", skills.dash ?? 0);
+  player.setDynamicProperty(
+    "dhh:skill_targeted_lightning",
+    skills.targeted_lightning ?? 0
+  );
+  player.setDynamicProperty("dhh:skill_summon_wolf", skills.summon_wolf ?? 0);
+  player.setDynamicProperty("dhh:skill_shadow_swap", skills.shadow_swap ?? 0);
+  player.setDynamicProperty("dhh:skill_radar", skills.radar ?? 0);
+  player.setDynamicProperty("dhh:skill_shadowbind", skills.shadowbind ?? 0);
+  player.setDynamicProperty("dhh:skill_golem_punch", skills.golem_punch ?? 0);
+  player.setDynamicProperty(
+    "dhh:skill_winters_dominion",
+    skills.winters_dominion ?? 0
+  );
+  player.setDynamicProperty("dhh:skill_ally_swap", skills.ally_swap ?? 0);
+  player.setDynamicProperty("dhh:skill_time_lock", skills.time_lock ?? 0);
+  player.setDynamicProperty(
+    "dhh:skill_earthen_grave",
+    skills.earthen_grave ?? 0
+  );
+  player.setDynamicProperty("dhh:skill_hellfire_pit", skills.hellfire_pit ?? 0);
+  player.setDynamicProperty("dhh:skill_reality_warp", skills.reality_warp ?? 0);
+  player.setDynamicProperty("dhh:skill_spirit_sight", skills.spirit_sight ?? 0);
+  player.setDynamicProperty("dhh:skill_chaos_trap", skills.chaos_trap ?? 0);
+  player.setDynamicProperty(
+    "dhh:skill_immortal_edict",
+    skills.immortal_edict ?? 0
+  );
+  player.setDynamicProperty("dhh:skill_explosion", skills.explosion ?? 0);
+  player.setDynamicProperty("dhh:skill_blade_storm", skills.blade_storm ?? 0);
+  player.setDynamicProperty("dhh:skill_primal_beast", skills.primal_beast ?? 0);
+  player.setDynamicProperty(
+    "dhh:skill_celestial_step",
+    skills.celestial_step ?? 0
+  );
+  player.setDynamicProperty("dhh:skill_void_step", skills.void_step ?? 0);
+  player.setDynamicProperty("dhh:base_health", playerData.baseHealth ?? 0);
+  player.setDynamicProperty("dhh:base_mana", playerData.baseMana ?? 0);
+  player.setDynamicProperty("dhh:base_damage", playerData.baseDamage ?? 0);
+  player.setDynamicProperty("dhh:base_speed", playerData.baseSpeed ?? 0);
+
+  player.setDynamicProperty("dhh:nguyen_thach", playerData.nguyen_thach ?? 0);
+  player.setDynamicProperty("dhh:pity_5star", playerData.pity_5star ?? 0);
+  player.setDynamicProperty("dhh:pity_4star", playerData.pity_4star ?? 0);
+  player.setDynamicProperty(
+    "dhh:is_guaranteed",
+    playerData.is_guaranteed ?? false
+  );
+  player.setDynamicProperty(
+    "dhh:quest_tier_unlocked",
+    playerData.questTierUnlocked ?? 1
+  );
+  player.setDynamicProperty(
+    "dhh:easy_quests_completed",
+    playerData.easyQuestsCompleted ?? 0
+  );
+  player.setDynamicProperty(
+    "dhh:normal_quests_completed",
+    playerData.normalQuestsCompleted ?? 0
+  );
+}
+
+function saveAllPlayerData(player) {
+  try {
+    const worldDataString = world.getDynamicProperty(dhh_DATA_KEY);
+    const allPlayersData = worldDataString ? JSON.parse(worldDataString) : {};
+    const currentStats = getPlayerStats(player);
+    const playerDataToSave = {
+      level: currentStats.level,
+      xp: currentStats.xp,
+      skillPoints: currentStats.skillPoints,
+      vitality: currentStats.vitality,
+      strength: currentStats.strength,
+      agility: currentStats.agility,
+      intelligence: currentStats.intelligence,
+      class: currentStats.class,
+      skills: {
+        regeneration: currentStats.skills.regeneration,
+        ironSkin: currentStats.skills.ironSkin,
+        sprint: currentStats.skills.sprint,
+        stealth: currentStats.skills.stealth,
+        heal: currentStats.skills.heal,
+        dash: currentStats.skills.dash,
+        targeted_lightning: currentStats.skills.targeted_lightning,
+        summon_wolf: currentStats.skills.summon_wolf,
+        shadow_swap: currentStats.skills.shadow_swap,
+        radar: currentStats.skills.radar,
+        shadowbind: currentStats.skills.shadowbind,
+        golem_punch: currentStats.skills.golem_punch,
+        winters_dominion: currentStats.skills.winters_dominion,
+        ally_swap: currentStats.skills.ally_swap,
+        time_lock: currentStats.skills.time_lock,
+        earthen_grave: currentStats.skills.earthen_grave,
+        hellfire_pit: currentStats.skills.hellfire_pit,
+        reality_warp: currentStats.skills.reality_warp,
+        spirit_sight: currentStats.skills.spirit_sight,
+        chaos_trap: currentStats.skills.chaos_trap,
+        immortal_edict: currentStats.skills.immortal_edict,
+        explosion: currentStats.skills.explosion,
+        blade_storm: currentStats.skills.blade_storm,
+        primal_beast: currentStats.skills.primal_beast,
+        celestial_step: currentStats.skills.celestial_step,
+        void_step: currentStats.skills.void_step,
+      },
+      baseHealth: player.getDynamicProperty("dhh:base_health") ?? 0,
+      baseMana: player.getDynamicProperty("dhh:base_mana") ?? 0,
+      baseDamage: player.getDynamicProperty("dhh:base_damage") ?? 0,
+      baseSpeed: player.getDynamicProperty("dhh:base_speed") ?? 0,
+      nguyen_thach: player.getDynamicProperty("dhh:nguyen_thach") ?? 0,
+      pity_5star: player.getDynamicProperty("dhh:pity_5star") ?? 0,
+      pity_4star: player.getDynamicProperty("dhh:pity_4star") ?? 0,
+      is_guaranteed: player.getDynamicProperty("dhh:is_guaranteed") ?? false,
+      questTierUnlocked:
+        player.getDynamicProperty("dhh:quest_tier_unlocked") ?? 1,
+      easyQuestsCompleted:
+        player.getDynamicProperty("dhh:easy_quests_completed") ?? 0,
+      normalQuestsCompleted:
+        player.getDynamicProperty("dhh:normal_quests_completed") ?? 0,
+    };
+    allPlayersData[player.nameTag] = playerDataToSave;
+    world.setDynamicProperty(dhh_DATA_KEY, JSON.stringify(allPlayersData));
+    logDebug(`Saved persistent data for ${player.nameTag}`);
+  } catch (e) {
+    logError("saveAllPlayerData", player, e);
+  }
+}
+
+export function getPlayerStats(player) {
+  const stats = {
+    level: player.getDynamicProperty("dhh:level") ?? 1,
+    xp: player.getDynamicProperty("dhh:xp") ?? 0,
+    skillPoints: player.getDynamicProperty("dhh:skill_points") ?? 0,
+    vitality: player.getDynamicProperty("dhh:vitality") ?? 0,
+    strength: player.getDynamicProperty("dhh:strength") ?? 0,
+    agility: player.getDynamicProperty("dhh:agility") ?? 0,
+    intelligence: player.getDynamicProperty("dhh:intelligence") ?? 0,
+    class: player.getDynamicProperty("dhh:class") ?? "none",
+    currentMana: player.getDynamicProperty("dhh:mana") ?? 0,
+    skills: {
+      regeneration: player.getDynamicProperty("dhh:skill_regen") ?? 0,
+      ironSkin: player.getDynamicProperty("dhh:skill_iron") ?? 0,
+      sprint: player.getDynamicProperty("dhh:skill_sprint") ?? 0,
+      stealth: player.getDynamicProperty("dhh:skill_stealth") ?? 0,
+      heal: player.getDynamicProperty("dhh:skill_heal") ?? 0,
+      dash: player.getDynamicProperty("dhh:skill_dash") ?? 0,
+      targeted_lightning:
+        player.getDynamicProperty("dhh:skill_targeted_lightning") ?? 0,
+      summon_wolf: player.getDynamicProperty("dhh:skill_summon_wolf") ?? 0,
+      shadow_swap: player.getDynamicProperty("dhh:skill_shadow_swap") ?? 0,
+      radar: player.getDynamicProperty("dhh:skill_radar") ?? 0,
+      shadowbind: player.getDynamicProperty("dhh:skill_shadowbind") ?? 0,
+      golem_punch: player.getDynamicProperty("dhh:skill_golem_punch") ?? 0,
+      winters_dominion:
+        player.getDynamicProperty("dhh:skill_winters_dominion") ?? 0,
+      ally_swap: player.getDynamicProperty("dhh:skill_ally_swap") ?? 0,
+      time_lock: player.getDynamicProperty("dhh:skill_time_lock") ?? 0,
+      earthen_grave: player.getDynamicProperty("dhh:skill_earthen_grave") ?? 0,
+      hellfire_pit: player.getDynamicProperty("dhh:skill_hellfire_pit") ?? 0,
+      reality_warp: player.getDynamicProperty("dhh:skill_reality_warp") ?? 0,
+      spirit_sight: player.getDynamicProperty("dhh:skill_spirit_sight") ?? 0,
+      chaos_trap: player.getDynamicProperty("dhh:skill_chaos_trap") ?? 0,
+      immortal_edict:
+        player.getDynamicProperty("dhh:skill_immortal_edict") ?? 0,
+      explosion: player.getDynamicProperty("dhh:skill_explosion") ?? 0,
+      blade_storm: player.getDynamicProperty("dhh:skill_blade_storm") ?? 0,
+      primal_beast: player.getDynamicProperty("dhh:skill_primal_beast") ?? 0,
+      celestial_step:
+        player.getDynamicProperty("dhh:skill_celestial_step") ?? 0,
+      void_step: player.getDynamicProperty("dhh:skill_void_step") ?? 0,
+    },
+    baseHealth: player.getDynamicProperty("dhh:base_health") ?? 0,
+    baseMana: player.getDynamicProperty("dhh:base_mana") ?? 0,
+    baseDamage: player.getDynamicProperty("dhh:base_damage") ?? 0,
+    baseSpeed: player.getDynamicProperty("dhh:base_speed") ?? 0,
+  };
+  stats.maxMana =
+    30 +
+    stats.intelligence * CONFIG.STAT_SCALING.INTELLIGENCE.mana_per_point +
+    stats.baseMana;
+  return stats;
+}
+
+async function showClassSelectionMenu(player) {
+  const form = new ActionFormData();
+  form.title("§l§1CHỌN NGHỀ NGHIỆP");
+  form.body(
+    "§l§cĐây là lựa chọn quan trọng nhất và sẽ không thể thay đổi!§r\n\n" +
+      "Lựa chọn này sẽ định hình lối chơi và các kỹ năng bạn có thể học. Hãy đọc kỹ mô tả trước khi quyết định.\n\n" +
+      "§7Tất cả điểm kỹ năng bạn đã cộng trước đây (nếu có) sẽ được hoàn trả."
+  );
+
+  form.button(
+    "§cHộ Vệ\n§8Tuyến đầu, trâu bò, bảo vệ đồng đội.",
+    "textures/items/diamond_chestplate"
+  );
+  form.button(
+    "§dPháp Sư\n§8Sát thương diện rộng, khống chế từ xa.",
+    "textures/items/book_enchanted"
+  );
+  form.button(
+    "§aDu Hiệp\n§8Cơ động, lén lút, hỗ trợ linh hoạt.",
+    "textures/items/bow_pulling_2"
+  );
+
+  const { canceled, selection } = await form.show(player);
+
+  if (canceled) {
+    system.run(() => showClassSelectionMenu(player));
+    return;
+  }
+
+  let chosenClass = "none";
+  let className = "";
+  if (selection === 0) {
+    chosenClass = "guardian";
+    className = "Hộ Vệ";
+  } else if (selection === 1) {
+    chosenClass = "mage";
+    className = "Pháp Sư";
+  } else if (selection === 2) {
+    chosenClass = "ranger";
+    className = "Du Hiệp";
+  }
+
+  player.setDynamicProperty("dhh:class", chosenClass);
+
+  let stats = getPlayerStats(player);
+  let totalRefundedPoints = stats.skillPoints;
+  for (const skillKey in stats.skills) {
+    const skillLevel = stats.skills[skillKey];
+    if (skillLevel > 0) {
+      totalRefundedPoints += skillLevel;
+      const prop = `dhh:skill_${skillKey
+        .replace("ironSkin", "iron")
+        .replace("regeneration", "regen")
+        .replace("targeted_lightning", "targeted_lightning")
+        .replace("summon_wolf", "summon_wolf")
+        .replace("shadow_swap", "shadow_swap")
+        .replace("winters_dominion", "winters_dominion")
+        .replace("ally_swap", "ally_swap")
+        .replace("time_lock", "time_lock")
+        .replace("earthen_grave", "earthen_grave")
+        .replace("hellfire_pit", "hellfire_pit")
+        .replace("reality_warp", "reality_warp")}`;
+      try {
+        player.setDynamicProperty(prop, 0);
+      } catch (e) {}
+    }
+  }
+
+  player.setDynamicProperty("dhh:skill_points", totalRefundedPoints);
+
+  player.onScreenDisplay.setTitle("§l§eLỰA CHỌN HOÀN TẤT!", {
+    subtitle: `§fChào mừng đến với con đường của §b${className}!`,
+    fadeInDuration: 10,
+    stayDuration: 100,
+    fadeOutDuration: 20,
+  });
+  player.playSound("random.levelup");
+  player.sendMessage(`§aBạn đã chính thức trở thành một §l§b${className}§r§a!`);
+  if (totalRefundedPoints > stats.skillPoints) {
+    player.sendMessage(
+      `§e${
+        totalRefundedPoints - stats.skillPoints
+      } điểm kỹ năng đã được hoàn trả. Hãy sử dụng Sổ Tay để nâng cấp lại!`
+    );
+  }
+
+  system.run(() => {
+    applyAllBonuses(player);
+    saveAllPlayerData(player);
+    showStatsMenu(player);
+  });
+}
+
+function createAllSeeingEyeItem() {
+  const eyeItem = new ItemStack("dhh:all_seeing_eye", 1);
+  eyeItem.nameTag = "§d§lCon Mắt Minh Triết";
+  eyeItem.setLore([
+    "§7Hãy nhìn vào thế giới và dùng ta...",
+    "§8Tạo tác Cổ đại",
+    "§§all_seeing_eye",
+  ]);
+  eyeItem.lockMode = "inventory";
+  eyeItem.keepOnDeath = true;
+  return eyeItem;
+}
+function getMissingdhhItems(player) {
+  const missing = { book: true, scepter: true, eye: true };
+  const inventory = player.getComponent("inventory")?.container;
+  if (!inventory) return missing;
+
+  for (let i = 0; i < inventory.size; i++) {
+    const item = inventory.getItem(i);
+    if (!item) continue;
+
+    if (item.typeId === "dhh:menu_book") {
+      missing.book = false;
+    }
+    if (
+      item.typeId === "dhh:magic_staff" &&
+      item.nameTag?.startsWith("§b§lQuyền Trượng")
+    ) {
+      missing.scepter = false;
+    }
+    if (item.typeId === "dhh:all_seeing_eye") {
+      missing.eye = false;
+    }
+  }
+  return missing;
+}
+
+function giveMissingdhhItems(player) {
+  const missing = getMissingdhhItems(player);
+  const inventory = player.getComponent("inventory")?.container;
+  if (!inventory)
+    return logError(
+      "giveMissingdhhItems",
+      player,
+      new Error("Could not access inventory")
+    );
+
+  let gaveItem = false;
+  if (missing.book) {
+    const book = new ItemStack("dhh:menu_book", 1);
+    book.lockMode = "inventory";
+    book.keepOnDeath = true;
+    inventory.addItem(book);
+    gaveItem = true;
+  }
+  if (missing.scepter) {
+    const scepter = new ItemStack("dhh:magic_staff", 1);
+    scepter.nameTag = "§b§lQuyền Trượng";
+    scepter.setLore([
+      "§7Vật phẩm ma thuật để sử dụng Kỹ năng.",
+      "§f- §aChuột Phải§f để §eChọn Kỹ năng§f.",
+      "§f- §aCầm trên tay và Ngồi xuống§f để §cKích hoạt§f.",
+      "§8Vật phẩm hệ thống, không thể vứt bỏ.",
+    ]);
+    scepter.lockMode = "inventory";
+    scepter.keepOnDeath = true;
+    inventory.addItem(scepter);
+    gaveItem = true;
+  }
+  if (missing.eye) {
+    const eyeItem = createAllSeeingEyeItem();
+    inventory.addItem(eyeItem);
+    gaveItem = true;
+  }
+  if (gaveItem) {
+    player.sendMessage("§a[dhh] Các vật phẩm hệ thống đã được cấp lại!");
+    player.playSound("random.orb");
+  } else {
+    player.sendMessage("§e[dhh] Bạn đã có đủ vật phẩm rồi!");
+  }
+  system.run(() => showStatsMenu(player));
+}
+
+function createProgressBar(
+  current,
+  max,
+  length = 10,
+  fullChar = "█",
+  emptyChar = "░",
+  fullColor = "§a",
+  emptyColor = "§7"
+) {
+  if (max === 0) return `${fullColor}[${fullChar.repeat(length)}]`;
+  const percentage = Math.max(0, Math.min(1, current / max));
+  const fullCount = Math.round(percentage * length);
+  const emptyCount = length - fullCount;
+  return `${fullColor}${fullChar.repeat(
+    fullCount
+  )}${emptyColor}${emptyChar.repeat(emptyCount)}`;
+}
+
+export function xpForLevel(level) {
+  if (level <= 1) return CONFIG.BASE_XP_TO_LEVEL;
+  return Math.floor(
+    CONFIG.BASE_XP_TO_LEVEL * Math.pow(CONFIG.XP_MULTIPLIER, level - 1)
+  );
+}
+
+function revokeXp(player, xpLost, sourceText) {
+  if (xpLost <= 0) return;
+  let stats = getPlayerStats(player);
+  stats.xp -= xpLost;
+  if (stats.xp < 0) {
+    stats.xp = 0;
+  }
+  player.setDynamicProperty("dhh:xp", stats.xp);
+  player.sendMessage(`§c-${Number(xpLost.toFixed(2))} XP §7(${sourceText})`);
+  saveAllPlayerData(player);
+}
+
+export function grantXpAndLevelUpCheck(player, xpGained, sourceText) {
+  if (xpGained <= 0) return;
+
+  const originalXpGained = xpGained;
+  const guildName = getPlayerGuildName(player);
+
+  if (guildName) {
+    grantXpToGuild(guildName, originalXpGained);
+
+    const guildData = getAllGuildsData()[guildName];
+    const boost = getGuildPerkValue(guildData, "global_xp_boost", 0);
+    xpGained *= 1 + boost;
+  }
+
+  let stats = getPlayerStats(player);
+  stats.xp += xpGained;
+  player.sendMessage(`§a+${Number(xpGained.toFixed(2))} XP §7(${sourceText})`);
+
+  let leveledUp = false;
+  let xpNeeded = xpForLevel(stats.level);
+  while (stats.xp >= xpNeeded) {
+    stats.level++;
+    stats.xp -= xpNeeded;
+    stats.skillPoints += CONFIG.SKILL_POINTS_PER_LEVEL;
+    leveledUp = true;
+    xpNeeded = xpForLevel(stats.level);
+
+    let baseHealth = player.getDynamicProperty("dhh:base_health") ?? 0;
+    let baseMana = player.getDynamicProperty("dhh:base_mana") ?? 0;
+    let baseDamage = player.getDynamicProperty("dhh:base_damage") ?? 0;
+    let baseSpeed = player.getDynamicProperty("dhh:base_speed") ?? 0;
+
+    player.setDynamicProperty(
+      "dhh:base_health",
+      baseHealth + CONFIG.BASE_STATS_PER_LEVEL.health
+    );
+    player.setDynamicProperty(
+      "dhh:base_mana",
+      baseMana + CONFIG.BASE_STATS_PER_LEVEL.mana
+    );
+    player.setDynamicProperty(
+      "dhh:base_damage",
+      baseDamage + CONFIG.BASE_STATS_PER_LEVEL.damage_bonus
+    );
+    player.setDynamicProperty(
+      "dhh:base_speed",
+      baseSpeed + CONFIG.BASE_STATS_PER_LEVEL.speed_bonus
+    );
+  }
+
+  if (leveledUp) {
+    player.setDynamicProperty("dhh:level", stats.level);
+    player.setDynamicProperty("dhh:skill_points", stats.skillPoints);
+    player.onScreenDisplay.setTitle("§l§eLÊN CẤP!", {
+      subtitle: `§fĐạt cấp độ §b${stats.level}§f! Bạn nhận được §d${CONFIG.SKILL_POINTS_PER_LEVEL}§f điểm kỹ năng.`,
+      fadeInDuration: 10,
+      stayDuration: 80,
+      fadeOutDuration: 20,
+    });
+    player.playSound("random.levelup");
+    system.run(() => applyAllBonuses(player));
+  }
+
+  player.setDynamicProperty("dhh:xp", stats.xp);
+  saveAllPlayerData(player);
+}
+
+function shareXpWithNearbyGuildMembers(sourcePlayer, originalXp, sourceText) {
+  if (!CONFIG.GUILD_XP_SHARE.ENABLED || originalXp <= 0) {
+    return;
+  }
+
+  const sourceGuildName = getPlayerGuildName(sourcePlayer);
+  if (!sourceGuildName) {
+    return;
+  }
+
+  const guildData = getAllGuildsData()[sourceGuildName];
+
+  const finalSharePercentage = getGuildPerkValue(
+    guildData,
+    "xp_share_boost",
+    CONFIG.GUILD_XP_SHARE.PERCENTAGE
+  );
+
+  const sharedXpAmount = originalXp * finalSharePercentage;
+  const shareRadius = CONFIG.GUILD_XP_SHARE.RADIUS;
+
+  for (const member of world.getAllPlayers()) {
+    if (member.nameTag === sourcePlayer.nameTag || !member.isValid) {
+      continue;
+    }
+
+    if (
+      getPlayerGuildName(member) === sourceGuildName &&
+      member.dimension.id === sourcePlayer.dimension.id
+    ) {
+      const distance = Vector.magnitude(
+        Vector.subtract(sourcePlayer.location, member.location)
+      );
+      if (distance <= shareRadius) {
+        grantXpAndLevelUpCheck(
+          member,
+          sharedXpAmount,
+          `chia sẻ từ ${sourcePlayer.nameTag}`
+        );
+      }
+    }
+  }
+}
+
+export function applyAllBonuses(player) {
+  try {
+    const stats = getPlayerStats(player);
+    const managedEffects = ["health_boost", "speed", "strength"];
+    const conflictingEffects = ["regeneration", "resistance"];
+
+    const healthComp = player.getComponent("health");
+    const movementComp = player.getComponent("minecraft:movement");
+
+    let healthRatio = 1;
+    let oldCurrentHealth = 20;
+    if (healthComp) {
+      oldCurrentHealth = healthComp.currentValue;
+      const oldMaxHealth =
+        healthComp.effectiveMax > 0 ? healthComp.effectiveMax : 20;
+      healthRatio = oldCurrentHealth / oldMaxHealth;
+    }
+
+    [...managedEffects, ...conflictingEffects].forEach((effectId) => {
+      try {
+        player.removeEffect(effectId);
+      } catch (e) {}
+    });
+
+    if (movementComp) {
+      movementComp.resetToDefaultValue();
+      const agilityBonusFromPoints =
+        stats.agility * CONFIG.STAT_SCALING.AGILITY.speed_bonus_per_point;
+      const totalAgilityBonus = agilityBonusFromPoints + stats.baseSpeed;
+      movementComp.setCurrentValue(
+        movementComp.defaultValue * (1 + totalAgilityBonus)
+      );
+    }
+    if (stats.vitality > 0 || stats.baseHealth > 0) {
+      const bonusHealthFromPoints =
+        stats.vitality * CONFIG.STAT_SCALING.VITALITY.health_per_point;
+      const totalBonusHealth = bonusHealthFromPoints + stats.baseHealth;
+      const healthAmplifier = Math.floor(totalBonusHealth / 4);
+      if (healthAmplifier >= 0)
+        player.addEffect("health_boost", INFINITE_DURATION, {
+          amplifier: healthAmplifier,
+          showParticles: false,
+        });
+    }
+    if (stats.strength > 0 || stats.baseDamage > 0) {
+      const bonusFromPoints =
+        stats.strength * CONFIG.STAT_SCALING.STRENGTH.damage_bonus_per_point;
+      const totalBonusPercentage = bonusFromPoints + stats.baseDamage;
+
+      const strengthAmplifier = Math.floor(totalBonusPercentage / 0.25);
+
+      if (strengthAmplifier > 0) {
+        player.addEffect("strength", INFINITE_DURATION, {
+          amplifier: strengthAmplifier - 1,
+          showParticles: false,
+        });
+      }
+    }
+
+    const effectSources = {
+      regeneration: { skill: -1, guild: -1 },
+      resistance: { skill: -1, guild: -1 },
+    };
+
+    if (stats.skills.regeneration > 0)
+      effectSources.regeneration.skill = Math.floor(
+        (stats.skills.regeneration - 1) / 2
+      );
+    if (stats.skills.ironSkin > 0)
+      effectSources.resistance.skill = Math.min(
+        3,
+        Math.floor((stats.skills.ironSkin - 1) / 2)
+      );
+
+    const guildName = getPlayerGuildName(player);
+    if (guildName) {
+      const guildData = getAllGuildsData()[guildName];
+      const passiveEffect = getGuildPerkValue(
+        guildData,
+        "passive_effect",
+        null
+      );
+      if (passiveEffect && effectSources[passiveEffect.effectId]) {
+        effectSources[passiveEffect.effectId].guild = passiveEffect.amplifier;
+      }
+    }
+
+    for (const effectId in effectSources) {
+      const sources = effectSources[effectId];
+      const finalAmplifier = Math.max(sources.skill, sources.guild);
+      if (finalAmplifier >= 0) {
+        player.addEffect(effectId, INFINITE_DURATION, {
+          amplifier: finalAmplifier,
+          showParticles: false,
+        });
+      }
+    }
+
+    system.run(() => {
+      if (healthComp?.isValid) {
+        const newMaxHealth = healthComp.effectiveMax;
+        const targetHealth = newMaxHealth * healthRatio;
+        const desiredHealth = Math.max(oldCurrentHealth, targetHealth);
+        const finalHealth = Math.min(newMaxHealth, desiredHealth);
+        healthComp.setCurrentValue(finalHealth);
+      }
+    });
+  } catch (error) {
+    logError("applyAllBonuses", player, error);
+  }
+}
+
+async function showUpgradeChoiceMenu(player) {
+  const stats = getPlayerStats(player);
+  if (stats.skillPoints <= 0) return await showStatsMenu(player);
+  const form = new ActionFormData();
+  form.title("§l§aNÂNG CẤP");
+  form.body(
+    `§fBạn đang có §d${stats.skillPoints} §fđiểm để phân phối.\n\n§7Hãy chọn một hạng mục để sử dụng điểm:`
+  );
+  form.button(
+    "§eNâng cấp Thuộc tính\n§8(Sức mạnh, Sức bền...)",
+    "textures/ui/strength_effect.png"
+  );
+  form.button(
+    "§6Nâng cấp Kỹ năng\n§8(Bị động và Chủ động)",
+    "textures/ui/regeneration_effect.png"
+  );
+  form.button("§0Quay lại Menu chính", "textures/ui/undo.png");
+  const { canceled, selection } = await form.show(player);
+  if (canceled) return;
+  if (selection === 0) showStatUpgradeMenu(player);
+  else if (selection === 1) showSkillUpgradeMenu(player);
+  else if (selection === 2) showCharacterDetailsMenu(player);
+}
+
+async function showSpecificSkillTree(player, title, skillsToShow) {
+  const form = new ActionFormData();
+  const stats = getPlayerStats(player);
+
+  if (stats.skillPoints <= 0) {
+    player.sendMessage("§cBạn đã dùng hết điểm kỹ năng!");
+    return showSkillUpgradeMenu(player);
+  }
+
+  form.title(title);
+  form.body(
+    `§fSử dụng điểm để học hoặc cải thiện kỹ năng.\n§fĐiểm còn lại: §d${stats.skillPoints}`
+  );
+
+  skillsToShow.forEach((skill) => {
+    const currentLevel = stats.skills[skill.key] ?? 0;
+    if (currentLevel >= skill.max) {
+      form.button(`§m§7${skill.name}: ${currentLevel}/${skill.max} (Tối đa)`);
+    } else {
+      form.button(
+        `§e${skill.name}: ${currentLevel}/${skill.max}\n§8${skill.desc}`
+      );
+    }
+  });
+  form.button("§0Quay lại");
+
+  const { canceled, selection } = await form.show(player);
+  if (canceled) return;
+  if (selection === skillsToShow.length) {
+    return showSkillUpgradeMenu(player);
+  }
+
+  const selectedSkill = skillsToShow[selection];
+  const currentLevel = stats.skills[selectedSkill.key] ?? 0;
+  if (currentLevel >= selectedSkill.max) {
+    player.sendMessage(
+      `§cKỹ năng §e${selectedSkill.name}§c đã đạt cấp tối đa!`
+    );
+  } else {
+    player.setDynamicProperty(selectedSkill.prop, currentLevel + 1);
+    player.setDynamicProperty("dhh:skill_points", stats.skillPoints - 1);
+    player.sendMessage(
+      `§aNâng cấp thành công: §e${selectedSkill.name}§a đã lên cấp §b${
+        currentLevel + 1
+      }§a!`
+    );
+    applyAllBonuses(player);
+    saveAllPlayerData(player);
+  }
+  system.run(() => showSpecificSkillTree(player, title, skillsToShow));
+}
+
+async function showSkillUpgradeMenu(player) {
+  const stats = getPlayerStats(player);
+  const playerClass = stats.class;
+
+  if (playerClass === "none") {
+    player.sendMessage(
+      "§cBạn phải chọn một nghề nghiệp trước khi nâng cấp kỹ năng!"
+    );
+    return system.run(() => showClassSelectionMenu(player));
+  }
+
+  if (stats.skillPoints <= 0) {
+    player.sendMessage("§cBạn không có điểm kỹ năng nào để sử dụng!");
+    return showUpgradeChoiceMenu(player);
+  }
+
+  const currentClassData = ALL_CLASSES[playerClass];
+  if (!currentClassData) {
+    logError(
+      "showSkillUpgradeMenu",
+      player,
+      new Error(`Không tìm thấy dữ liệu cho class: ${playerClass}`)
+    );
+    return;
+  }
+
+  const playerClassSkills = currentClassData.skillTree.map(
+    (skillKey) => ALL_SKILLS[skillKey]
+  );
+  const playerClassName = currentClassData.name;
+
+  const form = new ActionFormData();
+  form.title("§l§6CHỌN NHÁNH KỸ NĂNG");
+  form.body(
+    `§fNghề nghiệp: §b${playerClassName}\n§fĐiểm còn lại: §d${stats.skillPoints}`
+  );
+
+  form.button(
+    `§aKỹ năng ${playerClassName}\n§8Kỹ năng chuyên biệt của nghề.`,
+    "textures/items/diamond_sword"
+  );
+  form.button(
+    "§eKỹ năng Chung\n§8Các kỹ năng mà nghề nào cũng học được.",
+    "textures/ui/resistance_effect.png"
+  );
+  form.button("§0Quay lại", "textures/ui/undo.png");
+
+  const { canceled, selection } = await form.show(player);
+  if (canceled) return;
+
+  switch (selection) {
+    case 0:
+      showSpecificSkillTree(
+        player,
+        `§l§aKỸ NĂNG ${playerClassName.toUpperCase()}`,
+        playerClassSkills
+      );
+      break;
+    case 1:
+      const commonSkillData = COMMON_SKILLS.map(
+        (skillKey) => ALL_SKILLS[skillKey]
+      );
+      showSpecificSkillTree(player, "§l§eKỸ NĂNG CHUNG", commonSkillData);
+      break;
+    case 2:
+      showUpgradeChoiceMenu(player);
+      break;
+  }
+}
+
+async function showStatUpgradeMenu(player) {
+  const form = new ActionFormData();
+  const stats = getPlayerStats(player);
+  if (stats.skillPoints <= 0) {
+    player.sendMessage("§cBạn đã dùng hết điểm kỹ năng!");
+    return await showCharacterDetailsMenu(player);
+  }
+  form.title("§l§eNÂNG CẤP THUỘC TÍNH");
+  form.body(
+    `§fSử dụng điểm để tăng các chỉ số cơ bản của bạn.\n§fĐiểm còn lại: §d${stats.skillPoints}`
+  );
+  form.button(`§cSức Bền: ${stats.vitality}\n§8Tăng Máu tối đa của bạn.`);
+  form.button(
+    `§4Sức Mạnh: ${stats.strength}\n§8+${(
+      stats.strength *
+      CONFIG.STAT_SCALING.STRENGTH.damage_bonus_per_point *
+      100
+    ).toFixed(0)} phần trăm sát thương cận chiến`
+  );
+  form.button(
+    `§bNhanh Nhẹn: ${stats.agility}\n§8+${(
+      stats.agility *
+      CONFIG.STAT_SCALING.AGILITY.speed_bonus_per_point *
+      100
+    ).toFixed(1)}% Tốc độ di chuyển`
+  );
+  form.button(
+    `§dTrí Tuệ: ${stats.intelligence}\n§8Tăng Mana tối đa để dùng kỹ năng.`
+  );
+  form.button("§0Quay lại");
+  const { canceled, selection } = await form.show(player);
+  if (canceled) return;
+  if (selection === 4) return await showUpgradeChoiceMenu(player);
+  const statsMap = ["vitality", "strength", "agility", "intelligence"];
+  const statToUpgrade = statsMap[selection];
+  if (statToUpgrade) {
+    player.setDynamicProperty(
+      `dhh:${statToUpgrade}`,
+      (player.getDynamicProperty(`dhh:${statToUpgrade}`) ?? 0) + 1
+    );
+    player.setDynamicProperty("dhh:skill_points", stats.skillPoints - 1);
+    player.sendMessage(
+      `§aBạn đã cộng 1 điểm vào §e${
+        statToUpgrade.charAt(0).toUpperCase() + statToUpgrade.slice(1)
+      }§a.`
+    );
+    applyAllBonuses(player);
+    saveAllPlayerData(player);
+    system.run(() => showStatUpgradeMenu(player));
+  }
+}
+
+async function showCharacterDetailsMenu(player) {
+  try {
+    const stats = getPlayerStats(player);
+    const xpNeeded = xpForLevel(stats.level);
+    const form = new ActionFormData();
+    form.title("§l§eCHI TIẾT & NÂNG CẤP");
+
+    const skillInfo = {
+      regeneration: { name: "Tự Hồi Phục", type: "passive" },
+      ironSkin: { name: "Da Sắt", type: "passive" },
+      radar: { name: "Rada Thăm Dò", type: "passive" },
+      stealth: {
+        name: "Tàng Hình",
+        type: "active",
+        manaKey: "STEALTH",
+        cdKey: "STEALTH",
+      },
+      heal: {
+        name: "Chữa Lành",
+        type: "active",
+        manaKey: "HEAL",
+        cdKey: "HEAL",
+      },
+      dash: { name: "Lướt Đi", type: "active", manaKey: "DASH", cdKey: "DASH" },
+      targeted_lightning: {
+        name: "Lôi Vực",
+        type: "active",
+        manaKey: "TARGETED_LIGHTNING",
+        cdKey: "TARGETED_LIGHTNING",
+      },
+      summon_wolf: {
+        name: "Triệu Hồi Linh Thú",
+        type: "active",
+        manaKey: "SUMMON_WOLF",
+        cdKey: "SUMMON_WOLF",
+      },
+      shadow_swap: {
+        name: "Thiên Mệnh Thời Không",
+        type: "active",
+        manaKey: "SHADOW_SWAP",
+        cdKey: "SHADOW_SWAP",
+      },
+      sprint: {
+        name: "Bứt Tốc",
+        type: "active",
+        manaKey: "SPRINT",
+        cdKey: "SPRINT",
+      },
+      shadowbind: {
+        name: "Dây Trói Bóng Tối",
+        type: "active",
+        manaKey: "SHADOWBIND",
+        cdKey: "SHADOWBIND",
+      },
+      golem_punch: {
+        name: "Cú Đấm Golem",
+        type: "active",
+        manaKey: "GOLEM_PUNCH",
+        cdKey: "GOLEM_PUNCH",
+      },
+      winters_dominion: {
+        name: "Lãnh Địa Mùa Đông",
+        type: "active",
+        manaKey: "WINTERS_DOMINION",
+        cdKey: "WINTERS_DOMINION",
+      },
+      ally_swap: {
+        name: "Hoán Vị Đồng Minh",
+        type: "active",
+        manaKey: "ALLY_SWAP",
+        cdKey: "ALLY_SWAP",
+      },
+      time_lock: {
+        name: "Giam Cầm Thời Gian",
+        type: "active",
+        manaKey: "TIME_LOCK",
+        cdKey: "TIME_LOCK",
+      },
+      earthen_grave: {
+        name: "Mộ Phần Trói Buộc",
+        type: "active",
+        manaKey: "EARTHEN_GRAVE",
+        cdKey: "EARTHEN_GRAVE",
+      },
+      hellfire_pit: {
+        name: "Vực Lửa Địa Ngục",
+        type: "active",
+        manaKey: "HELLFIRE_PIT",
+        cdKey: "HELLFIRE_PIT",
+      },
+      reality_warp: {
+        name: "Vùng Hỗn Loạn",
+        type: "active",
+        manaKey: "REALITY_WARP",
+        cdKey: "REALITY_WARP",
+      },
+      spirit_sight: {
+        name: "Thị Kiến Tâm Linh",
+        type: "active",
+        manaKey: "SPIRIT_SIGHT",
+        cdKey: "SPIRIT_SIGHT",
+      },
+      chaos_trap: {
+        name: "Bẫy Hỗn Mang",
+        type: "active",
+        manaKey: "CHAOS_TRAP",
+        cdKey: "CHAOS_TRAP",
+      },
+      immortal_edict: {
+        name: "Thánh Lệnh Bất Diệt",
+        type: "active",
+        manaKey: "IMMORTAL_EDICT",
+        cdKey: "IMMORTAL_EDICT",
+      },
+      explosion: {
+        name: "Bộc Liệt Ma Pháp",
+        type: "active",
+        manaKey: "EXPLOSION",
+        cdKey: "EXPLOSION",
+      },
+      blade_storm: {
+        name: "Bão Kiếm",
+        type: "active",
+        manaKey: "BLADE_STORM",
+        cdKey: "BLADE_STORM",
+      },
+      primal_beast: {
+        name: "Hóa Thân Thần Thú",
+        type: "active",
+        manaKey: "PRIMAL_BEAST",
+        cdKey: "PRIMAL_BEAST",
+      },
+      celestial_step: {
+        name: "Bước Chân Thiên Giới",
+        type: "active",
+        manaKey: "CELESTIAL_STEP",
+        cdKey: "CELESTIAL_STEP",
+      },
+      void_step: {
+        name: "Vô Hạ Hạn",
+        type: "active",
+        manaKey: "VOID_STEP",
+        cdKey: "VOID_STEP",
+      },
+    };
+
+    let body = [];
+    body.push(`§l§f${player.nameTag} §r- §bCấp ${stats.level}`);
+    body.push(
+      `§7Nghề nghiệp: §b${CLASS_TRANSLATIONS[stats.class] ?? "Chưa Chọn"}`
+    );
+    body.push(
+      `§eXP: §f${stats.xp.toFixed(0)}/${xpNeeded} [${createProgressBar(
+        stats.xp,
+        xpNeeded,
+        16,
+        "█",
+        "░",
+        "§e",
+        "§7"
+      )}]`
+    );
+    body.push(
+      `§bMP: §f${stats.currentMana.toFixed(0)}/${stats.maxMana.toFixed(
+        0
+      )} [${createProgressBar(
+        stats.currentMana,
+        stats.maxMana,
+        16,
+        "█",
+        "░",
+        "§b",
+        "§8"
+      )}]`
+    );
+    if (stats.skillPoints > 0)
+      body.push(`\n§dBạn có: §f${stats.skillPoints} §dĐiểm Kỹ Năng chưa dùng.`);
+    body.push("\n§7---------- §6THUỘC TÍNH §7----------");
+    body.push(
+      `§cSức Bền đã nâng(VIT): §f${stats.vitality} §8(§a+${(
+        stats.vitality * CONFIG.STAT_SCALING.VITALITY.health_per_point +
+        stats.baseHealth
+      ).toFixed(1)} HP§8)`
+    );
+    body.push(
+      `§4Sức Mạnh đã nâng(STR): §f${stats.strength} §8(§c+${(
+        (stats.strength * CONFIG.STAT_SCALING.STRENGTH.damage_bonus_per_point +
+          stats.baseDamage) *
+        100
+      ).toFixed(0)}phần trăm§8)`
+    );
+    body.push(
+      `§bNhanh Nhẹn đã nâng(AGI): §f${stats.agility} §8(§b+${(
+        (stats.agility * CONFIG.STAT_SCALING.AGILITY.speed_bonus_per_point +
+          stats.baseSpeed) *
+        100
+      ).toFixed(1)}% Tốc độ§8)`
+    );
+    body.push(
+      `§dTrí Tuệ đã nâng(INT): §f${stats.intelligence} §8(§d+${(
+        stats.intelligence * CONFIG.STAT_SCALING.INTELLIGENCE.mana_per_point +
+        stats.baseMana
+      ).toFixed(0)} Mana§8)`
+    );
+
+    let passiveSkills = Object.keys(skillInfo).filter(
+      (k) => skillInfo[k].type === "passive" && stats.skills[k] > 0
+    );
+    if (passiveSkills.length > 0) {
+      body.push("\n§7------- §eKỸ NĂNG BỊ ĐỘNG §7-------");
+      passiveSkills.forEach((key) =>
+        body.push(
+          `§e${skillInfo[key].name}: §f[${createProgressBar(
+            stats.skills[key],
+            9,
+            9,
+            "■",
+            "□",
+            "§6"
+          )}] Cấp ${stats.skills[key]}/9`
+        )
+      );
+    }
+    let activeSkills = Object.keys(skillInfo).filter(
+      (k) => skillInfo[k].type === "active" && stats.skills[k] > 0
+    );
+    if (activeSkills.length > 0) {
+      body.push("\n§7------- §dKỸ NĂNG CHỦ ĐỘNG §7-------");
+      activeSkills.forEach((key) => {
+        body.push(
+          `§d${skillInfo[key].name}: §f[${createProgressBar(
+            stats.skills[key],
+            9,
+            9,
+            "■",
+            "□",
+            "§d"
+          )}] Cấp ${stats.skills[key]}/9`
+        );
+        body.push(
+          `  §7Tiêu hao: §b${
+            CONFIG.SKILL_MANA_COSTS[skillInfo[key].manaKey]
+          } Mana §7| Hồi chiêu: §c${
+            CONFIG.SKILL_COOLDOWNS[skillInfo[key].cdKey]
+          }s`
+        );
+      });
+    }
+    form.body(body.join("\n"));
+
+    const buttons = [];
+    if (stats.skillPoints > 0)
+      buttons.push({
+        text: `§aNâng Cấp (${stats.skillPoints} điểm)`,
+        action: () => showUpgradeChoiceMenu(player),
+      });
+    buttons.push({ text: "§0Quay lại", action: () => showStatsMenu(player) });
+    buttons.forEach((button) => form.button(button.text));
+
+    const { canceled, selection } = await form.show(player);
+    if (canceled) return;
+    buttons[selection]?.action();
+  } catch (error) {
+    logError("showCharacterDetailsMenu", player, error);
+  }
+}
+
+async function showActivitiesMenu(player) {
+  const form = new ActionFormData();
+  form.title("§l§cHOẠT ĐỘNG & THỬ THÁCH");
+  form.body("§fChọn một hoạt động bạn muốn tham gia.");
+
+  const buttons = [];
+  buttons.push({ text: "§bNhiệm Vụ", action: () => showQuestMenu(player) });
+
+  if (activeDungeons.has(player.nameTag)) {
+    buttons.push({
+      text: "§c§lBỏ Cuộc (Hầm Ngục)",
+      action: () => {
+        player.sendMessage("§eBạn đã chọn bỏ cuộc. Đang đưa bạn trở về...");
+        finishDungeon(player, false);
+      },
+    });
+  } else {
+    buttons.push({
+      text: "§gThử Thách Hầm Ngục §c(Tạm khóa)",
+      action: () => showPasswordPrompt(player, showDungeonChallengeIntro),
+    });
+  }
+
+  const challengeState = [...activeChallenges.values()].find((c) =>
+    c.party.includes(player.nameTag)
+  );
+  if (challengeState) {
+    buttons.push({
+      text: "§c§lBỏ Cuộc (Sinh Tồn)",
+      action: () => {
+        const hostName = [...activeChallenges.entries()].find(
+          ([key, state]) => state === challengeState
+        )[0];
+        endChallenge(hostName, false);
+        for (const memberName of challengeState.party) {
+          const member = world.getPlayers({ name: memberName })[0];
+          if (member && member.nameTag !== player.nameTag) {
+            member.sendMessage(
+              `§e[Thử Thách] Trận đấu đã bị hủy bởi §f${player.nameTag}.`
+            );
+          }
+        }
+        player.sendMessage("§eBạn đã hủy/rời khỏi Thử Thách Sinh Tồn.");
+      },
+    });
+  } else {
+    buttons.push({
+      text: "§bThử Thách Sinh Tồn §c(Tạm khóa)",
+      action: () => showPasswordPrompt(player, showChallengeMainMenu),
+    });
+  }
+
+  buttons.push({ text: "§0Quay lại", action: () => showStatsMenu(player) });
+
+  buttons.forEach((b) => form.button(b.text));
+  const { canceled, selection } = await form.show(player);
+  if (canceled) return;
+  buttons[selection]?.action();
+}
+
+async function showSocialMenu(player) {
+  const form = new ActionFormData();
+  form.title("§l§bXÃ HỘI & TƯƠNG TÁC");
+  form.body("§fCác tính năng kết nối với người chơi khác.");
+
+  const buttons = [];
+  buttons.push({ text: "§2Bang Hội", action: () => showGuildMainMenu(player) });
+  buttons.push({
+    text: "§6Giao Dịch An Toàn",
+    action: () => showTradeInviteMenu(player),
+  });
+  buttons.push({ text: "§0Quay lại", action: () => showStatsMenu(player) });
+
+  buttons.forEach((b) => form.button(b.text));
+  const { canceled, selection } = await form.show(player);
+  if (canceled) return;
+  buttons[selection]?.action();
+}
+
+async function showUtilitiesMenu(player) {
+  const form = new ActionFormData();
+  form.title("§l§dCỬA HÀNG & TIỆN ÍCH");
+  form.body("§fSử dụng các tính năng đặc biệt và tiện ích.");
+
+  const buttons = [];
+  buttons.push({
+    text: "§dCầu Nguyện",
+    action: () => showGachaMainMenu(player),
+  });
+  buttons.push({ text: "§5Đổi Nhạc Nền", action: () => showMusicMenu(player) });
+  buttons.push({
+    text: "§1Tìm Kiếm Công Trình\n§8Dùng Nguyên Thạch để định vị",
+    action: () => showStructureFinderMenu(player),
+  });
+  buttons.push({
+    text: "§c§lKhởi Tạo Lại Nghề Nghiệp\n§8(Reset về Cấp 1)",
+    action: () => showClassResetConfirmationMenu(player),
+  });
+  buttons.push({ text: "§0Quay lại", action: () => showStatsMenu(player) });
+
+  buttons.forEach((b) => form.button(b.text));
+  const { canceled, selection } = await form.show(player);
+  if (canceled) return;
+  buttons[selection]?.action();
+}
+
+async function showSystemMenu(player) {
+  const form = new ActionFormData();
+  form.title("§l§7HỆ THỐNG");
+  form.body("§fCác chức năng liên quan đến hệ thống game.");
+
+  const buttons = [];
+  if (!world.getDynamicProperty("dhh:shared_inventory_active")) {
+    buttons.push({
+      text: "§c§lCHUNG TÚI ĐỒ §c(Tạm khóa)\n§8(§4KHÔNG THỂ HOÀN TÁC!§8)",
+      action: () => showPasswordPrompt(player, activateSharedInventoryChallenge),
+    });
+  }
+  buttons.push({
+    text: "§5§lMa Sói Làng Minecraft §c(Tạm khóa)\n§8Tổ chức một phiên chơi mới",
+    icon: "textures/items/spyglass",
+    action: () => showPasswordPrompt(player, startWerewolfLobby),
+  });
+  if (
+    getMissingdhhItems(player).book ||
+    getMissingdhhItems(player).scepter ||
+    getMissingdhhItems(player).eye
+  ) {
+    buttons.push({
+      text: "§eLấy lại Vật phẩm dhh",
+      action: () => giveMissingdhhItems(player),
+    });
+  }
+  buttons.push({ text: "§0Quay lại", action: () => showStatsMenu(player) });
+
+  buttons.forEach((b) => form.button(b.text));
+  const { canceled, selection } = await form.show(player);
+  if (canceled) return;
+  buttons[selection]?.action();
+}
+async function activateSharedInventoryChallenge(player) {
+  const form = new MessageFormData()
+    .title("§4§lXÁC NHẬN HÀNH ĐỘNG HỦY DIỆT")
+    .body(
+      "Bạn có thực sự chắc chắn muốn kích hoạt chế độ §e§lCHUNG TÚI ĐỒ§r cho TOÀN BỘ thế giới không?\n\n§cHành động này là VĨNH VIỄN và KHÔNG THỂ HOÀN TÁC.\nTất cả túi đồ của người chơi sẽ bị xóa và đồng bộ thành một."
+    )
+    .button1("§aKhông, tôi đã suy nghĩ lại")
+    .button2("§cĐỒNG Ý, KÍCH HOẠT!");
+
+  const { canceled, selection } = await form.show(player);
+
+  if (canceled || selection === 0) {
+    player.sendMessage("§aĐã hủy kích hoạt thử thách.");
+    return;
+  }
+
+  if (selection === 1) {
+    world.setDynamicProperty("dhh:shared_inventory_active", true);
+    initializeSharedInventorySystem();
+  }
+}
+export async function showStatsMenu(player) {
+  try {
+    const stats = getPlayerStats(player);
+    if (stats.class === "none") {
+      return system.run(() => showClassSelectionMenu(player));
+    }
+    const xpNeeded = xpForLevel(stats.level);
+    const form = new ActionFormData();
+
+    form.title("§l§6MENU CHÍNH");
+
+    let body = [];
+    body.push(`§l§f${player.nameTag} §r- §bCấp ${stats.level}`);
+    body.push(
+      `§7Nghề nghiệp: §b${CLASS_TRANSLATIONS[stats.class] ?? "Chưa Chọn"}`
+    );
+    body.push(
+      `§eXP: §f${stats.xp.toFixed(0)}/${xpNeeded} [${createProgressBar(
+        stats.xp,
+        xpNeeded,
+        16,
+        "█",
+        "░",
+        "§e",
+        "§7"
+      )}]`
+    );
+    body.push(
+      `§bMP: §f${stats.currentMana.toFixed(0)}/${stats.maxMana.toFixed(
+        0
+      )} [${createProgressBar(
+        stats.currentMana,
+        stats.maxMana,
+        16,
+        "█",
+        "░",
+        "§b",
+        "§8"
+      )}]`
+    );
+    if (stats.skillPoints > 0)
+      body.push(
+        `\n§d§lBạn có: §f${stats.skillPoints} §dĐiểm Kỹ Năng chưa dùng.`
+      );
+
+    const learnedActiveSkills = Object.keys(SKILL_TRANSLATIONS).filter(
+      (k) =>
+        (stats.skills[k] ?? 0) > 0 && LEARNABLE_SKILLS.includes(k.toUpperCase())
+    );
+    if (learnedActiveSkills.length > 0) {
+      body.push(`\n§7------- §dKỸ NĂNG ĐÃ HỌC §7-------`);
+      const skillLine = learnedActiveSkills
+        .map((k) => `§d${SKILL_TRANSLATIONS[k]}`)
+        .join("§7, ");
+      body.push(skillLine);
+    }
+    form.body(body.join("\n"));
+
+    const buttons = [
+      {
+        text: "§eThông tin chi tiết & Nâng Cấp\n§8Xem chỉ số, cộng điểm, kỹ năng...",
+        icon: "textures/items/book_writable",
+        action: () => showCharacterDetailsMenu(player),
+      },
+      {
+        text: "§6Cường Hóa Trang Bị\n§8Nâng cấp vũ khí và giáp",
+        icon: "textures/blocks/anvil_top_damaged_1",
+        action: () => showUpgradeSelectionMenu(player),
+      },
+      {
+        text: "§cHoạt Động & Thử Thách\n§8Nhiệm vụ, Hầm ngục, Sinh tồn...",
+        icon: "textures/items/diamond_sword",
+        action: () => showActivitiesMenu(player),
+      },
+      {
+        text: "§bXã Hội & Tương Tác\n§8Bang hội, Giao dịch...",
+        icon: "textures/items/emerald",
+        action: () => showSocialMenu(player),
+      },
+      {
+        text: "§dTiện Ích & Cửa Hàng\n§8Gacha, Nhạc nền...",
+        icon: "textures/items/nether_star",
+        action: () => showUtilitiesMenu(player),
+      },
+      {
+        text: "§6Bảo Hộ Lãnh Thổ\n§8Bảo vệ nhà cửa và tài sản",
+        icon: "textures/blocks/beacon",
+        action: () => showLandClaimMainMenu(player),
+      },
+      {
+        text: "§7Hệ Thống\n§8Chế độ mới, tiện ích game...",
+        icon: "textures/blocks/command_block",
+        action: () => showSystemMenu(player),
+      },
+      { text: "§4Đóng", icon: "textures/ui/cancel", action: () => {} },
+    ];
+
+    buttons.forEach((button) => form.button(button.text, button.icon));
+
+    const { canceled, selection } = await form.show(player);
+    if (canceled) return;
+    buttons[selection]?.action();
+  } catch (error) {
+    logError("showStatsMenu", player, error);
+  }
+}
+
+function giveInitialdhhItems(player) {
+  try {
+    const missing = getMissingdhhItems(player);
+    const inventory = player.getComponent("inventory")?.container;
+    if (!inventory) return;
+
+    let gaveItem = false;
+    if (missing.book) {
+      const book = new ItemStack("dhh:menu_book", 1);
+      book.lockMode = "inventory";
+      book.keepOnDeath = true;
+      inventory.addItem(book);
+      gaveItem = true;
+    }
+    if (missing.scepter) {
+      const scepter = new ItemStack("dhh:magic_staff", 1);
+      scepter.nameTag = "§b§lQuyền Trượng";
+      scepter.setLore([
+        "§7Vật phẩm ma thuật để sử dụng Kỹ năng.",
+        "§f- §aChuột Phải§f để §eChọn Kỹ năng§f.",
+        "§f- §aCầm trên tay và Ngồi xuống§f để §cKích hoạt§f.",
+        "§8Vật phẩm hệ thống, không thể vứt bỏ.",
+      ]);
+      scepter.lockMode = "inventory";
+      scepter.keepOnDeath = true;
+      inventory.addItem(scepter);
+      gaveItem = true;
+    }
+    if (missing.eye) {
+      const eyeItem = createAllSeeingEyeItem();
+      inventory.addItem(eyeItem);
+      gaveItem = true;
+    }
+    if (gaveItem) {
+      logDebug(`Gave initial dhh items to new player ${player.name}`);
+    }
+  } catch (error) {
+    logError("giveInitialdhhItems", player, error);
+  }
+}
+
+function handleSkillActivation(player) {
+  if (player.hasTag("spirit_sight_active")) {
+    showSpiritSightActionMenu(player);
+    return;
+  }
+  let activeSkillName = "unknown";
+  try {
+    const heldItem = player
+      .getComponent("inventory")
+      .container.getItem(player.selectedSlotIndex);
+    if (
+      !heldItem ||
+      heldItem.typeId !== "dhh:magic_staff" ||
+      !heldItem.nameTag?.startsWith("§b§lQuyền Trượng")
+    )
+      return;
+
+    activeSkillName = player.getDynamicProperty("dhh:active_skill");
+    if (!activeSkillName)
+      return player.onScreenDisplay.setActionBar(
+        "§eHãy dùng Quyền Trượng để chọn một kỹ năng!"
+      );
+
+    const isDeactivatingDominion =
+      activeSkillName === "WINTERS_DOMINION" &&
+      !!player.getDynamicProperty("dhh:dominion_instance");
+    const stats = getPlayerStats(player);
+    const skillAction = SKILL_ACTIONS[activeSkillName];
+    const skillLevel = stats.skills[activeSkillName.toLowerCase()] ?? 0;
+    if (!skillAction || skillLevel <= 0) return;
+
+    if (
+      activeSkillName === "SHADOW_SWAP" &&
+      player.getDynamicProperty("dhh:shadow_location")
+    ) {
+      skillAction(player, stats);
+      return;
+    }
+
+    const manaCost = CONFIG.SKILL_MANA_COSTS[activeSkillName];
+    const cooldown = CONFIG.SKILL_COOLDOWNS[activeSkillName];
+    const cdProp = `dhh:cd_${activeSkillName.toLowerCase()}`;
+    const now = system.currentTick;
+    const lastUsed = player.getDynamicProperty(cdProp) ?? 0;
+
+    if (now < lastUsed) {
+      const translatedName =
+        SKILL_TRANSLATIONS[activeSkillName.toLowerCase()] || activeSkillName;
+      return player.sendMessage(
+        `§c[${translatedName}] chưa hồi! Chờ ${((lastUsed - now) / 20).toFixed(
+          1
+        )}s.`
+      );
+    }
+
+    if (!isDeactivatingDominion) {
+      if (
+        activeSkillName === "SHADOWBIND" &&
+        !player.hasTag("shadowbind_active")
+      ) {
+        if (stats.currentMana < manaCost)
+          return player.sendMessage(
+            `§cKhông đủ mana để kích hoạt! Cần §b${manaCost}§c.`
+          );
+      } else if (activeSkillName !== "SHADOWBIND") {
+        if (stats.currentMana < manaCost)
+          return player.sendMessage(
+            `§cKhông đủ mana! Cần §b${manaCost}§c, bạn có §b${Math.floor(
+              stats.currentMana
+            )}§c.`
+          );
+      }
+    }
+
+    const success = skillAction(player, stats);
+    if (activeSkillName === "DASH" && success) {
+      return;
+    }
+    if (success) {
+      if (!isDeactivatingDominion) {
+        if (
+          activeSkillName !== "SHADOWBIND" ||
+          (activeSkillName === "SHADOWBIND" &&
+            !player.hasTag("shadowbind_active"))
+        ) {
+          player.setDynamicProperty("dhh:mana", stats.currentMana - manaCost);
+        }
+      }
+
+      let totalCooldownTicks = cooldown * 20;
+      const guildName = getPlayerGuildName(player);
+      if (guildName) {
+        const guildData = getAllGuildsData()[guildName];
+        const reduction = getGuildPerkValue(
+          guildData,
+          "cooldown_reduction",
+          0
+        );
+        totalCooldownTicks *= 1 - reduction;
+      }
+
+      if (
+        [
+          "SPRINT",
+          "STEALTH",
+          "WINTERS_DOMINION",
+          "SHADOW_SWAP",
+          "TIME_LOCK",
+          "EARTHEN_GRAVE",
+          "HELLFIRE_PIT",
+          "REALITY_WARP",
+        ].includes(activeSkillName)
+      ) {
+        let durationInSeconds = 0;
+        if (activeSkillName === "SPRINT")
+          durationInSeconds = 10 + skillLevel * 5;
+        else if (activeSkillName === "STEALTH")
+          durationInSeconds = 15 + skillLevel * 5 + stats.agility * 0.25;
+        else if (
+          activeSkillName === "WINTERS_DOMINION" &&
+          !isDeactivatingDominion
+        )
+          durationInSeconds = 60 + (skillLevel - 1) * 30;
+        else if (
+          activeSkillName === "SHADOW_SWAP" &&
+          !player.getDynamicProperty("dhh:shadow_location")
+        )
+          durationInSeconds = 30 + (skillLevel - 1) * 10;
+        else if (activeSkillName === "TIME_LOCK")
+          durationInSeconds = 10 + skillLevel * 5;
+        else if (activeSkillName === "EARTHEN_GRAVE")
+          durationInSeconds = 5 + skillLevel * 5;
+        else if (activeSkillName === "HELLFIRE_PIT")
+          durationInSeconds = 10 + skillLevel + 2;
+        else if (activeSkillName === "REALITY_WARP") durationInSeconds = 15;
+        totalCooldownTicks += Math.floor(durationInSeconds * 20);
+      }
+
+      player.setDynamicProperty(cdProp, now + totalCooldownTicks);
+      if (cooldown > 0) {
+        system.runTimeout(() => {
+          if (player.isValid) {
+            const translatedName =
+              SKILL_TRANSLATIONS[activeSkillName.toLowerCase()] ||
+              activeSkillName;
+            if (
+              system.currentTick >= (player.getDynamicProperty(cdProp) ?? 0)
+            ) {
+            }
+          }
+        }, totalCooldownTicks);
+      }
+    }
+  } catch (error) {
+    logError(`skill.${activeSkillName}`, player, error);
+  }
+}
+
+async function showSkillSelectionMenu(player) {
+  const stats = getPlayerStats(player);
+  const playerClass = stats.class;
+
+  const currentClassData = ALL_CLASSES[playerClass];
+  if (!currentClassData) {
+    return player.sendMessage(
+      `§cBạn chưa học kỹ năng chủ động nào của nghề ${
+        CLASS_TRANSLATIONS[playerClass]
+      }!`
+    );
+  }
+  const learnableSkillsForClass = currentClassData.skillTree;
+
+  const learnedSkills = LEARNABLE_SKILLS.filter(
+    (skill) =>
+      stats.skills[skill.toLowerCase()] > 0 &&
+      learnableSkillsForClass.includes(skill.toLowerCase())
+  );
+
+  if (learnedSkills.length === 0)
+    return player.sendMessage(
+      `§cBạn chưa học kỹ năng chủ động nào của nghề ${
+        CLASS_TRANSLATIONS[playerClass]
+      }!`
+    );
+
+  const form = new ActionFormData();
+  form.title("§b§lCHỌN KỸ NĂNG");
+  form.body("§fChọn một kỹ năng để trang bị cho Quyền Trượng.");
+  learnedSkills.forEach((skillKey) => {
+    const skillInternalName = skillKey.toLowerCase();
+    const translatedName = SKILL_TRANSLATIONS[skillInternalName] || skillKey;
+    form.button(translatedName);
+  });
+
+  const { canceled, selection } = await form.show(player);
+  if (canceled) return;
+  const selectedSkillKey = learnedSkills[selection];
+  player.setDynamicProperty("dhh:active_skill", selectedSkillKey);
+
+  const heldItem = player
+    .getComponent("inventory")
+    .container.getItem(player.selectedSlotIndex);
+  const translatedName =
+    SKILL_TRANSLATIONS[selectedSkillKey.toLowerCase()] || selectedSkillKey;
+
+  if (
+    heldItem?.typeId === "dhh:magic_staff" &&
+    heldItem.nameTag.startsWith("§b§lQuyền Trượng")
+  ) {
+    heldItem.nameTag = `§b§lQuyền Trượng §r§7(Hiện tại: §e${translatedName}§7)`;
+    player
+      .getComponent("inventory")
+      .container.setItem(player.selectedSlotIndex, heldItem);
+  }
+
+  player.sendMessage(`§aĐã trang bị kỹ năng: §e${translatedName}`);
+  player.playSound("random.orb");
+}
+
+world.afterEvents.playerBreakBlock.subscribe((event) => {
+  try {
+    const { player, brokenBlockPermutation, block } = event;
+    checkBlockBreakTriggers(player, brokenBlockPermutation, block);
+    updateGuildQuestProgress(
+      player,
+      "BREAK_BLOCK",
+      brokenBlockPermutation.type.id
+    );
+    const heldItem = player
+      .getComponent("inventory")
+      ?.container.getItem(player.selectedSlotIndex);
+    const hasSilkTouch = heldItem
+      ?.getComponent("enchantments")
+      ?.enchantments.some((e) => e.type.id === "silk_touch");
+    if (player.getGameMode() === GameMode.creative || hasSilkTouch) return;
+    const blockId = brokenBlockPermutation.type.id;
+    const xpGained = CONFIG.XP_SOURCES.BLOCK_BREAKS[blockId] ?? 0;
+    if (xpGained > 0)
+      grantXpAndLevelUpCheck(
+        player,
+        xpGained,
+        `đào ${blockId.replace("minecraft:", "").replace(/_/g, " ")}`
+      );
+    shareXpWithNearbyGuildMembers(player, xpGained, "đào block");
+  } catch (error) {
+    logError("playerBreakBlock", event.player, error);
+  }
+});
+
+world.afterEvents.entityDie.subscribe((event) => {
+  let player = undefined;
+  const { deadEntity, damageSource } = event;
+  if (!deadEntity?.isValid) return;
+  if (deadEntity.typeId === "minecraft:player") {
+    const deadPlayer = deadEntity;
+    deadPlayer.setDynamicProperty("dhh:xp", 0);
+    deadPlayer.setDynamicProperty("dhh:just_died", true);
+    deadPlayer.sendMessage(
+      "§c§lBạn đã gục ngã! Toàn bộ kinh nghiệm của cấp hiện tại đã bị xóa sạch!"
+    );
+    deadPlayer.playSound("entity.wither.hurt", { pitch: 0.8 });
+    return;
+  }
+  if (deadEntity.getTags().some((tag) => tag.startsWith("challenge_mob_"))) {
+    handleChallengeMobDeath(deadEntity);
+  }
+  try {
+    if (deadEntity.hasTag("dhh_spirit_beast")) {
+      const tags = deadEntity.getTags();
+      const ownerTag = tags.find((tag) => tag.startsWith("owner:"));
+      if (ownerTag) {
+        const ownerName = ownerTag.substring(6);
+        for (const owner of world.getAllPlayers()) {
+          if (owner.nameTag === ownerName) {
+            const cooldownSeconds = 60;
+            owner.setDynamicProperty(
+              "dhh:cd_summon_wolf",
+              system.currentTick + cooldownSeconds * 20
+            );
+            if (
+              owner.getDynamicProperty("dhh:active_pet_id") === deadEntity.id
+            ) {
+              owner.setDynamicProperty("dhh:active_pet_id", undefined);
+            }
+            owner.sendMessage(
+              `§cLinh thú của bạn đã hy sinh! Bạn có thể triệu hồi lại sau ${cooldownSeconds} giây.`
+            );
+            owner.playSound("entity.wither.death");
+            break;
+          }
+        }
+      }
+      return;
+    }
+    const killer = damageSource?.damagingEntity;
+    if (killer?.typeId === "minecraft:player") {
+      player = killer;
+      checkEntityDieTriggers(player, deadEntity);
+    } else if (killer?.hasTag("dhh_spirit_beast")) {
+      const tags = killer.getTags();
+      const ownerTag = tags.find((tag) => tag.startsWith("owner:"));
+      if (ownerTag) {
+        const ownerName = ownerTag.substring(6);
+        for (const p of world.getAllPlayers()) {
+          if (p.nameTag === ownerName) {
+            player = p;
+            break;
+          }
+        }
+      }
+    }
+
+    if (!player || player.getGameMode() === GameMode.creative) return;
+
+    updateQuestOnKill(player, deadEntity);
+    updateGuildQuestProgress(player, "KILL", deadEntity.typeId);
+
+    const entityId = deadEntity.typeId;
+    const xpValue = CONFIG.XP_SOURCES.MOB_KILLS[entityId] ?? 0;
+
+    if (xpValue > 0) {
+      grantXpAndLevelUpCheck(
+        player,
+        xpValue,
+        `giết ${entityId.replace("minecraft:", "").replace(/_/g, " ")}`
+      );
+      shareXpWithNearbyGuildMembers(player, xpValue, "giết mob");
+    } else if (xpValue < 0) {
+      revokeXp(
+        player,
+        -xpValue,
+        `tấn công ${entityId.replace("minecraft:", "").replace(/_/g, " ")}`
+      );
+    }
+  } catch (error) {
+    logError("entityDie", player, error);
+  }
+});
+
+world.afterEvents.playerSpawn.subscribe((event) => {
+  try {
+    const { player, initialSpawn } = event;
+    system.runTimeout(() => {
+      loadAndCachePlayerData(player);
+      player.setDynamicProperty("dhh:mana", getPlayerStats(player).maxMana);
+      player.setDynamicProperty("dhh:wasSneaking", false);
+
+      if ((player.getDynamicProperty("dhh:class") ?? "none") === "none") {
+        showClassSelectionMenu(player);
+      }
+
+      if (initialSpawn) {
+        logDebug(`Initializing dhh system for new player ${player.nameTag}`);
+        saveAllPlayerData(player);
+        player.sendMessage("§l§a=== Chào mừng đến với dhh System! ===");
+        player.sendMessage("§eGiết quái vật để nhận XP và lên cấp.");
+        player.sendMessage(
+          "§dDùng Sổ Tay dhh hoặc lệnh §l/scriptevent dhh:menu §r§dđể xem thông tin."
+        );
+        system.runTimeout(() => giveInitialdhhItems(player), 60);
+        checkAndRotateBanner();
+      }
+
+      applyAllBonuses(player);
+      if (!initialSpawn) {
+        system.runTimeout(() => {
+          triggerSarcasticTip(player, "GENERIC_FAILURE");
+        }, 40);
+      }
+    }, 20);
+  } catch (error) {
+    logError("playerSpawn", event.player, error);
+  }
+});
+function giveAllSeeingEye(player) {
+  const eyeItem = new ItemStack("minecraft:ender_eye", 1);
+  eyeItem.nameTag = "§d§lCon Mắt Minh Triết";
+  eyeItem.setLore([
+    "§7Hãy nhìn vào thế giới và dùng ta...",
+    "§8Tạo tác Cổ đại",
+    "§§all_seeing_eye",
+  ]);
+  const inventory = player.getComponent("inventory")?.container;
+  if (inventory) {
+    inventory.addItem(eyeItem);
+    player.sendMessage(
+      "§d§l[Tạo Tác Cổ Đại] §r§7Một cuốn sách huyền bí vừa xuất hiện trong tay ngươi."
+    );
+    player.playSound("block.enchantment_table.use");
+  }
+}
+system.afterEvents.scriptEventReceive.subscribe((event) => {
+  const { id, sourceEntity: player } = event;
+  if (player?.typeId !== "minecraft:player") return;
+
+  if (id === "dhh:menu") {
+    system.run(() => showStatsMenu(player));
+  } else if (id === "dhh:get_eye") {
+    giveAllSeeingEye(player);
+  }
+});
+
+world.afterEvents.itemUse.subscribe((event) => {
+  try {
+    const { itemStack, source: player } = event;
+    if (player.typeId !== "minecraft:player") return;
+
+    checkItemUseTriggers(player, itemStack);
+
+    const breedingItems = [
+      "minecraft:wheat",
+      "minecraft:carrot",
+      "minecraft:potato",
+      "minecraft:beetroot",
+      "minecraft:wheat_seeds",
+    ];
+    if (breedingItems.includes(itemStack.typeId)) {
+      const entityRaycast = player.getEntitiesFromViewDirection({
+        maxDistance: 8,
+      });
+      if (entityRaycast.length > 0) {
+        const entity = entityRaycast[0].entity;
+        lastPlayerToFeed.set(entity.id, player.nameTag);
+        system.runTimeout(() => {
+          if (lastPlayerToFeed.get(entity.id) === player.nameTag) {
+            lastPlayerToFeed.delete(entity.id);
+          }
+        }, 250);
+      }
+    }
+    handleWerewolfItemUse(event);
+  } catch (error) {
+    logError("itemUse", event.source, error);
+  }
+});
+world.afterEvents.entitySpawn.subscribe((event) => {
+  const { entity } = event;
+  checkEntitySpawnTriggers(entity);
+  try {
+    if (entity.getComponent("minecraft:is_baby")) {
+      const parentQuery = {
+        location: entity.location,
+        maxDistance: 5,
+        type: entity.typeId,
+      };
+      const nearbyAdults = entity.dimension.getEntities(parentQuery);
+      for (const adult of nearbyAdults) {
+        if (lastPlayerToFeed.has(adult.id)) {
+          const playerName = lastPlayerToFeed.get(adult.id);
+          const player = world.getPlayers({ name: playerName })[0];
+          if (player) {
+            updateQuestOnBreed(player, entity);
+            updateGuildQuestProgress(player, "BREED", entity.typeId);
+            lastPlayerToFeed.delete(adult.id);
+            return;
+          }
+        }
+      }
+    }
+  } catch (e) {}
+});
+world.afterEvents.entityHurt.subscribe((event) => {
+  const { hurtEntity, damageSource, damage } = event;
+  if (activeWerewolfGames.size > 0) {
+    const game = Array.from(activeWerewolfGames.values())[0];
+    if (
+      hurtEntity.typeId === "minecraft:player" &&
+      damageSource.damagingEntity?.typeId === "minecraft:player"
+    ) {
+      const attacker = damageSource.damagingEntity;
+      const attackerInGame = game.players.has(attacker.nameTag);
+      const victimInGame = game.players.has(hurtEntity.nameTag);
+
+      if (attackerInGame && victimInGame) {
+        if (game.gameType === "hunt") {
+          const attackerData = game.players.get(attacker.nameTag);
+          const victimData = game.players.get(hurtEntity.nameTag);
+          if (
+            !(
+              attackerData?.role === "Sói Săn Mồi" &&
+              victimData?.role === "Dân Sinh Tồn" &&
+              game.isWolfTransformed
+            )
+          ) {
+            const health = hurtEntity.getComponent("health");
+            if (health) health.setCurrentValue(health.currentValue + damage);
+          }
+        } else {
+          const health = hurtEntity.getComponent("health");
+          if (health) health.setCurrentValue(health.currentValue + damage);
+        }
+      }
+    }
+  }
+  handleWerewolfEntityHurt(event);
+
+  checkEntityHurtTriggers(event);
+
+  const player = damageSource.damagingEntity;
+  if (
+    !player ||
+    player.typeId !== "minecraft:player" ||
+    damageSource.cause !== "entityAttack"
+  ) {
+    return;
+  }
+
+  try {
+    const stats = getPlayerStats(player);
+    if (player.getDynamicProperty("dhh:stealth_ready") === true) {
+      player.setDynamicProperty("dhh:stealth_ready", false);
+      player.removeEffect("invisibility");
+      const skillLevel = stats.skills.stealth ?? 1;
+      const bonusDamageMultiplier = 1 + skillLevel * 0.15;
+      const bonusDamage = damage * bonusDamageMultiplier;
+
+      hurtEntity.applyDamage(bonusDamage, {
+        causingEntity: player,
+        cause: "entityAttack",
+      });
+
+      const targetDimension = hurtEntity.dimension;
+      const targetLocation = hurtEntity.location;
+
+      const explosionRadius = 2 + skillLevel * 0.5;
+
+      targetDimension.createExplosion(targetLocation, explosionRadius, {
+        breaksBlocks: false,
+        causesFire: true,
+        source: player,
+      });
+
+      targetDimension.spawnParticle(
+        "minecraft:huge_explosion_emitter",
+        targetLocation
+      );
+      player.playSound("random.explode", { pitch: 1.2 });
+      const victims = targetDimension.getEntities({
+        location: targetLocation,
+        maxDistance: explosionRadius,
+      });
+
+      for (const entity of victims) {
+        if (entity.id === player.id) continue;
+
+        try {
+          entity.addEffect("slowness", 100, {
+            amplifier: 225,
+            showParticles: true,
+          });
+          entity.addEffect("blindness", 100, {
+            amplifier: 0,
+            showParticles: true,
+          });
+        } catch (e) {}
+      }
+      player.sendMessage("§c§lĐòn Nổ Bóng Tối!");
+      player.addEffect("resistance", 40, {
+        amplifier: 0,
+        showParticles: false,
+      });
+      return;
+    }
+  } catch (error) {
+    logError("entityHurt (Damage Calculation)", player, error);
+  }
+});
+
+system.runInterval(() => {
+  handleNightCycleEvents();
+  runLightweightPeriodicChecks();
+  if (system.currentTick % 100 === 0) checkAndRotateBanner();
+
+  world.getAllPlayers().forEach((player) => {
+    try {
+      if (player.getGameMode() === GameMode.Spectator) return;
+      if ((player.getDynamicProperty("dhh:class") ?? "none") === "none") return;
+      if (system.currentTick % 100 === 0) {
+        checkAndRestoreEffects(player);
+      }
+      let stats = getPlayerStats(player);
+      if (stats.currentMana < stats.maxMana) {
+        player.setDynamicProperty(
+          "dhh:mana",
+          Math.min(stats.currentMana + CONFIG.MANA_REGEN_RATE, stats.maxMana)
+        );
+      }
+
+      const dashSkillLevel = player.getDynamicProperty("dhh:skill_dash") ?? 0;
+      if (dashSkillLevel > 0) {
+        const maxCharges = 1 + Math.floor(dashSkillLevel / 3);
+        let currentCharges = player.getDynamicProperty("dhh:dash_charges") ?? 0;
+
+        if (player.getDynamicProperty("dhh:dash_charges") === undefined) {
+          player.setDynamicProperty("dhh:dash_charges", maxCharges);
+          currentCharges = maxCharges;
+        }
+
+        let rechargeTick =
+          player.getDynamicProperty("dhh:dash_recharge_tick") ?? 0;
+
+        if (currentCharges < maxCharges && rechargeTick === 0) {
+          player.setDynamicProperty(
+            "dhh:dash_recharge_tick",
+            system.currentTick + CONFIG.SKILL_COOLDOWNS.DASH_CHARGE * 20
+          );
+          rechargeTick = player.getDynamicProperty("dhh:dash_recharge_tick");
+        }
+
+        if (
+          rechargeTick > 0 &&
+          currentCharges < maxCharges &&
+          system.currentTick >= rechargeTick
+        ) {
+          currentCharges++;
+          player.setDynamicProperty("dhh:dash_charges", currentCharges);
+          player.playSound("random.orb", { pitch: 2.0, volume: 0.5 });
+
+          if (currentCharges < maxCharges) {
+            player.setDynamicProperty(
+              "dhh:dash_recharge_tick",
+              system.currentTick + CONFIG.SKILL_COOLDOWNS.DASH_CHARGE * 20
+            );
+          } else {
+            player.setDynamicProperty("dhh:dash_recharge_tick", 0);
+          }
+        }
+      }
+      const isCurrentlySneaking = player.isSneaking;
+      const wasPreviouslySneaking =
+        player.getDynamicProperty("dhh:wasSneaking") ?? false;
+      if (isCurrentlySneaking && !wasPreviouslySneaking) {
+        if (activeTrades.has(player.nameTag)) {
+          handleTradeConfirmation(player);
+        } else {
+          handleSkillActivation(player);
+        }
+      }
+      player.setDynamicProperty("dhh:wasSneaking", isCurrentlySneaking);
+
+      checkQuestExpiration(player);
+      checkCollectQuestProgress(player);
+      checkExploreQuestProgress(player);
+      if (system.currentTick % 600 === 0) saveAllPlayerData(player);
+
+      const activePetId = player.getDynamicProperty("dhh:active_pet_id");
+      if (activePetId) {
+        const pet = world.getEntity(activePetId);
+        if (pet?.isValid) {
+          const health = pet.getComponent("health");
+          if (health) {
+            const currentHealth = Math.round(health.currentValue);
+            const maxHealth = health.effectiveMax;
+            const baseName = pet.nameTag.split("\n")[0] ?? pet.typeId;
+            const healthBar = createProgressBar(
+              currentHealth,
+              maxHealth,
+              10,
+              "█",
+              "░",
+              "§c",
+              "§7"
+            );
+            const newNameTag = `${baseName}\n§c${currentHealth} §r/ §a${maxHealth} ${healthBar}`;
+            pet.nameTag = newNameTag;
+          }
+        } else {
+          player.setDynamicProperty("dhh:active_pet_id", undefined);
+        }
+      }
+      if (system.currentTick % 40 === 0) {
+        const radarLevel = player.getDynamicProperty("dhh:skill_radar") ?? 0;
+        if (radarLevel > 0) {
+          try {
+            const baseRadius = 10,
+              radiusPerLevel = 5,
+              searchRadius = baseRadius + radarLevel * radiusPerLevel;
+            const queryOptions = {
+              location: player.location,
+              maxDistance: searchRadius,
+              families: ["monster"],
+            };
+            const allNearbyMonsters =
+              player.dimension.getEntities(queryOptions);
+            const relevantMonsters = allNearbyMonsters.filter(
+              (monster) =>
+                Math.abs(player.location.y - monster.location.y) <= 2
+            );
+            if (relevantMonsters.length > 0) {
+              for (const monster of relevantMonsters) {
+                player.dimension.spawnParticle(
+                  "minecraft:totem_particle",
+                  monster.location
+                );
+              }
+              const lastAlertTick =
+                player.getDynamicProperty("dhh:radar_alert_cooldown") ?? 0;
+              if (system.currentTick >= lastAlertTick) {
+                const mobCounts = {};
+                for (const monster of relevantMonsters) {
+                  const mobName = monster.typeId
+                    .replace("minecraft:", "")
+                    .replace(/_/g, " ")
+                    .replace(/\b\w/g, (l) => l.toUpperCase());
+                  mobCounts[mobName] = (mobCounts[mobName] || 0) + 1;
+                }
+                const messageParts = [];
+                for (const name in mobCounts)
+                  messageParts.push(`${mobCounts[name]} ${name}`);
+                player.sendMessage(
+                  `§eRada: §cPhát hiện [${messageParts.join(", ")}]!`
+                );
+                player.setDynamicProperty(
+                  "dhh:radar_alert_cooldown",
+                  system.currentTick + 100
+                );
+              }
+            }
+          } catch (e) {
+            logError("Radar Skill", player, e);
+          }
+        }
+      }
+    } catch (error) {
+      logError("Main Game Loop", player, error);
+    }
+  });
+}, 20);
+const sleepingPlayers = new Map();
+system.runInterval(() => {
+  try {
+    for (const player of world.getAllPlayers()) {
+      if (player.isSleeping && !sleepingPlayers.has(player.nameTag)) {
+        sleepingPlayers.set(player.nameTag, true);
+        system.run(() => {
+          const { x, y, z } = player.location;
+          player.teleport({ x: x, y: y + 0.5, z: z });
+          player.sendMessage(
+            "§c§l[Warning!!!??]§r §7Giữa lúc thế giới cần những anh hùng, ngươi lại chọn cách trốn chạy vào giấc mơ như một kẻ hèn nhát. Ngươi nghĩ rằng bóng tối sẽ kiên nhẫn chờ đợi sự yếu đuối của ngươi sao? Tỉnh dậy đi, sự tồn tại của ngươi là một nỗi hổ thẹn!"
+          );
+          player.playSound("mob.elderguardian.curse", {
+            location: player.location,
+            pitch: 0.8,
+            volume: 1.0,
+          });
+          player.dimension.spawnParticle("minecraft:knockback_roar_particle", {
+            x,
+            y: y + 1,
+            z,
+          });
+          player.addEffect("slowness", 200, {
+            amplifier: 0,
+            showParticles: true,
+          });
+          player.addEffect("weakness", 200, {
+            amplifier: 0,
+            showParticles: true,
+          });
+        });
+      } else if (!player.isSleeping && sleepingPlayers.has(player.nameTag)) {
+        sleepingPlayers.delete(player.nameTag);
+      }
+    }
+  } catch (e) {
+    console.error(`[Sleep Monitor Error] ${e}`);
+  }
+}, 1);
+world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
+  const { player, block } = event;
+  checkPlayerInteractTriggers(player, block);
+});
+world.afterEvents.playerInteractWithBlock.subscribe(
+  handleWerewolfBlockInteract
+);
+world.afterEvents.playerPlaceBlock.subscribe((event) => {
+  const { player, block } = event;
+  checkPlayerPlaceBlockTriggers(player, block);
+});
+world.beforeEvents.itemUse.subscribe((event) => {
+  try {
+    const { source: player, itemStack } = event;
+    if (
+      player.typeId === "minecraft:player" &&
+      itemStack.typeId === "dhh:all_seeing_eye"
+    ) {
+      event.cancel = true;
+      system.run(() => {
+        processAllSeeingEye(player);
+      });
+    }
+    if (
+      itemStack?.typeId === "minecraft:ender_eye" &&
+      itemStack?.nameTag === "§5§lCon Mắt Tà Thuật"
+    ) {
+      event.cancel = true;
+      system.run(() => {
+        handleWerewolfItemUse(event);
+      });
+    }
+    if (itemStack.typeId === "dhh:menu_book") {
+      event.cancel = true;
+      system.run(() => {
+        showStatsMenu(player);
+      });
+    }
+
+    if (itemStack.typeId === "dhh:magic_staff") {
+      event.cancel = true;
+      system.run(() => {
+        showSkillSelectionMenu(player);
+      });
+    }
+  } catch (e) {
+    logError("allSeeingEye.itemUse", event.source, e);
+  }
+});
+world.afterEvents.playerInteractWithEntity.subscribe((eventData) => {
+  try {
+    const { player, target } = eventData;
+    if (player.typeId !== "minecraft:player") return;
+    updateQuestOnTrade(player, target);
+    updateGuildTradeQuestProgress(player, target);
+  } catch (error) {
+    logError("playerInteractWithEntity", player, error);
+  }
+});
+world.afterEvents.playerLeave.subscribe((event) => {
+  const { player } = event;
+  try {
+    saveAllPlayerData(player);
+    handleWerewolfPlayerLeave(event);
+    logDebug(`Saved data for leaving player: ${player.nameTag}`);
+  } catch (e) {
+    logError("playerLeave", player, e);
+  }
+});
+
+function checkAndRestoreEffects(player) {
+  try {
+    const stats = getPlayerStats(player);
+    const dhhEffects = {
+      health_boost: -1,
+      speed: -1,
+      strength: -1,
+      regeneration: -1,
+      resistance: -1,
+    };
+
+    const totalBonusHealth =
+      stats.vitality * CONFIG.STAT_SCALING.VITALITY.health_per_point +
+      stats.baseHealth;
+    dhhEffects.health_boost = Math.floor(totalBonusHealth / 4);
+
+    const totalBonusPercentage =
+      stats.strength * CONFIG.STAT_SCALING.STRENGTH.damage_bonus_per_point +
+      stats.baseDamage;
+    const calculatedStrengthAmp = Math.floor(totalBonusPercentage / 0.25) - 1;
+    dhhEffects.strength = Math.min(calculatedStrengthAmp, 5);
+
+    if (stats.skills.regeneration > 0)
+      dhhEffects.regeneration = Math.floor(
+        (stats.skills.regeneration - 1) / 2
+      );
+    if (stats.skills.ironSkin > 0)
+      dhhEffects.resistance = Math.min(
+        3,
+        Math.floor((stats.skills.ironSkin - 1) / 2)
+      );
+
+    for (const effectId in dhhEffects) {
+      const requiredAmplifier = dhhEffects[effectId];
+      const currentEffect = player.getEffect(effectId);
+
+      if (requiredAmplifier >= 0) {
+        if (!currentEffect) {
+          player.addEffect(effectId, INFINITE_DURATION, {
+            amplifier: requiredAmplifier,
+            showParticles: false,
+          });
+        } else if (currentEffect.amplifier < requiredAmplifier) {
+          player.addEffect(effectId, INFINITE_DURATION, {
+            amplifier: requiredAmplifier,
+            showParticles: false,
+          });
+        }
+      } else {
+        if (currentEffect) {
+          if (currentEffect.duration > 1000000) {
+            player.removeEffect(effectId);
+          }
+        }
+      }
+    }
+
+    const movementComp = player.getComponent("minecraft:movement");
+    if (movementComp) {
+      const requiredSpeedBonus =
+        stats.agility * CONFIG.STAT_SCALING.AGILITY.speed_bonus_per_point +
+        stats.baseSpeed;
+      const requiredSpeedValue =
+        movementComp.defaultValue * (1 + requiredSpeedBonus);
+
+      if (movementComp.currentValue < requiredSpeedValue) {
+        movementComp.setCurrentValue(requiredSpeedValue);
+      }
+    }
+  } catch (e) {
+    logError("checkAndRestoreEffects", player, e);
+  }
+}
+
+const NIGHT_WARNING_MESSAGES = [
+  "Không khí trở nên lạnh lẽo. Có thứ gì đó đang trỗi dậy từ bóng tối.",
+  "Màn đêm buông xuống... và ngươi không đơn độc.",
+  "Tiếng thì thầm yếu ớt vang lên trong gió. Chúng đang đến.",
+  "Mặt trời đã bỏ rơi ngươi. Hãy chuẩn bị cho cuộc săn.",
+  "Ngươi có nghe thấy không? Tiếng cào cấu dưới lòng đất... chúng sắp lên rồi.",
+];
+
+function handleNightCycleEvents() {
+  try {
+    const time = world.getTimeOfDay();
+    const warningGiven =
+      world.getDynamicProperty("dhh:night_warning_given") ?? false;
+
+    if (time >= 12500 && !warningGiven) {
+      world.setDynamicProperty("dhh:night_warning_given", true);
+
+      const randomMessage =
+        NIGHT_WARNING_MESSAGES[
+          Math.floor(Math.random() * NIGHT_WARNING_MESSAGES.length)
+        ];
+
+      for (const player of world.getAllPlayers()) {
+        player.onScreenDisplay.setTitle("§c§lBóng Tối Trỗi Dậy", {
+          subtitle: `§7${randomMessage}`,
+          fadeInDuration: 20,
+          stayDuration: 100,
+          fadeOutDuration: 40,
+        });
+        player.playSound("ambient.cave", { pitch: 0.7, volume: 1.0 });
+      }
+    } else if (time < 12500 && warningGiven) {
+      world.setDynamicProperty("dhh:night_warning_given", false);
+    }
+  } catch (e) {
+    console.error(`[Night Warning Error] ${e}`);
+  }
+}
+const NIGHT_HORRORS_CONFIG = {
+  ENABLED: true,
+  SPAWN_INTERVAL_TICKS: 500,
+
+  COMMON_SPAWN_CHANCE_PER_PLAYER: 0.6,
+  COMMON_SPAWN_GROUP_MIN: 2,
+  COMMON_SPAWN_GROUP_MAX: 4,
+  COMMON_MOB_LIST: [
+    "minecraft:zombie",
+    "minecraft:skeleton",
+    "minecraft:creeper",
+    "minecraft:spider",
+    "minecraft:husk",
+    "minecraft:stray",
+    "minecraft:strider",
+    "minecraft:goat",
+  ],
+
+  ELITE_SPAWN_CHANCE_GLOBAL: 0.1,
+  ELITE_MOB_LIST: [
+    "minecraft:ravager",
+    "minecraft:wither",
+    "minecraft:blaze",
+    "minecraft:vindicator",
+    "minecraft:ghast",
+    "minecraft:witch",
+    "minecraft:zoglin",
+    "minecraft:hoglin",
+    "minecraft:vex",
+    "minecraft:creaking",
+    "minecraft:wither_skeleton",
+    "minecraft:magma_cube",
+    "minecraft:piglin_brute",
+  ],
+
+  MIN_SPAWN_RADIUS: 15,
+  MAX_SPAWN_RADIUS: 32,
+};
+function performClassReset(player) {
+  try {
+    player.setDynamicProperty("dhh:level", 1);
+    player.setDynamicProperty("dhh:xp", 0);
+    player.setDynamicProperty("dhh:skill_points", 0);
+    player.setDynamicProperty("dhh:vitality", 0);
+    player.setDynamicProperty("dhh:strength", 0);
+    player.setDynamicProperty("dhh:agility", 0);
+    player.setDynamicProperty("dhh:intelligence", 0);
+    player.setDynamicProperty("dhh:class", "none");
+
+    const allSkillKeys = Object.keys(SKILL_TRANSLATIONS);
+    for (const skillKey of allSkillKeys) {
+      try {
+        player.setDynamicProperty(`dhh:skill_${skillKey}`, 0);
+      } catch (e) {}
+    }
+
+    player.setDynamicProperty("dhh:base_health", 0);
+    player.setDynamicProperty("dhh:base_mana", 0);
+    player.setDynamicProperty("dhh:base_damage", 0);
+    player.setDynamicProperty("dhh:base_speed", 0);
+
+    applyAllBonuses(player);
+    saveAllPlayerData(player);
+
+    player.sendMessage(
+      "§c§lBạn đã khởi tạo lại con đường của mình. Mọi ký ức và sức mạnh cũ đã tan biến..."
+    );
+    player.playSound("mob.wither.spawn");
+
+    system.run(() => showStatsMenu(player));
+  } catch (error) {
+    logError("performClassReset", player, error);
+    player.sendMessage("§cĐã có lỗi xảy ra trong quá trình khởi tạo lại.");
+  }
+}
+
+async function showClassResetConfirmationMenu(player) {
+  const form = new MessageFormData()
+    .title("§4§lCẢNH BÁO HÀNH ĐỘNG HỦY DIỆT")
+    .body(
+      "Bạn có thực sự chắc chắn muốn §c§lKHỞI TẠO LẠI§r nghề nghiệp của mình không?\n\nHành động này §4KHÔNG THỂ HOÀN TÁC§r và sẽ khiến bạn:\n\n§e- Trở về Cấp độ 1, mất toàn bộ kinh nghiệm.\n§e- Mất tất cả điểm kỹ năng đã cộng.\n§e- Quên hết các kỹ năng đã học.\n§e- Mất tất cả các chỉ số cộng thêm (máu, mana...) từ cấp độ.\n\n§7Bạn sẽ được chọn lại nghề nghiệp từ đầu."
+    )
+    .button1("§aKhông, tôi đã suy nghĩ lại")
+    .button2("§cĐỒNG Ý - TÔI CHẤP NHẬN RESET!");
+
+  const { canceled, selection } = await form.show(player);
+
+  if (canceled || selection === 0) {
+    player.sendMessage("§aĐã hủy quá trình khởi tạo lại.");
+    return;
+  }
+
+  if (selection === 1) {
+    performClassReset(player);
+  }
+}
+system.runInterval(() => {
+  if (!NIGHT_HORRORS_CONFIG.ENABLED) return;
+
+  const time = world.getTimeOfDay();
+  const isNight = time >= 13000 && time <= 23000;
+
+  if (!isNight) return;
+
+  const targetablePlayers = world
+    .getAllPlayers()
+    .filter((p) => p.getGameMode() !== GameMode.Spectator);
+
+  if (targetablePlayers.length === 0) return;
+
+  for (const player of targetablePlayers) {
+    if (Math.random() < NIGHT_HORRORS_CONFIG.COMMON_SPAWN_CHANCE_PER_PLAYER) {
+      const groupSize =
+        Math.floor(
+          Math.random() *
+            (NIGHT_HORRORS_CONFIG.COMMON_SPAWN_GROUP_MAX -
+              NIGHT_HORRORS_CONFIG.COMMON_SPAWN_GROUP_MIN +
+              1)
+        ) + NIGHT_HORRORS_CONFIG.COMMON_SPAWN_GROUP_MIN;
+
+      for (let i = 0; i < groupSize; i++) {
+        const randomMobId =
+          NIGHT_HORRORS_CONFIG.COMMON_MOB_LIST[
+            Math.floor(
+              Math.random() * NIGHT_HORRORS_CONFIG.COMMON_MOB_LIST.length
+            )
+          ];
+        spawnMobNearPlayer(player, randomMobId);
+      }
+    }
+  }
+
+  if (Math.random() < NIGHT_HORRORS_CONFIG.ELITE_SPAWN_CHANCE_GLOBAL) {
+    const targetPlayer =
+      targetablePlayers[Math.floor(Math.random() * targetablePlayers.length)];
+    const randomEliteMobId =
+      NIGHT_HORRORS_CONFIG.ELITE_MOB_LIST[
+        Math.floor(Math.random() * NIGHT_HORRORS_CONFIG.ELITE_MOB_LIST.length)
+      ];
+
+    if (spawnMobNearPlayer(targetPlayer, randomEliteMobId)) {
+      if (randomEliteMobId === "minecraft:wither") {
+        targetPlayer.onScreenDisplay.setTitle("§4§lCÁI CHẾT ĐANG ĐẾN", {
+          subtitle: "Một con Wither vừa xuất hiện gần bạn!",
+          stayDuration: 80,
+        });
+        targetPlayer.playSound("mob.wither.spawn");
+      } else {
+        targetPlayer.sendMessage(
+          "§cBạn cảm thấy một sự hiện diện đáng sợ ở gần đây..."
+        );
+        targetPlayer.playSound("mob.elderguardian.curse");
+      }
+    }
+  }
+}, NIGHT_HORRORS_CONFIG.SPAWN_INTERVAL_TICKS);
+
+function spawnMobNearPlayer(player, mobId) {
+  for (let i = 0; i < 10; i++) {
+    const angle = Math.random() * 2 * Math.PI;
+    const distance =
+      NIGHT_HORRORS_CONFIG.MIN_SPAWN_RADIUS +
+      Math.random() *
+        (NIGHT_HORRORS_CONFIG.MAX_SPAWN_RADIUS -
+          NIGHT_HORRORS_CONFIG.MIN_SPAWN_RADIUS);
+
+    const spawnX = Math.floor(player.location.x + Math.cos(angle) * distance);
+    const spawnZ = Math.floor(player.location.z + Math.sin(angle) * distance);
+
+    for (let y = player.location.y + 5; y > player.location.y - 5; y--) {
+      const spawnLocation = { x: spawnX + 0.5, y: y, z: spawnZ + 0.5 };
+      const blockBelow = player.dimension.getBlock({
+        x: spawnX,
+        y: y - 1,
+        z: spawnZ,
+      });
+      const blockAt = player.dimension.getBlock({ x: spawnX, y: y, z: spawnZ });
+      const blockAbove = player.dimension.getBlock({
+        x: spawnX,
+        y: y + 1,
+        z: spawnZ,
+      });
+
+      if (blockBelow?.isSolid && blockAt?.isAir && blockAbove?.isAir) {
+        try {
+          player.dimension.spawnEntity(mobId, spawnLocation);
+          return true;
+        } catch (e) {
+          logError(`NightHorrorsSpawn (${mobId})`, player, e);
+          return false;
+        }
+      }
+    }
+  }
+  return false;
+}
+world.beforeEvents.chatSend.subscribe((event) => {
+  handleWerewolfChatSend(event);
+});
+initializeActionBarManager();
+initializeDamageHandler();
+initializeCursedBladeLogic();
+initializeLandClaimSystem();
+system.run(() => {
+  if (world.getDynamicProperty("dhh:shared_inventory_active")) {
+    initializeSharedInventorySystem();
+    console.log(
+      "§6[dhh System] §eTính năng Thử Thách Chung Túi Đồ đang hoạt động!"
+    );
+  }
+});
+initializeBossSystem();
+console.log(
+  "§a[dhh System] §2Professional & Stable Version with Class System - §aLoaded!"
+);

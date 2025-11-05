@@ -1,0 +1,23 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:honey_clover_generator"
+        },
+        "components": {
+            "minecraft:tick": {
+                "interval_range": [
+                    5,
+                    15
+                ],
+                "looping": true
+            },
+            "sert:generator": {
+                "id": "wild_plants",
+                "data": "('types': ['sert:honey_clover'], 'radius': [2, 7], 'count': [5, 15])",
+                "replaceWithSideBlock": true
+            },
+            "tag:sys": {}
+        }
+    }
+}

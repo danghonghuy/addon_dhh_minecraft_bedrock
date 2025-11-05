@@ -1,0 +1,25 @@
+{
+	"format_version": "1.8.0",
+	"render_controllers": {
+		"controller.render.night_light": {
+			"geometry": "geometry.default",
+			"materials": [
+				{
+					"*": "material.default"
+				}
+			],
+			"arrays": {
+				"textures": {
+					"Array.texture": [
+						"Texture.pouncer",
+						"Texture.ruffrunner",
+						"Texture.dart"
+					]
+				}
+			},
+			"textures": [
+				"array.texture[query.variant]"
+			]
+		}
+	}
+}

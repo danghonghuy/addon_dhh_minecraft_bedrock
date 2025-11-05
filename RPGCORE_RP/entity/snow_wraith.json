@@ -1,0 +1,46 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "dhh:snow_wraith",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"textures": {
+				"default": "textures/entity/snow_wraith/white",
+				"saddled": "textures/entity/snow_wraith/white_saddled"
+			},
+			"geometry": {
+				"default": "geometry.snow_wraith"
+			},
+			"animations": {
+				"idle_controller": "controller.animation.snow_wraith.idle",
+				"main_controller": "controller.animation.snow_wraith.main",
+				"walk": "animation.snow_wraith.walk",
+				"idle": "animation.snow_wraith.idle",
+				"idle_special": "animation.snow_wraith.idle_special",
+				"fly": "animation.snow_wraith.fly",
+				"glide": "animation.snow_wraith.fly",
+				"sit": "animation.snow_wraith.sit",
+				"sleep": "animation.snow_wraith.sleep",
+				"bite": "animation.snow_wraith.bite",
+				"look_at_target": "animation.common.look_at_target",
+				"rotate": "animation.dragon.rotate"
+			},
+			"scripts": {
+				"animate": [
+					"main_controller",
+					"look_at_target",
+					"rotate"
+				]
+			},
+			"render_controllers": [
+				"controller.render.snow_wraith"
+			],
+			"spawn_egg": {
+				"base_color": "#FFFFFF",
+				"overlay_color": "#FFFFFF"
+			}
+		}
+	}
+}

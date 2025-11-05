@@ -1,0 +1,131 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.whispering_death.main": {
+			"initial_state": "initial",
+			"states": {
+				"spawning": {
+					"animations": [
+						"spawn"
+					],
+					"transitions": [
+						{
+							"default": "query.property('dhh:emerging')==false"
+						}
+					],
+					"blend_transition": 1
+				},
+				"initial": {
+					"transitions": [
+						{
+							"spawning": "query.property('dhh:emerging')==true"
+						},
+						{
+							"default": "query.property('dhh:emerging')==false"
+						}
+					]
+				},
+				"default": {
+					"animations": [
+						"idle"
+					],
+					"transitions": [
+						{
+							"sitting": "query.is_sitting"
+						},
+						{
+							"hovering": "!query.is_on_ground&&!query.is_moving"
+						},
+						{
+							"walking": "query.is_on_ground&&query.is_moving"
+						},
+						{
+							"flying": "!query.is_on_ground&&query.is_moving"
+						}
+					],
+					"blend_transition": 1
+				},
+				"sitting": {
+					"animations": [
+						"sit"
+					],
+					"transitions": [
+						{
+							"default": "query.is_on_ground&&!query.is_moving&&!query.is_riding"
+						},
+						{
+							"hovering": "!query.is_on_ground&&!query.is_moving"
+						},
+						{
+							"walking": "query.is_on_ground&&query.is_moving"
+						},
+						{
+							"flying": "!query.is_on_ground&&query.is_moving"
+						}
+					],
+					"blend_transition": 0.5
+				},
+				"hovering": {
+					"animations": [
+						"air_idle"
+					],
+					"transitions": [
+						{
+							"default": "query.is_on_ground&&!query.is_moving&&!query.is_riding"
+						},
+						{
+							"sitting": "query.is_sitting"
+						},
+						{
+							"walking": "query.is_on_ground&&query.is_moving"
+						},
+						{
+							"flying": "!query.is_on_ground&&query.is_moving"
+						}
+					],
+					"blend_transition": 3
+				},
+				"walking": {
+					"animations": [
+						"walk"
+					],
+					"transitions": [
+						{
+							"default": "query.is_on_ground&&!query.is_moving&&!query.is_riding"
+						},
+						{
+							"hovering": "!query.is_on_ground&&!query.is_moving"
+						},
+						{
+							"sitting": "query.is_sitting"
+						},
+						{
+							"flying": "!query.is_on_ground&&query.is_moving"
+						}
+					],
+					"blend_transition": 3
+				},
+				"flying": {
+					"animations": [
+						"fly"
+					],
+					"transitions": [
+						{
+							"default": "query.is_on_ground&&!query.is_moving&&!query.is_riding"
+						},
+						{
+							"hovering": "!query.is_on_ground&&!query.is_moving"
+						},
+						{
+							"sitting": "query.is_sitting"
+						},
+						{
+							"walking": "query.is_on_ground&&query.is_moving"
+						}
+					],
+					"blend_transition": 3
+				}
+			}
+		}
+	}
+}

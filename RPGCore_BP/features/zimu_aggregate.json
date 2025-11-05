@@ -1,0 +1,14 @@
+{
+    "format_version": "1.19.50",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "dhh:zimu_aggregate"
+        },
+        "features": [
+            [ "dhh:zimu1", 2 ],
+            [ "dhh:zimu2", 2 ],
+            [ "dhh:zimu3", 2 ],
+            [ "dhh:zimu4", 2 ]
+        ]
+    }
+}

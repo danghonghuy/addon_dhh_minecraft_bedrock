@@ -1,0 +1,41 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:client_biome": {
+        "description": {
+            "identifier": "sert:magic_forest"
+        },
+        "components": {
+            "minecraft:fog_appearance": {
+                "fog_identifier": "sert:fog_magic_forest"
+            },
+            "minecraft:sky_color": {
+                "sky_color": "#6c84cb"
+            },
+            "minecraft:water_appearance": {
+                "surface_color": "#0b79cd",
+                "surface_opacity": 0.7
+            },
+            "minecraft:foliage_appearance": {
+                "color": "#3e8f33"
+            },
+            "minecraft:grass_appearance": {
+                "color": "#387b2b"
+            },
+            "minecraft:dry_foliage_color": {
+                "color": "#7B5334"
+            },
+            "minecraft:atmosphere_identifier": {
+                "atmosphere_identifier": "minecraft:default_atmospherics"
+            },
+            "minecraft:color_grading_identifier": {
+                "color_grading_identifier": "minecraft:default_color_grading"
+            },
+            "minecraft:lighting_identifier": {
+                "lighting_identifier": "minecraft:default_lighting"
+            },
+            "minecraft:water_identifier": {
+                "water_identifier": "minecraft:default_water"
+            }
+        }
+    }
+}

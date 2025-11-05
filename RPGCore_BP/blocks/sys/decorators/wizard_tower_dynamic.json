@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.50",
+    "minecraft:block": {
+        "description": {
+            "identifier": "sert:wizard_tower_dynamic"
+        },
+        "components": {
+            "minecraft:tick": {
+                "interval_range": [
+                    30,
+                    50
+                ],
+                "looping": true
+            },
+            "minecraft:custom_components": [
+                "sert:wizard_tower_dynamic"
+            ],
+            "tag:sys": {}
+        }
+    }
+}

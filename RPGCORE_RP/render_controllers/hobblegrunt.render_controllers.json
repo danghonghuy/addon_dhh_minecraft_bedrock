@@ -1,0 +1,24 @@
+{
+	"format_version": "1.8.0",
+	"render_controllers": {
+		"controller.render.hobblegrunt": {
+			"part_visibility": [
+				{
+					"saddleBags": "query.is_chested"
+				},
+				{
+					"equipement": "query.is_saddled"
+				}
+			],
+			"geometry": "geometry.default",
+			"materials": [
+				{
+					"*": "material.default"
+				}
+			],
+			"textures": [
+				"texture.default"
+			]
+		}
+	}
+}

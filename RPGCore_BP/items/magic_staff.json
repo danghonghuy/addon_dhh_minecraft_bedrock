@@ -1,0 +1,24 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "dhh:magic_staff",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "§l§bGậy Phép Thuật"
+      },
+      "minecraft:icon": {
+        "textures": {
+          "default": "dhh:magic_staff_icon"
+        }
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true
+    
+    }
+  }
+}
