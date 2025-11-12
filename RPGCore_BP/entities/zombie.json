@@ -58,7 +58,7 @@
       },
       "zombie:zombie_giant": {
         "minecraft:scale": {
-          "value": 1.5
+          "value": 3.0
         },
         "minecraft:health": {
           "value": 40,
@@ -66,6 +66,9 @@
         },
         "minecraft:movement": {
           "value": 0.299
+        },
+        "minecraft:attack": {
+          "damage": 10
         }
       },
       "minecraft:can_break_doors": {
@@ -317,7 +320,7 @@
           {
             "randomize": [
               {
-                "weight": 10,
+                "weight": 90,
                 "add": {
                   "component_groups": [
                     "minecraft:can_break_doors"
@@ -325,7 +328,7 @@
                 }
               },
               {
-                "weight": 90
+                "weight": 10
               }
             ]
           }

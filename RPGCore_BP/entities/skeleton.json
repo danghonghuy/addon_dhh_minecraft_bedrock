@@ -17,9 +17,15 @@
         "minecraft:movement": { "value": 0.25 }
       },
       "skeleton:skeleton_giant": {
-        "minecraft:scale": { "value": 1.5 },
+        "minecraft:scale": { "value": 3.0 },
         "minecraft:health": { "value": 40, "max": 40 },
-        "minecraft:movement": { "value": 0.325 }
+        "minecraft:movement": { "value": 0.325 },
+        "minecraft:attack": {
+          "damage": 10
+        }
+      },
+      "skeleton:can_break_doors": {
+        "minecraft:annotation.break_door": {}
       },
       "minecraft:melee_mode": {
         "minecraft:behavior.melee_box_attack": {
@@ -149,7 +155,8 @@
         "is_amphibious": true,
         "can_swim": true,
         "avoid_sun": true,
-        "avoid_water": false
+        "avoid_water": false,
+        "can_break_doors": true
       },
       "minecraft:underwater_movement": {
         "value": 0.08
@@ -249,7 +256,7 @@
             "randomize": [
               { "weight": 80, "add": { "component_groups": [ "skeleton:skeleton_adult" ] } },
               { "weight": 10, "add": { "component_groups": [ "skeleton:skeleton_baby" ] } },
-              { "weight": 10, "add": { "component_groups": [ "skeleton:skeleton_giant" ] } }
+              { "weight": 10, "add": { "component_groups": [ "skeleton:skeleton_giant", "skeleton:can_break_doors" ] } }
             ]
           },
           {

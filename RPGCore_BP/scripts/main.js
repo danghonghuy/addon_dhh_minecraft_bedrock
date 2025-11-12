@@ -46,7 +46,7 @@ import {
   grantDailyReward
 } from "./daily_reward_system.js";
 import { showStoryQuestLog, advanceStoryQuest, updateStoryQuestProgress,checkStepCompletion } from "./story_quest_system.js";
-
+import { initializeDefenseTurretSystem } from "./defense_turret_system.js";
 import {
   showGuildMainMenu,
   getPlayerGuildName,
@@ -4515,6 +4515,7 @@ system.run(() => {
 initializeBossSystem();
 initializeFlashSaleSystem();
 initializeDailyRewardSystem();
+initializeDefenseTurretSystem();
 console.log(
   "§a[dhh System] §2Professional & Stable Version with Class System - §aLoaded!"
 );
