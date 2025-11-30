@@ -1,64 +1,99 @@
-DHH's RPG & Survival Overhaul
+# ⚔️ DHH System - RPG & Hardcore Survival Overhaul
+### Cho Minecraft Bedrock Edition (Script API)
 
-Biến đổi hoàn toàn trải nghiệm Minecraft Bedrock của bạn thành một thế giới RPG sinh tồn đầy thử thách, chiều sâu và những cuộc phiêu lưu bất tận.
-Đây không chỉ là một addon thông thường. Đây là một bản làm lại toàn bộ hệ thống gameplay, mang đến những cơ chế phức tạp lấy cảm hứng từ các tựa game MMORPG hiện đại, kết hợp với một hệ thống sinh tồn khắc nghiệt sẽ thử thách mọi kỹ năng của bạn.
+**DHH System** là một Add-on toàn diện (Total Conversion) biến thế giới Minecraft của bạn thành một trải nghiệm nhập vai (RPG) sinh tồn hạng nặng. Add-on này mang đến hệ thống lớp nhân vật, kỹ năng chủ động, cốt truyện sâu sắc, và các cơ chế sinh tồn thực tế khắc nghiệt.
 
-✨ Các Tính Năng Chính
-DHH's RPG Overhaul là một bộ sưu tập khổng lồ các hệ thống được tích hợp liền mạch với nhau:
-⚔️ Hệ thống RPG Cốt lõi
-Cấp độ & Kinh nghiệm (XP): Lên cấp bằng cách khai khoáng, chiến đấu, xây dựng, và làm nhiệm vụ. Mọi hành động đều có giá trị.
-Chỉ số Nhân vật: Phân phối điểm thuộc tính vào Sức Bền (VIT), Sức Mạnh (STR), Nhanh Nhẹn (AGI), và Trí Tuệ (INT) để xây dựng nhân vật theo phong cách của bạn.
-Hệ thống Nghề nghiệp (Class): Chọn một trong ba con đường chính với những nội tại và cây kỹ năng riêng biệt:
-🛡️ Hộ Vệ (Guardian): Bức tường thép ở tuyến đầu, càng chiến đấu càng trở nên cứng cáp.
-🔮 Pháp Sư (Mage): Bậc thầy ma pháp, điều khiển năng lượng để hồi phục và tiêu diệt kẻ thù.
-🏹 Du Hiệp (Ranger): Xạ thủ cơ động, tích tụ sức mạnh qua từng phát bắn chính xác.
-Hệ thống Kỹ năng Đa dạng: Mở khóa và nâng cấp hàng chục kỹ năng chủ động và bị động, từ tàng hình, triệu hồi linh thú, dịch chuyển tức thời cho đến tạo ra những cơn bão kiếm hủy diệt.
-Thanh Mana & Hồi chiêu: Sử dụng kỹ năng một cách chiến thuật với hệ thống tài nguyên và thời gian hồi chiêu chuyên nghiệp.
-⛺ Hệ thống Sinh tồn Hardcore
-Nhiệt độ & Cơn khát: Cơ thể bạn sẽ phản ứng với môi trường. Hãy giữ ấm vào ban đêm, làm mát giữa sa mạc và luôn tìm nguồn nước sạch.
-Chấn thương & Bệnh tật:
-Gãy chân khi ngã quá cao, làm bạn di chuyển chậm chạp.
-Chảy máu từ những đòn tấn công hiểm ác.
-Bỏng nặng khi tiếp xúc với lửa.
-Cảm lạnh & Sốt cao khi nhiệt độ thay đổi đột ngột.
-Virus Zombie: Một vết cắn có thể là khởi đầu cho sự kết thúc. Hãy tìm cách chữa trị trước khi quá muộn!
-Tinh thần (Sanity): Bóng tối, sự cô độc và những hiểm nguy sẽ bào mòn lý trí của bạn, gây ra những ảo giác đáng sợ. Hãy ở gần ánh sáng và bè bạn!
-👹 Nội dung PvE & Thử thách
-Boss Thế giới: Những con Boss tùy chỉnh như Warden Matriarch và Phantom Sharpshooter sẽ xuất hiện ngẫu nhiên, mang đến những trận chiến kịch tính và phần thưởng quý giá.
-Hầm ngục (Dungeon) Ngẫu nhiên: Triệu hồi một "Người Dẫn Lối", chọn độ khó và bước vào những hầm ngục được tạo ngẫu nhiên đầy cạm bẫy và quái vật.
-Trăng Máu (Blood Moon): Vào những đêm định mệnh, mặt trăng hóa đỏ, quái vật trở nên hung hãn và mạnh mẽ hơn bao giờ hết. Phần thưởng cũng sẽ được nhân đôi cho những ai dám đối mặt.
-Hệ thống Sinh sản Quái vật Nâng cao: Thế giới sống động hơn với cơ chế spawn quái vật và động vật thông minh hơn theo chu kỳ ngày/đêm.
-💰 Kinh tế & Tiến trình
-Hệ thống Cầu Nguyện (Gacha): Sử dụng Nguyên Thạch kiếm được để cầu nguyện tại các banner sự kiện, có cơ hội nhận được những vũ khí và trang bị thần thoại với hệ thống bảo hiểm (pity) công bằng.
-Cường Hóa Trang Bị: Đưa vũ khí và giáp của bạn đến Lò Rèn Thần Bí, sử dụng tài nguyên để nâng cấp, tăng sức mạnh và mở khóa các enchantment mới một cách ngẫu nhiên.
-Nhiệm vụ Đa dạng: Nhận các nhiệm vụ hàng ngày/tuần với 3 cấp độ Dễ, Thường, Khó. Hoàn thành để nhận XP, Nguyên Thạch và các vật phẩm giá trị.
-Nhiệm vụ Cốt truyện: Theo chân một câu chuyện bí ẩn về ký ức đã mất, "Sự Im Lặng" và khám phá sự thật đằng sau thế giới này.
-Kinh tế Vật phẩm: Hầu hết mọi vật phẩm trong game đều có giá trị. Bán chúng để đổi lấy Nguyên Thạch tại Cửa Hàng.
-Chợ Trời Chớp Nhoáng (Flash Sale): Các phiên chợ ngẫu nhiên xuất hiện trong thời gian ngắn, bán những vật phẩm với giá cực kỳ ưu đãi!
-Phần thưởng Hàng ngày: Đăng nhập mỗi ngày để nhận Nguyên Thạch và các vật phẩm ngẫu nhiên.
-🌐 Tính năng Xã hội & Tiện ích
-Hệ thống Bang hội (Guild):
-Tạo hoặc gia nhập bang hội.
-Lên cấp bang hội để mở khóa các lợi ích (perks) mạnh mẽ như tăng XP, chia sẻ XP, kho đồ chung...
-Cùng nhau hoàn thành các nhiệm vụ bang hội hàng tuần.
-Bảo Hộ Lãnh Thổ (Land Claim): Dùng Nguyên Thạch để mua và bảo vệ đất đai của bạn khỏi sự phá hoại của người khác. Thêm bạn bè vào danh sách tin cậy để cùng xây dựng.
-Giao Dịch An Toàn: Một giao diện giao dịch trực quan và an toàn để trao đổi vật phẩm giữa hai người chơi, tránh lừa đảo.
-Ping Vị trí: Đánh dấu những địa điểm quan trọng (như hầm mỏ, căn cứ) và chia sẻ tọa độ cho mọi người trên server, có thể dịch chuyển đến với một khoản phí.
-Mua Nhà Tiện Lợi: Xây dựng ngay lập tức những ngôi nhà được thiết kế sẵn chỉ với một nút bấm.
-Thắp Sáng Vĩnh Viễn: Sử dụng Nguyên Thạch để đặt các khối sáng vô hình, ngăn quái vật spawn vĩnh viễn trong một khu vực rộng lớn.
-🛠️ Cài Đặt
-Truy cập vào mục Releases của kho lưu trữ này.
-Tải về tệp .mcaddon mới nhất.
-Mở (nhấp đúp vào) tệp vừa tải. Minecraft sẽ tự động nhập addon.
-Khi tạo một thế giới mới (hoặc chỉnh sửa thế giới cũ), hãy kích hoạt cả Behavior Pack và Resource Pack của addon.
-QUAN TRỌNG: Trong mục Experiments (Thử nghiệm) của thế giới, hãy BẬT TẤT CẢ các tùy chọn, đặc biệt là "Beta APIs".
-▶️ Bắt Đầu Chơi
-Thế giới này có thể hơi choáng ngợp lúc đầu. Đây là lộ trình đề xuất cho người chơi mới:
-Mở Menu Chính: Vật phẩm khởi đầu của bạn là Sổ Tay Menu. Hãy dùng nó (chuột phải trên PC, nhấn giữ trên Mobile).
-Học những điều cơ bản: Trong Menu chính, tìm đến mục "Sổ Tay Hướng Dẫn". Hoàn thành các hướng dẫn về chế tạo, khai khoáng, nông nghiệp... để làm quen với các cơ chế mới.
-Bắt đầu Cốt truyện: Sau khi đã nắm vững những điều cơ bản, hãy mở "Cốt Truyện" trong Menu. Một giọng nói bí ẩn sẽ dẫn lối cho bạn trong cuộc hành trình đầu tiên.
-Làm Nhiệm vụ: Mở mục "Hoạt Động" -> "Nhiệm vụ" để nhận các nhiệm vụ ngẫu nhiên, giúp bạn có thêm XP và Nguyên Thạch để phát triển.
-📝 Dành cho Lập trình viên
-Dự án được xây dựng với mã nguồn JavaScript API của Minecraft Bedrock (Beta APIs). Cấu trúc code được chia thành các module rõ ràng theo từng tính năng, nằm trong thư mục scripts/, giúp dễ dàng bảo trì và phát triển.
-📜 Giấy phép
-Dự án này được cấp phép theo Giấy phép MIT. Xem file LICENSE để biết thêm chi tiết.
+---
+
+## 🌟 Tính Năng Nổi Bật
+
+### 1. 🛡️ Hệ Thống Nhập Vai (RPG System)
+Không còn là Steve vô danh, hãy chọn con đường của riêng bạn:
+*   **3 Lớp Nhân Vật (Class):**
+    *   **🛡️ Hộ Vệ (Guardian):** "Bức tường thép". Nội tại **Lì Đòn** (hồi máu khi bị đánh) & **Chấn Động** (đẩy lùi kẻ địch).
+    *   **🔮 Pháp Sư (Mage):** "Bậc thầy nguyên tố". Sở hữu lượng **Mana** dồi dào, sát thương phép thuật diện rộng và khả năng **Bùng Nổ Ma Lực**.
+    *   **🏹 Du Hiệp (Ranger):** "Bóng ma chiến trường". Tốc độ di chuyển cao, **Nhảy kép (Double Jump)** và **Mũi tên độc**.
+*   **Chỉ Số (Stats):** Dùng điểm kỹ năng (Skill Points) khi lên cấp để nâng:
+    *   💪 **Sức Mạnh (STR):** Tăng sát thương.
+    *   🦵 **Nhanh Nhẹn (AGI):** Tăng tốc độ chạy.
+    *   🧠 **Trí Tuệ (INT):** Tăng Mana tối đa.
+    *   ❤️ **Sức Bền (VIT):** Tăng Máu tối đa.
+
+### 2. ⚡ Kỹ Năng & Phép Thuật (Active Skills)
+Sử dụng **Quyền Trượng (Magic Staff)** để thi triển hơn **25 kỹ năng** độc đáo:
+*   🔥 **Tấn công:** Cầu Lửa, Bão Kiếm, Lôi Vực, Địa Ngục Hỏa...
+*   🛡️ **Phòng thủ:** Tàng Hình, Da Sắt, Hồi Máu, Khiên Thời Gian...
+*   ✨ **Tiện ích:** Dịch chuyển tức thời (Blink), Triệu hồi Linh thú, Lướt (Dash)...
+
+### 3. 🩸 Sinh Tồn Khắc Nghiệt (Hardcore Survival)
+Minecraft chưa bao giờ khó đến thế. Bạn phải quản lý:
+*   **💧 Độ Khát (Thirst):** Uống nước sạch (đun sôi) để sống. Nước bẩn sẽ gây bệnh.
+*   **🌡️ Thân Nhiệt (Temperature):** Cẩn thận bị sốt khi quá nóng hoặc cảm lạnh khi dầm mưa/tuyết.
+*   **🧠 Tinh Thần (Sanity):** Bóng tối và sự cô đơn sẽ khiến bạn hóa điên (gây ảo giác, giảm tốc độ).
+*   **🚑 Chấn Thương:** Ngã cao có thể **Gãy Chân**, bị chém có thể **Chảy Máu**, và Zombie có thể lây **Virus** chết người.
+
+### 4. 📜 Cốt Truyện & Nhiệm Vụ
+*   **Chế Độ Cốt Truyện:** Theo chân nhân vật bí ẩn **Elara** qua 3 Hồi (Acts) kịch tính:
+    *   *Hồi I:* Tiếng Vọng Thức Tỉnh.
+    *   *Hồi II:* Tro Tàn Của Ký Ức (Chinh phục Nether).
+    *   *Hồi III:* Hư Vô Vĩnh Cửu (Đối đầu với The End).
+*   **Nhiệm Vụ Hàng Ngày:** Hệ thống bảng nhiệm vụ (Easy/Normal/Hard) với phần thưởng phong phú.
+*   **Hướng Dẫn Tân Thủ:** Hệ thống nhiệm vụ hướng dẫn người chơi mới làm quen game.
+
+### 5. 🌍 Thế Giới & Quái Vật (PVE)
+*   **🌚 Trăng Máu (Blood Moon):** Sự kiện định kỳ khiến quái vật mạnh gấp bội và hung hăng hơn.
+*   **☠️ Hầm Ngục (Dungeons):** Các khu vực đặc biệt (Hầm mộ Zombie, Hang nhện...) với Boss và kho báu riêng.
+*   **🌊 Siêu Bão (Super Storm):** Thời tiết cực đoan với sấm sét và gió bão thổi bay người chơi.
+*   **Quái Vật Nâng Cấp:** Boss Thế Giới (Wither, Warden, Elder Guardian) và các Mini-boss (Vindicator, Ravager...) rơi ra vật phẩm giá trị.
+
+### 6. 💰 Kinh Tế & Xã Hội
+*   **💎 Nguyên Thạch:** Tiền tệ chính trong game.
+*   **🏰 Bang Hội (Guild):** Tạo bang, chia sẻ XP, làm nhiệm vụ bang chung, xây Kho Bang Hội.
+*   **🏠 Bất Động Sản:** Mua các mẫu nhà xây sẵn (Cottage, Villa, Tháp Pháp Sư...) và hệ thống **Land Claim** bảo vệ tài sản.
+*   **🛒 Chợ Trời (Flash Sale):** Cửa hàng ngẫu nhiên xuất hiện với các món đồ giảm giá sốc.
+*   **🎰 Gacha (Cầu Nguyện):** Hệ thống quay thưởng Vũ khí/Giáp Huyền Thoại.
+
+### 7. 🛠️ Tiện Ích Khác
+*   **Thần Binh (Soul Weapon):** Vũ khí phát triển sức mạnh theo cấp độ của chủ nhân.
+*   **Giám Định Cổ Vật:** Nhặt được đồ "Vô Danh"? Hãy giám định để mở khóa thuộc tính ẩn.
+*   **Ping System:** Đánh dấu vị trí cho đồng đội.
+*   **Music Player:** Tùy chỉnh nhạc nền khi chơi.
+*   **Ma Sói Mini-game:** Tích hợp trò chơi Ma Sói ngay trong thế giới sinh tồn.
+
+---
+
+## 🎮 Hướng Dẫn Sử Dụng
+
+### Lệnh & Menu
+*   **Mở Menu Chính:**
+    *   Sử dụng vật phẩm **Sổ Tay DHH** (được cấp khi vào game).
+    *   Hoặc gõ lệnh: `/scriptevent dhh:menu`
+*   **Sử Dụng Kỹ Năng:**
+    *   Cầm **Quyền Trượng**.
+    *   **Chuột Phải (hoặc Nhấn giữ màn hình):** Mở menu chọn kỹ năng.
+    *   **Ngồi + Chuột Phải:** Kích hoạt kỹ năng đã chọn.
+*   **Xem thông tin:** Sử dụng **Con Mắt Minh Triết** bấm (hoặc đánh) vào block/quái vật để xem thông tin chi tiết.
+
+### Cài Đặt (Quan Trọng)
+Add-on này yêu cầu **Script API** của Minecraft Bedrock phiên bản mới nhất.
+Khi tạo thế giới, hãy bật:
+1.  **Beta APIs** (Bắt buộc).
+2.  Khuyến nghị bật thử nghiệm: Holiday Creator Features (nếu có).
+
+---
+
+## 🛠️ Cấu Hình (Dành cho Admin/Dev)
+Mọi chỉ số trong game đều có thể cân bằng lại trong file `config.js`:
+*   `XP_SOURCES`: Lượng XP nhận được khi đào block/giết quái.
+*   `SKILL_MANA_COSTS` & `COOLDOWNS`: Cân bằng kỹ năng.
+*   `REWARD_POOLS`: Cấu hình vật phẩm rơi ra từ nhiệm vụ/gacha.
+*   `SURVIVAL_CONFIG`: Điều chỉnh tốc độ đói/khát/bệnh tật.
+
+---
+
+## 📝 Bản Quyền
+Add-on này được phát triển với sự hỗ trợ của cộng đồng Minecraft Bedrock.
+Vui lòng không re-upload hoặc bán Add-on này dưới mọi hình thức.
+
+---
+*Chúc bạn có những giờ phút sinh tồn nghẹt thở cùng DHH System!*
